@@ -1,4 +1,4 @@
-# Codecraft
+# ![Codecraft](https://raw.githubusercontent.com/canalesb93/Codecraft/master/proposal/codecraft.png)
 
 ## Proposal Document
 https://docs.google.com/document/d/13wp2fx8Qr-E8C4QgYowqk0E-wXFWvfjE1Dwm_tgwj74/edit?usp=sharing
