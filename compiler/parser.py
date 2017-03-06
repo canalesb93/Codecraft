@@ -4,70 +4,89 @@
 # Utilizes lexer for parsing BNF rules
 # -----------------------------------------------------------------------------
 
+import sys
 import ply.lex as lex
 import scanner
 
-# Build the lexer
-lexer = lex.lex(module=token_rules, debug=1)
+if sys.version_info[0] >= 3:
+    raw_input = input
 
-# Parsing rules
+# Build the lexer
+tokens = scanner.tokens
+lex.lex(module=scanner,debug=1,)
 
 precedence = (
-    ('left','PLUS','MINUS'),
-    ('left','TIMES','DIVIDE'),
-    ('right','UMINUS'),
-    )
+    ('left', '+', '-'),
+    ('left', '*', '/'),
+    ('right', 'UMINUS'),
+)
 
 # dictionary of names
-names = { }
+names = {}
 
-def p_statement_assign(t):
-    'statement : NAME EQUALS expression'
-    names[t[1]] = t[3]
+def p_statement_assign(p):
+    'statement : NAME "=" expression'
+    names[p[1]] = p[3]
 
-def p_statement_expr(t):
+
+def p_statement_expr(p):
     'statement : expression'
-    print(t[1])
+    print(p[1])
 
-def p_expression_binop(t):
-    '''expression : expression PLUS expression
-                  | expression MINUS expression
-                  | expression TIMES expression
-                  | expression DIVIDE expression'''
-    if t[2] == '+'  : t[0] = t[1] + t[3]
-    elif t[2] == '-': t[0] = t[1] - t[3]
-    elif t[2] == '*': t[0] = t[1] * t[3]
-    elif t[2] == '/': t[0] = t[1] / t[3]
 
-def p_expression_uminus(t):
-    'expression : MINUS expression %prec UMINUS'
-    t[0] = -t[2]
+def p_expression_binop(p):
+    '''expression : expression '+' expression
+                  | expression '-' expression
+                  | expression '*' expression
+                  | expression '/' expression'''
+    if p[2] == '+':
+        p[0] = p[1] + p[3]
+    elif p[2] == '-':
+        p[0] = p[1] - p[3]
+    elif p[2] == '*':
+        p[0] = p[1] * p[3]
+    elif p[2] == '/':
+        p[0] = p[1] / p[3]
 
-def p_expression_group(t):
-    'expression : LPAREN expression RPAREN'
-    t[0] = t[2]
 
-def p_expression_number(t):
-    'expression : NUMBER'
-    t[0] = t[1]
+def p_expression_uminus(p):
+    "expression : '-' expression %prec UMINUS"
+    p[0] = -p[2]
 
-def p_expression_name(t):
-    'expression : NAME'
+
+def p_expression_group(p):
+    "expression : '(' expression ')'"
+    p[0] = p[2]
+
+
+def p_expression_number(p):
+    "expression : NUMBER"
+    p[0] = p[1]
+
+
+def p_expression_name(p):
+    "expression : NAME"
     try:
-        t[0] = names[t[1]]
+        p[0] = names[p[1]]
     except LookupError:
-        print("Undefined name '%s'" % t[1])
-        t[0] = 0
+        print("Undefined name '%s'" % p[1])
+        p[0] = 0
 
-def p_error(t):
-    print("Syntax error at '%s'" % t.value)
+
+def p_error(p):
+    if p:
+        print("Syntax error at '%s'" % p.value)
+    else:
+        print("Syntax error at EOF")
 
 import ply.yacc as yacc
-parser = yacc.yacc()
+yacc.yacc(debug=1)
 
-while True:
+while 1:
     try:
-        s = input('parser > ')   # Use raw_input on Python 2
+        s = raw_input('calc > ')
     except EOFError:
         break
-    parser.parse(s)
+    if not s:
+        continue
+    yacc.parse(s)

@@ -1,41 +1,56 @@
-# -----------------------------------------------------------------------------
-# token_rules.py
-#
-# List of tokens and rules
-# -----------------------------------------------------------------------------
-
-# =========== START Tokens ===========
+# module: scanner.py
+# This module just contains the lexing rules
 
 reserved = {
-   'if' : 'IF',
-   'then' : 'THEN',
-   'else' : 'ELSE',
-   'while' : 'WHILE'
+    # Basic tokens
+    'program' : 'PROGRAM',
+    'var' : 'VAR',
+    'true' : 'BOOLEAN_TRUE',
+    'false' : 'BOOLEAN_FALSE',
+    'and' : 'AND',
+    'or' : 'OR',
+    'input' : 'INPUT',
+    'output' : 'OUTPUT',
+    
+    # Functions tokens
+    'return' : 'RETURN',
+    'function' : 'FUNCTION',
+
+    # Conditional tokens
+    'if' : 'IF',
+    'then' : 'THEN',
+    'else' : 'ELSE',
+
+    # Cycle tokens
+    'while' : 'WHILE',
+    'break' : 'BREAK',
+    'continue' : 'CONTINUE',
+
+    # Primitive types
+    'int' : 'INT',
+    'float' : 'FLOAT',
+    'char' : 'CHAR',
+    'bool' : 'BOOL',
+    'string' : 'STRING'
 }
 
 tokens = [
-    'NAME',
     'NUMBER',
-    'PLUS',
-    'MINUS',
-    'TIMES',
-    'DIVIDE',
-    'EQUALS',
-    'LPAREN',
-    'RPAREN',
-    'ID'
+    'ID',
+    'EQ',
+    'LESS_EQ',
+    'GREATER_EQ',
+    'NAME'
 ] + list(reserved.values())
 
 # Regular expressions for tokens
+t_EQ  = r'=='
+t_GREATER_EQ  = r'>='
+t_LESS_EQ  = r'<='
+t_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
 
-t_PLUS    = r'\+'
-t_MINUS   = r'-'
-t_TIMES   = r'\*'
-t_DIVIDE  = r'/'
-t_EQUALS  = r'='
-t_LPAREN  = r'\('
-t_RPAREN  = r'\)'
-t_NAME    = r'[a-zA-Z_][a-zA-Z0-9_]*'
+# Literals
+literals = [ '+','-','*','/','=','(',')','{','}','<','>' ]
 
 # Regular expressions with action code
 
@@ -63,5 +78,3 @@ def t_newline(t):
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
-
-# =========== END Tokens ===========
