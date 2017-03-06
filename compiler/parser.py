@@ -13,7 +13,7 @@ if sys.version_info[0] >= 3:
 
 # Build the lexer
 tokens = scanner.tokens
-lex.lex(module=scanner,debug=1,)
+lex.lex(module=scanner)
 
 precedence = (
     ('left', 'AND', 'OR'),
@@ -220,11 +220,11 @@ def p_error(p):
         print("Syntax error at EOF")
 
 import ply.yacc as yacc
-yacc.yacc(debug=1)
+yacc.yacc()
 
 while 1:
     try:
-        s = raw_input('calc > ')
+        s = raw_input('craft > ')
     except EOFError:
         break
     if not s:
