@@ -5,8 +5,8 @@ reserved = {
     # Basic tokens
     'program' : 'PROGRAM',
     'var' : 'VAR',
-    'true' : 'BOOLEAN_TRUE',
-    'false' : 'BOOLEAN_FALSE',
+    'true' : 'TRUE',
+    'false' : 'FALSE',
     'and' : 'AND',
     'or' : 'OR',
     'input' : 'INPUT',
@@ -15,10 +15,10 @@ reserved = {
     # Functions tokens
     'return' : 'RETURN',
     'function' : 'FUNCTION',
+    'void' : 'VOID',
 
     # Conditional tokens
     'if' : 'IF',
-    'then' : 'THEN',
     'else' : 'ELSE',
 
     # Cycle tokens
@@ -40,17 +40,15 @@ tokens = [
     'EQ',
     'LESS_EQ',
     'GREATER_EQ',
-    'NAME'
 ] + list(reserved.values())
 
 # Regular expressions for tokens
 t_EQ  = r'=='
 t_GREATER_EQ  = r'>='
 t_LESS_EQ  = r'<='
-t_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
 
-# Literals
-literals = [ '+','-','*','/','=','(',')','{','}','<','>' ]
+# Literals 
+literals = [ '+','-','*','/', '%','=','(',')','{','}','<','>', ',' ]
 
 # Regular expressions with action code
 
@@ -70,6 +68,11 @@ def t_ID(t):
 
 # Ignored characters (spaces and tabs)
 t_ignore = " \t"
+
+def t_COMMENT(t):
+    r'\#.*'
+    pass
+    # No return value. Token discarded
 
 def t_newline(t):
     r'\n+'
