@@ -48,7 +48,7 @@ t_GREATER_EQ  = r'>='
 t_LESS_EQ  = r'<='
 
 # Literals 
-literals = [ '+','-','*','/', '%','=','(',')','{','}','<','>', ',' ]
+literals = [ '+','-','*','/', '%','=','(',')','{','}','[',']','<','>', ',' ]
 
 # Regular expressions with action code
 

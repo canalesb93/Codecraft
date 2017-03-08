@@ -1,43 +1,22 @@
 PROGRAM  ::= 'craft' '{' VAR* BLOCK FUNCTION* '}'
-
-VAR ::= 'var' TYPE ASSIGNMENT
-
+VAR ::= 'var' TYPE ('[' 'number' ']')? ASSIGNMENT
 TYPE ::= ('int' | 'float' | 'char' | 'bool' | 'string')
-
-ASSIGNMENT ::= 'id' ('[' 'number' ']')? ('=' ( EXPRESSION | '{' LITERAL_ARRAY '}') )? (',' ASSIGNMENT)?
-
+ASSIGNMENT ::= 'id' ('=' ( EXPRESSION | '{' LITERAL_ARRAY '}') )? (',' ASSIGNMENT)?
 LITERAL_ARRAY ::= EXPRESSION (',' EXPRESSION)?
-
 EXPRESSION ::= EXP (('<' | '>' | '<=' | '>=' | '!=') EXPRESSION)?
-
 EXP ::= TERM (( '+' | '-') EXP)?
-
 TERM ::= FACTOR (('*' | '/' | '%') TERM)?
-
 FACTOR ::= ( '(' CONDITION ')' | FUNCTION_CALL | NUMBER | 'id' )
-
 CONDITION ::= EXPRESSION (('and' | 'or') CONDITION)?
-
 FUNCTION ::= (TYPE | 'void') 'id' '(' PARAMETERS_DEFINITION? ')' '{' (VAR)* BLOCK '}'
-
 PARAMETERS ::= EXPRESSION (',' PARAMETERS)?
-
 PARAMETERS_DEFINITION ::= TYPE (',' PARAMETERS_DEFINITION)?
-
 BLOCK ::= (ASSIGNMENT | IF | CYCLE | RETURN | BREAK | CONTINUE | FUNCTION_CALL | COMMENT)*
-
 IF ::= 'if' '(' CONDITION ')' '{' BLOCK '}' (ELSE)?
-
 ELSE ::= 'else' ( IF | '{' BLOCK '}' )
-
 CYCLE ::= 'while' '(' CONDITION ')' '{' BLOCK '}'
-
 RETURN ::= 'return' EXP?
-
 BREAK ::= 'break'
-
 CONTINUE ::= 'continue'
-
 FUNCTION_CALL ::= ('id' | PREDEFINED_FUNCTIONS) '(' PARAMETERS ')'
-
 PREDEFINED_FUNCTIONS ::= ('input' | 'output')
