@@ -30,7 +30,7 @@ names = {}
 
 
 def p_program(p):
-    'program : PROGRAM "{" vars block functions "}"'
+    'program : CRAFT "{" vars block functions "}"'
     pass
 
 

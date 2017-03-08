@@ -3,7 +3,7 @@
 
 reserved = {
     # Basic tokens
-    'program' : 'PROGRAM',
+    'craft' : 'CRAFT',
     'var' : 'VAR',
     'true' : 'TRUE',
     'false' : 'FALSE',

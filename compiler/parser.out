@@ -8,7 +8,7 @@ Unused terminals:
 Grammar
 
 Rule 0     S' -> program
-Rule 1     program -> PROGRAM { vars block functions }
+Rule 1     program -> CRAFT { vars block functions }
 Rule 2     vars -> var vars
 Rule 3     vars -> empty
 Rule 4     functions -> function functions
@@ -84,6 +84,7 @@ BOOL                 : 10
 BREAK                : 26
 CHAR                 : 9
 CONTINUE             : 27
+CRAFT                : 1
 ELSE                 : 32 33
 EQ                   : 46
 FALSE                : 54
@@ -98,7 +99,6 @@ LESS_EQ              : 47
 NUMBER               : 53
 OR                   : 50
 OUTPUT               : 
-PROGRAM              : 1
 RETURN               : 35 36
 STRING               : 11
 TRUE                 : 55
@@ -134,9 +134,9 @@ Parsing method: LALR
 state 0
 
     (0) S' -> . program
-    (1) program -> . PROGRAM { vars block functions }
+    (1) program -> . CRAFT { vars block functions }
 
-    PROGRAM         shift and go to state 2
+    CRAFT           shift and go to state 2
 
     program                        shift and go to state 1
 
@@ -148,14 +148,14 @@ state 1
 
 state 2
 
-    (1) program -> PROGRAM . { vars block functions }
+    (1) program -> CRAFT . { vars block functions }
 
     {               shift and go to state 3
 
 
 state 3
 
-    (1) program -> PROGRAM { . vars block functions }
+    (1) program -> CRAFT { . vars block functions }
     (2) vars -> . var vars
     (3) vars -> . empty
     (6) var -> . VAR type assignment
@@ -177,7 +177,7 @@ state 3
 
 state 4
 
-    (1) program -> PROGRAM { vars . block functions }
+    (1) program -> CRAFT { vars . block functions }
     (22) block -> . assignment block
     (23) block -> . if block
     (24) block -> . cycle block
@@ -301,8 +301,8 @@ state 8
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
   ! ID              [ reduce using rule 35 (return -> RETURN .) ]
@@ -618,7 +618,7 @@ state 19
 
 state 20
 
-    (1) program -> PROGRAM { vars block . functions }
+    (1) program -> CRAFT { vars block . functions }
     (4) functions -> . function functions
     (5) functions -> . empty
     (14) function -> . FUNCTION type ID ( ) { vars block }
@@ -728,8 +728,8 @@ state 28
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 52
@@ -765,31 +765,31 @@ state 29
 
 state 30
 
-    (55) expression -> TRUE .
+    (54) expression -> FALSE .
 
-    +               reduce using rule 55 (expression -> TRUE .)
-    -               reduce using rule 55 (expression -> TRUE .)
-    *               reduce using rule 55 (expression -> TRUE .)
-    /               reduce using rule 55 (expression -> TRUE .)
-    %               reduce using rule 55 (expression -> TRUE .)
-    >               reduce using rule 55 (expression -> TRUE .)
-    <               reduce using rule 55 (expression -> TRUE .)
-    EQ              reduce using rule 55 (expression -> TRUE .)
-    LESS_EQ         reduce using rule 55 (expression -> TRUE .)
-    GREATER_EQ      reduce using rule 55 (expression -> TRUE .)
-    AND             reduce using rule 55 (expression -> TRUE .)
-    OR              reduce using rule 55 (expression -> TRUE .)
-    BREAK           reduce using rule 55 (expression -> TRUE .)
-    CONTINUE        reduce using rule 55 (expression -> TRUE .)
-    ID              reduce using rule 55 (expression -> TRUE .)
-    IF              reduce using rule 55 (expression -> TRUE .)
-    WHILE           reduce using rule 55 (expression -> TRUE .)
-    RETURN          reduce using rule 55 (expression -> TRUE .)
-    FUNCTION        reduce using rule 55 (expression -> TRUE .)
-    }               reduce using rule 55 (expression -> TRUE .)
-    )               reduce using rule 55 (expression -> TRUE .)
-    ,               reduce using rule 55 (expression -> TRUE .)
-    VAR             reduce using rule 55 (expression -> TRUE .)
+    +               reduce using rule 54 (expression -> FALSE .)
+    -               reduce using rule 54 (expression -> FALSE .)
+    *               reduce using rule 54 (expression -> FALSE .)
+    /               reduce using rule 54 (expression -> FALSE .)
+    %               reduce using rule 54 (expression -> FALSE .)
+    >               reduce using rule 54 (expression -> FALSE .)
+    <               reduce using rule 54 (expression -> FALSE .)
+    EQ              reduce using rule 54 (expression -> FALSE .)
+    LESS_EQ         reduce using rule 54 (expression -> FALSE .)
+    GREATER_EQ      reduce using rule 54 (expression -> FALSE .)
+    AND             reduce using rule 54 (expression -> FALSE .)
+    OR              reduce using rule 54 (expression -> FALSE .)
+    BREAK           reduce using rule 54 (expression -> FALSE .)
+    CONTINUE        reduce using rule 54 (expression -> FALSE .)
+    ID              reduce using rule 54 (expression -> FALSE .)
+    IF              reduce using rule 54 (expression -> FALSE .)
+    WHILE           reduce using rule 54 (expression -> FALSE .)
+    RETURN          reduce using rule 54 (expression -> FALSE .)
+    FUNCTION        reduce using rule 54 (expression -> FALSE .)
+    }               reduce using rule 54 (expression -> FALSE .)
+    )               reduce using rule 54 (expression -> FALSE .)
+    ,               reduce using rule 54 (expression -> FALSE .)
+    VAR             reduce using rule 54 (expression -> FALSE .)
 
 
 state 31
@@ -817,8 +817,8 @@ state 31
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 53
@@ -892,31 +892,31 @@ state 33
 
 state 34
 
-    (54) expression -> FALSE .
+    (55) expression -> TRUE .
 
-    +               reduce using rule 54 (expression -> FALSE .)
-    -               reduce using rule 54 (expression -> FALSE .)
-    *               reduce using rule 54 (expression -> FALSE .)
-    /               reduce using rule 54 (expression -> FALSE .)
-    %               reduce using rule 54 (expression -> FALSE .)
-    >               reduce using rule 54 (expression -> FALSE .)
-    <               reduce using rule 54 (expression -> FALSE .)
-    EQ              reduce using rule 54 (expression -> FALSE .)
-    LESS_EQ         reduce using rule 54 (expression -> FALSE .)
-    GREATER_EQ      reduce using rule 54 (expression -> FALSE .)
-    AND             reduce using rule 54 (expression -> FALSE .)
-    OR              reduce using rule 54 (expression -> FALSE .)
-    BREAK           reduce using rule 54 (expression -> FALSE .)
-    CONTINUE        reduce using rule 54 (expression -> FALSE .)
-    ID              reduce using rule 54 (expression -> FALSE .)
-    IF              reduce using rule 54 (expression -> FALSE .)
-    WHILE           reduce using rule 54 (expression -> FALSE .)
-    RETURN          reduce using rule 54 (expression -> FALSE .)
-    FUNCTION        reduce using rule 54 (expression -> FALSE .)
-    }               reduce using rule 54 (expression -> FALSE .)
-    )               reduce using rule 54 (expression -> FALSE .)
-    ,               reduce using rule 54 (expression -> FALSE .)
-    VAR             reduce using rule 54 (expression -> FALSE .)
+    +               reduce using rule 55 (expression -> TRUE .)
+    -               reduce using rule 55 (expression -> TRUE .)
+    *               reduce using rule 55 (expression -> TRUE .)
+    /               reduce using rule 55 (expression -> TRUE .)
+    %               reduce using rule 55 (expression -> TRUE .)
+    >               reduce using rule 55 (expression -> TRUE .)
+    <               reduce using rule 55 (expression -> TRUE .)
+    EQ              reduce using rule 55 (expression -> TRUE .)
+    LESS_EQ         reduce using rule 55 (expression -> TRUE .)
+    GREATER_EQ      reduce using rule 55 (expression -> TRUE .)
+    AND             reduce using rule 55 (expression -> TRUE .)
+    OR              reduce using rule 55 (expression -> TRUE .)
+    BREAK           reduce using rule 55 (expression -> TRUE .)
+    CONTINUE        reduce using rule 55 (expression -> TRUE .)
+    ID              reduce using rule 55 (expression -> TRUE .)
+    IF              reduce using rule 55 (expression -> TRUE .)
+    WHILE           reduce using rule 55 (expression -> TRUE .)
+    RETURN          reduce using rule 55 (expression -> TRUE .)
+    FUNCTION        reduce using rule 55 (expression -> TRUE .)
+    }               reduce using rule 55 (expression -> TRUE .)
+    )               reduce using rule 55 (expression -> TRUE .)
+    ,               reduce using rule 55 (expression -> TRUE .)
+    VAR             reduce using rule 55 (expression -> TRUE .)
 
 
 state 35
@@ -952,8 +952,8 @@ state 36
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 66
@@ -1019,8 +1019,8 @@ state 41
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 69
@@ -1052,8 +1052,8 @@ state 42
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 70
@@ -1084,8 +1084,8 @@ state 43
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 71
@@ -1147,7 +1147,7 @@ state 47
 
 state 48
 
-    (1) program -> PROGRAM { vars block functions . }
+    (1) program -> CRAFT { vars block functions . }
 
     }               shift and go to state 75
 
@@ -1292,8 +1292,8 @@ state 54
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 77
@@ -1323,8 +1323,8 @@ state 55
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 78
@@ -1354,8 +1354,8 @@ state 56
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 79
@@ -1385,8 +1385,8 @@ state 57
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 80
@@ -1416,8 +1416,8 @@ state 58
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 81
@@ -1447,8 +1447,8 @@ state 59
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 82
@@ -1478,8 +1478,8 @@ state 60
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 83
@@ -1509,8 +1509,8 @@ state 61
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 84
@@ -1540,8 +1540,8 @@ state 62
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 85
@@ -1571,8 +1571,8 @@ state 63
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 86
@@ -1602,8 +1602,8 @@ state 64
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 87
@@ -1633,8 +1633,8 @@ state 65
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 88
@@ -1822,9 +1822,9 @@ state 74
 
 state 75
 
-    (1) program -> PROGRAM { vars block functions } .
+    (1) program -> CRAFT { vars block functions } .
 
-    $end            reduce using rule 1 (program -> PROGRAM { vars block functions } .)
+    $end            reduce using rule 1 (program -> CRAFT { vars block functions } .)
 
 
 state 76
@@ -2552,8 +2552,8 @@ state 91
     -               shift and go to state 28
     (               shift and go to state 31
     NUMBER          shift and go to state 29
-    FALSE           shift and go to state 34
-    TRUE            shift and go to state 30
+    FALSE           shift and go to state 30
+    TRUE            shift and go to state 34
     ID              shift and go to state 32
 
     expression                     shift and go to state 69
