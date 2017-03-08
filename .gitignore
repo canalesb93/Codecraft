@@ -122,3 +122,7 @@ ENV/
 .ropeproject
 
 # End of https://www.gitignore.io/api/osx,python
+
+### Python Parse ###
+parser.out
+parsetab.py
