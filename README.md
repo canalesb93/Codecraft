@@ -5,14 +5,15 @@ https://docs.google.com/document/d/13wp2fx8Qr-E8C4QgYowqk0E-wXFWvfjE1Dwm_tgwj74/
 
 ## Grammar
 ```
-PROGRAM ::= (VAR | BLOCK | FUNCTION)
+PROGRAM  ::= 'craft' '{' VAR* BLOCK FUNCTION* '}'
 VAR ::= 'var' TYPE ASSIGNMENT
 TYPE ::= ('int' | 'float' | 'char' | 'bool' | 'string')
-ASSIGNMENT ::= ('id' '=' EXPRESSION | 'id') (',' ASSIGNMENT)?
+ASSIGNMENT ::= 'id' ('[' 'number' ']')? ('=' ( EXPRESSION | '{' LITERAL_ARRAY '}') )? (',' ASSIGNMENT)?
+LITERAL_ARRAY ::= EXPRESSION (',' EXPRESSION)?
 EXPRESSION ::= EXP (('<' | '>' | '<=' | '>=' | '!=') EXPRESSION)?
 EXP ::= TERM (( '+' | '-') EXP)?
 TERM ::= FACTOR (('*' | '/' | '%') TERM)?
-FACTOR ::= ( '(' CONDITION ')' | FUNCTION_CALL | VAR_CTE )
+FACTOR ::= ( '(' CONDITION ')' | FUNCTION_CALL | NUMBER | 'id' )
 CONDITION ::= EXPRESSION (('and' | 'or') CONDITION)?
 FUNCTION ::= (TYPE | 'void') 'id' '(' PARAMETERS_DEFINITION? ')' '{' (VAR)* BLOCK '}'
 PARAMETERS ::= EXPRESSION (',' PARAMETERS)?
@@ -26,5 +27,4 @@ BREAK ::= 'break'
 CONTINUE ::= 'continue'
 FUNCTION_CALL ::= ('id' | PREDEFINED_FUNCTIONS) '(' PARAMETERS ')'
 PREDEFINED_FUNCTIONS ::= ('input' | 'output')
-COMMENT ::= '/*' 'comment' '*/'
 ```

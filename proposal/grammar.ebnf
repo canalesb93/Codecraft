@@ -1,10 +1,12 @@
-PROGRAM ::= (VAR | BLOCK | FUNCTION)*
+PROGRAM  ::= 'craft' '{' VAR* BLOCK FUNCTION* '}'
 
 VAR ::= 'var' TYPE ASSIGNMENT
 
 TYPE ::= ('int' | 'float' | 'char' | 'bool' | 'string')
 
-ASSIGNMENT ::= ('id' '=' EXPRESSION | 'id') (',' ASSIGNMENT)?
+ASSIGNMENT ::= 'id' ('[' 'number' ']')? ('=' ( EXPRESSION | '{' LITERAL_ARRAY '}') )? (',' ASSIGNMENT)?
+
+LITERAL_ARRAY ::= EXPRESSION (',' EXPRESSION)?
 
 EXPRESSION ::= EXP (('<' | '>' | '<=' | '>=' | '!=') EXPRESSION)?
 
@@ -12,7 +14,7 @@ EXP ::= TERM (( '+' | '-') EXP)?
 
 TERM ::= FACTOR (('*' | '/' | '%') TERM)?
 
-FACTOR ::= ( '(' CONDITION ')' | FUNCTION_CALL | VAR_CTE )
+FACTOR ::= ( '(' CONDITION ')' | FUNCTION_CALL | NUMBER | 'id' )
 
 CONDITION ::= EXPRESSION (('and' | 'or') CONDITION)?
 
@@ -39,5 +41,3 @@ CONTINUE ::= 'continue'
 FUNCTION_CALL ::= ('id' | PREDEFINED_FUNCTIONS) '(' PARAMETERS ')'
 
 PREDEFINED_FUNCTIONS ::= ('input' | 'output')
-
-COMMENT ::= '/*' 'comment' '*/'
