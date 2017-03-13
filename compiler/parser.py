@@ -8,12 +8,16 @@ import sys
 import ply.lex as lex
 import scanner
 
+# Classes
+from symbols import SymbolTable
+
 if sys.version_info[0] >= 3:
     raw_input = input
 
 # Build the lexer
 tokens = scanner.tokens
 lex.lex(module=scanner)
+
 
 precedence = (
     ('left', 'AND', 'OR'),
@@ -25,6 +29,10 @@ precedence = (
 
 # dictionary of names
 names = {}
+
+# Program Data
+global_symbol_table = SymbolTable()
+current_scope = global_symbol_table
 
 # ====== GRAMMAR ======
 
@@ -46,7 +54,9 @@ def p_var(p):
     '''var : VAR type assignment
            | VAR type "[" NUMBER "]" assignment_array
            '''
-    pass
+    if p[3] != "[":
+        p[3].type = p[2]
+    print p[3]
 
 def p_type(p):
     '''type : INT
@@ -54,19 +64,33 @@ def p_type(p):
             | CHAR
             | BOOL
             | STRING'''
+    if p[1] == "int":
+        p[0] = 0
+    elif p[1] == "float":
+        p[0] = 1
+    elif p[1] == "char":
+        p[0] = 2
+    elif p[1] == "bool":
+        p[0] = 3
+    elif p[1] == "string":
+        p[0] = 4
     pass
 
 def p_assignment(p):
     '''assignment : ID "=" expression ',' assignment
                   | ID "=" expression 
+                  | ID
                   '''
-    names[p[1]] = p[3]
-    print(names[p[1]])
+    var = current_scope.insert(p[1])
+    if len(p) >= 4:
+        var.value = p[3]
+    p[0] = var
     pass
 
 def p_assignment_array(p):
     '''assignment_array : ID "=" "{" parameters "}" ',' assignment
                         | ID "=" "{" parameters "}" 
+                        | ID
                         '''
     print(p[4])
     pass

@@ -1,0 +1,2532 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"supervi",
+				"supervisor_id"
+			],
+			[
+				"super",
+				"supervisor"
+			],
+			[
+				"superv",
+				"supervisor"
+			],
+			[
+				"check",
+				"checkedRoles"
+			],
+			[
+				"for",
+				"foreach\tforeach …"
+			],
+			[
+				"fact",
+				"factor_a"
+			],
+			[
+				"VAR",
+				"VAR_STRING"
+			],
+			[
+				"exp",
+				"expression"
+			],
+			[
+				"get",
+				"get_users"
+			],
+			[
+				"Play",
+				"Player"
+			],
+			[
+				"Player",
+				"PlayerType"
+			],
+			[
+				"level",
+				"levelExpToLose"
+			],
+			[
+				"float",
+				"float32"
+			],
+			[
+				"sk",
+				"skillExperience"
+			],
+			[
+				"blood",
+				"bloodPosition"
+			],
+			[
+				"per",
+				"percentageLost"
+			],
+			[
+				"ground",
+				"groundEffect"
+			],
+			[
+				"write",
+				"writeGroundEffect"
+			],
+			[
+				"Groun",
+				"groundEffectComponent"
+			],
+			[
+				"T",
+				"Type"
+			],
+			[
+				"animati",
+				"animationType"
+			],
+			[
+				"An",
+				"animationType"
+			],
+			[
+				"ex",
+				"experience"
+			],
+			[
+				"levl",
+				"levelDifference"
+			],
+			[
+				"Re",
+				"Respawn"
+			],
+			[
+				"int",
+				"int64"
+			],
+			[
+				"Remove",
+				"RemoveExperience"
+			],
+			[
+				"MAp",
+				"MapTile"
+			],
+			[
+				"Pl",
+				"Player"
+			],
+			[
+				"client",
+				"clientID"
+			],
+			[
+				"server",
+				"ServerIP"
+			],
+			[
+				"tra",
+				"trackerID"
+			],
+			[
+				"ser",
+				"serverClientID"
+			],
+			[
+				"Pla",
+				"Player"
+			],
+			[
+				"Mon",
+				"Monster"
+			],
+			[
+				"kill",
+				"killName"
+			],
+			[
+				"target",
+				"targetName"
+			],
+			[
+				"tar",
+				"target"
+			],
+			[
+				"go",
+				"gamob"
+			],
+			[
+				"targe",
+				"targetType"
+			],
+			[
+				"sign",
+				"signinDurationInt64"
+			],
+			[
+				"si",
+				"signinDurationInt64"
+			],
+			[
+				"id",
+				"ID"
+			],
+			[
+				"Time",
+				"TimeToTeleportScroll"
+			],
+			[
+				"Tele",
+				"TeleportScroll"
+			],
+			[
+				"TELE",
+				"TeleportScroll"
+			],
+			[
+				"RemoveFromP",
+				"RemoveEntityFromMap"
+			],
+			[
+				"RemoveIteBy",
+				"RemoveItemByID"
+			],
+			[
+				"align",
+				"text-align"
+			],
+			[
+				"padd",
+				"padding-left"
+			],
+			[
+				"fra",
+				"frames"
+			],
+			[
+				"frames",
+				"framesFile"
+			],
+			[
+				"Conf",
+				"Conferencias"
+			],
+			[
+				"padding",
+				"padding-top"
+			],
+			[
+				"sess",
+				"sessionToken"
+			],
+			[
+				"costo",
+				"costoCaso2"
+			],
+			[
+				"cosot",
+				"costo_acum"
+			],
+			[
+				"prod",
+				"prod_acum"
+			],
+			[
+				"coso",
+				"costo_unitario"
+			],
+			[
+				"cos",
+				"costo_unitario"
+			],
+			[
+				"border-r",
+				"border-radius"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"box",
+				"boxH"
+			],
+			[
+				"subs",
+				"subsize"
+			],
+			[
+				"base",
+				"base_top"
+			],
+			[
+				"valid",
+				"valueToDigit"
+			],
+			[
+				"to",
+				"to_base"
+			],
+			[
+				"conver",
+				"convertToBaseX"
+			],
+			[
+				"an",
+				"angle_difference"
+			],
+			[
+				"prin",
+				"print_graph"
+			],
+			[
+				"visite",
+				"visited_ts"
+			],
+			[
+				"gene",
+				"generateMapPairs"
+			],
+			[
+				"limi",
+				"limit_y"
+			],
+			[
+				"lim",
+				"limit_x"
+			],
+			[
+				"count",
+				"countPaths"
+			],
+			[
+				"righ",
+				"rightHeight"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"nu",
+				"NULL"
+			],
+			[
+				"sie",
+				"size_a"
+			],
+			[
+				"siz",
+				"size_b"
+			],
+			[
+				"size",
+				"size_a"
+			],
+			[
+				"ne",
+				"nextNode"
+			],
+			[
+				"lsat",
+				"last-offset"
+			],
+			[
+				"nums",
+				"nums1"
+			],
+			[
+				"be",
+				"before_last_number"
+			],
+			[
+				"my",
+				"myMap"
+			],
+			[
+				"desti",
+				"destination_id"
+			],
+			[
+				"roadi",
+				"roadies_response"
+			],
+			[
+				"mee",
+				"meeting_time_end"
+			],
+			[
+				"meet",
+				"meeting_time_end"
+			],
+			[
+				"user",
+				"user_oauth"
+			],
+			[
+				"fies",
+				"files"
+			],
+			[
+				"fom",
+				"formidable"
+			],
+			[
+				"pst",
+				"postData"
+			],
+			[
+				"postD",
+				"postDataChunk"
+			],
+			[
+				"ar",
+				"articulation_vertex"
+			],
+			[
+				"DF",
+				"DFS_WHITE"
+			],
+			[
+				"alr",
+				"articulation"
+			],
+			[
+				"total",
+				"total_neighbors"
+			],
+			[
+				"route",
+				"$routeProvider\tAngularJS"
+			],
+			[
+				"st",
+				"style\tTag"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "parser.py",
+			"settings":
+			{
+				"buffer_size": 5308,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "scanner.py",
+			"settings":
+			{
+				"buffer_size": 1593,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/Canales/Workspace/Projects/Compiler/Codecraft/.gitignore",
+			"settings":
+			{
+				"buffer_size": 1627,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/Canales/Workspace/Projects/Compiler/Codecraft/proposal/grammar.ebnf",
+			"settings":
+			{
+				"buffer_size": 1148,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "SymbolTable.py",
+			"settings":
+			{
+				"buffer_size": 11,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/Canales/Workspace/Projects/Compiler/Codecraft/README.md",
+			"settings":
+			{
+				"buffer_size": 1388,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				],
+				[
+					"Packages/User/OnlineC++.sublime-build",
+					""
+				],
+				[
+					"Packages/User/OnlineC++.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/Java/Ant.sublime-build",
+					""
+				],
+				[
+					"Packages/Java/JavaC.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Java/JavaC.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/User/OnlineC++.sublime-build",
+					""
+				],
+				[
+					"Packages/User/OnlineC++.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/User/OnlineC++.sublime-build",
+				"Run"
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 400.0,
+		"last_filter": "list ",
+		"selected_items":
+		[
+			[
+				"list ",
+				"Package Control: List Packages"
+			],
+			[
+				"rein",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"reind",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"indent",
+				"JSON Reindent: reindent file or selection"
+			],
+			[
+				"ssjso",
+				"Set Syntax: JSON"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"sstext",
+				"Set Syntax: Textile"
+			],
+			[
+				"sstex",
+				"Set Syntax: TeX"
+			],
+			[
+				"ssbis",
+				"Set Syntax: Bison"
+			],
+			[
+				"ssc",
+				"Set Syntax: C"
+			],
+			[
+				"ssbi",
+				"Set Syntax: Bison"
+			],
+			[
+				"ssbison",
+				"Set Syntax: Bison"
+			],
+			[
+				"regular",
+				"Set Syntax: Regular Expression"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"ss text",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"f",
+				"File: Copy Name Encoded"
+			],
+			[
+				"ssrub",
+				"Set Syntax: Ruby"
+			],
+			[
+				"ssxml",
+				"Set Syntax: XML"
+			],
+			[
+				"bash",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"goto de",
+				"GoTools: Go to definition"
+			],
+			[
+				"ssbas",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"go",
+				"GoTools: Format"
+			],
+			[
+				"pack",
+				"Package Control: Remove Package"
+			],
+			[
+				"gotools",
+				"GoTools: Format"
+			],
+			[
+				"goto",
+				"GoTools: Format"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"pl",
+				"Package Control: List Packages"
+			],
+			[
+				"ssmar",
+				"Set Syntax: Markdown Extended"
+			],
+			[
+				"ssc++",
+				"Set Syntax: C++"
+			],
+			[
+				"ssbash",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"sssql",
+				"Set Syntax: SQL"
+			],
+			[
+				"ss ssh",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"ss mard",
+				"Set Syntax: Markdown Extended"
+			],
+			[
+				"remove ",
+				"Package Control: Remove Package"
+			],
+			[
+				"ss mark",
+				"Set Syntax: Markdown"
+			],
+			[
+				"ssmul",
+				"Set Syntax: MultiMarkdown"
+			],
+			[
+				"ssmard",
+				"Set Syntax: Markdown"
+			],
+			[
+				"ss rub",
+				"Set Syntax: Ruby"
+			],
+			[
+				"ss ru",
+				"Set Syntax: Ruby"
+			],
+			[
+				"ssruby",
+				"Set Syntax: Ruby"
+			],
+			[
+				"ssswi",
+				"Set Syntax: Swift"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"sst",
+				"Set Syntax: Plain Text"
+			],
+			[
+				"sste",
+				"Set Syntax: Textile"
+			],
+			[
+				"ssjs",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"js",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"SSSQ",
+				"Set Syntax: SQL"
+			],
+			[
+				"ssejs",
+				"Set Syntax: EJS (<% and %>)"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"shtml",
+				"Set Syntax: HTML"
+			],
+			[
+				"sshtml",
+				"Set Syntax: HTML"
+			],
+			[
+				"ssht",
+				"Set Syntax: HTML"
+			],
+			[
+				"ss html",
+				"Set Syntax: HTML"
+			],
+			[
+				"ssm",
+				"Set Syntax: MATLAB"
+			],
+			[
+				"gitdiff",
+				"Git: Diff Current File"
+			],
+			[
+				"ssmat",
+				"Set Syntax: MATLAB"
+			],
+			[
+				"ssma",
+				"Set Syntax: MATLAB"
+			],
+			[
+				"build",
+				"Build With: C++ Single File"
+			],
+			[
+				"run",
+				"Build With: C++ Single File - Run"
+			],
+			[
+				"git diff",
+				"Git: Diff Current File"
+			],
+			[
+				"c++ ",
+				"Build With: C++ Single File - Run"
+			],
+			[
+				"ssc+",
+				"Set Syntax: C++"
+			],
+			[
+				"sscp",
+				"Set Syntax: camlp4"
+			],
+			[
+				"ss java",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"co",
+				"Convert Case: Lower Case"
+			],
+			[
+				"conver",
+				"Convert Case: Swap Case"
+			],
+			[
+				"buil",
+				"Build With: C++ Single File"
+			],
+			[
+				"bui",
+				"Build: Cancel"
+			],
+			[
+				"ind",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"diff",
+				"Git: Diff Current File"
+			],
+			[
+				"gitg",
+				"GitGutter: Show Comparing Against"
+			],
+			[
+				"gitgu",
+				"GitGutter: Compare Against Commit"
+			],
+			[
+				"path",
+				"File: Copy Path From Project"
+			],
+			[
+				"filepa",
+				"File: Copy Path as URI"
+			],
+			[
+				"rename",
+				"File: Rename"
+			],
+			[
+				"git df",
+				"Git: Diff All Files"
+			],
+			[
+				"git bla",
+				"Git: Blame"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"pack re",
+				"Package Control: Remove Package"
+			],
+			[
+				"insa",
+				"Package Control: Install Package"
+			],
+			[
+				"ssjava",
+				"Set Syntax: Java"
+			],
+			[
+				"ss c++",
+				"Set Syntax: C++"
+			],
+			[
+				"pack in",
+				"Package Control: Install Package"
+			],
+			[
+				"pack insta",
+				"Package Control: Install Package"
+			],
+			[
+				"ss ruby",
+				"Set Syntax: Ruby"
+			],
+			[
+				"ss js",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"pack ",
+				"Package Control: Install Package"
+			],
+			[
+				"pack ins",
+				"Package Control: Install Package"
+			],
+			[
+				"pac in",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 538.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/Users/Canales/Workspace/Projects/Compiler/Codecraft",
+		"/Users/Canales/Workspace/Projects/Compiler/Codecraft/compiler",
+		"/Users/Canales/Workspace/Projects/Compiler/Codecraft/proposal"
+	],
+	"file_history":
+	[
+		"/Users/Canales/Workspace/Projects/Compiler/Codecraft/proposal/grammar.ebnf",
+		"/Users/Canales/Library/Application Support/Sublime Text 3/Packages/User/SideBarEnhancements/Open With/Side Bar.sublime-menu",
+		"/Users/Canales/.rbenv/versions/2.3.3/lib/ruby/gems/2.3.0/gems/thredded-0.9.4/app/views/thredded/shared/nav/_notification_preferences.html.erb",
+		"/Users/Canales/.rbenv/versions/2.3.3/lib/ruby/gems/2.3.0/gems/thredded-0.9.4/app/views/thredded/shared/_nav.html.erb",
+		"/Users/Canales/.rbenv/versions/2.3.3/lib/ruby/gems/2.3.0/gems/thredded-0.9.4/config/routes.rb",
+		"/Users/Canales/.rbenv/versions/2.3.3/lib/ruby/gems/2.3.0/gems/thredded-0.9.4/config/locales/es.yml",
+		"/Users/Canales/.rbenv/versions/2.3.3/lib/ruby/gems/2.3.0/gems/thredded-0.9.4/app/helpers/thredded/application_helper.rb",
+		"/Users/Canales/.rbenv/versions/2.3.3/lib/ruby/gems/2.3.0/gems/thredded-0.9.4/app/views/thredded/shared/_flash_messages.html.erb",
+		"/Users/Canales/.rbenv/versions/2.3.3/lib/ruby/gems/2.3.0/gems/thredded-0.9.4/README.md",
+		"/Users/Canales/Workspace/Projects/codersden/config/application.rb",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/layouts/messages.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/composer.json",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/User.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/layouts/app.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/admin/users/index.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/.env",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/vendor/notifications/email.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/laravel/framework/src/Illuminate/Auth/Notifications/ResetPassword.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/appzcoder/laravel-admin/src/Controllers/ProcessController.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/assets/js/app.js",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/lang/es.json",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/laravel/framework/src/Illuminate/Foundation/Auth/ResetsPasswords.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Notifications/AccountCreated.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/laravel/framework/src/Illuminate/Auth/Passwords/PasswordBroker.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/laravel/framework/src/Illuminate/Foundation/Auth/User.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/laravel/framework/src/Illuminate/Foundation/Auth/SendsPasswordResetEmails.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/auth/passwords/reset.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Http/Controllers/Auth/ResetPasswordController.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/config/auth.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/config/services.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/config/mail.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Mail/AccountCreated.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/HasRoles.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/laravel/framework/src/Illuminate/Notifications/Channels/MailChannel.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/routes/web.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/config/app.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/lang/es/validation.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/admin/users/show.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/database/migrations/2017_03_02_003650_allow_supervisor_null.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Http/Controllers/Admin/UsersController.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/admin/users/form.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/assets/sass/app.scss",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Http/Controllers/LegalCaseController.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/admin/users/create.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/laravel-admin/menus.json",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/lang/en/validation.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/storage/logs/laravel.log",
+		"/Users/Canales/Workspace/Projects/BufeTec/node_modules/core-js/modules/es6.math.log10.js",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/legal-case/form.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/database/migrations/2017_02_24_170124_add_lawyer_student_information_to_users.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/layouts/backend.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/public/css/app.css",
+		"/Users/Canales/Workspace/Projects/BufeTec/public/js/app.js",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/assets/js/components/Example.vue",
+		"/Users/Canales/Workspace/Projects/BufeTec/package.json",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/admin/users/edit.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/node_modules/yargs/lib/validation.js",
+		"/Users/Canales/Workspace/Projects/BufeTec/node_modules/macaddress/gulpfile.js",
+		"/Users/Canales/Downloads/grammar.ebnf",
+		"/Users/Canales/Workspace/Projects/Compiler/Codecraft/README.md",
+		"/Users/Canales/Workspace/Projects/Compiler/Codecraft/.gitignore",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/admin/sidebar.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/admin/dashboard.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/legal-case/edit.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/legal-case/index.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/appzcoder/laravel-admin/src/LaravelAdminServiceProvider.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/BufeTec.sublime-project",
+		"/Users/Canales/Workspace/Projects/BufeTec/webpack.mix.js",
+		"/Users/Canales/Workspace/Projects/BufeTec/node_modules/laravel-mix/setup/webpack.config.js",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Providers/MacroServiceProvider",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Http/Controllers/Admin/AdminController.php",
+		"/Users/Canales/.zshrc",
+		"/Users/Canales/Workspace/Projects/BufeTec/config/laravel-translation-manager.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/.gitignore",
+		"/Users/Canales/Workspace/Projects/BufeTec/config/translation-manager.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/barryvdh/laravel-translation-manager/src/ManagerServiceProvider.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/barryvdh/laravel-debugbar/src/ServiceProvider.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/barryvdh/laravel-translation-manager/config/translation-manager.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/composer.lock",
+		"/Users/Canales/Workspace/Projects/BufeTec/database/migrations/2017_02_24_014521_create_translations_table.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/monolog/monolog/tests/Monolog/Handler/Fixtures/.gitkeep",
+		"/Users/Canales/Workspace/Projects/BufeTec/bootstrap/cache/config.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/config/translator.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/welcome.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Helpers/helper.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/laravel/framework/src/Illuminate/Support/Facades/Password.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/lang/es/auth.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Http/Middleware/RedirectIfAuthenticated.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Http/Controllers/Auth/RegisterController.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Http/Controllers/Auth/LoginController.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/appzcoder/laravel-admin/publish/resources/views/admin/sidebar.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Http/Controllers/StudentController.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/database/seeds/DatabaseSeeder.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/routes/channels.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/bufetec.sublime-project",
+		"/Users/Canales/Library/Application Support/Sublime Text 3/Packages/JSON Reindent/JSONReindent.sublime-settings",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Http/Kernel.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/laravel/framework/src/Illuminate/Auth/Console/stubs/make/controllers/HomeController.stub",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/laravel/framework/src/Illuminate/Database/Seeder.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/appzcoder/laravel-admin/publish/Controllers/Admin/UsersController.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/students/index.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/readme.md",
+		"/Users/Canales/Workspace/Projects/BufeTec/database/seeds/RoleSeeder.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/database/migrations/2017_02_20_212540_add_supervisor_id_to_user.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/database/seeds/PermissionSeeder.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/database/migrations/2017_02_19_002544_create_legal_cases_table.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/LegalCase.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/database/migrations/2017_02_20_211755_add_case_name_to_legal_case.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Permission.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Providers/AuthServiceProvider.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/laravel/framework/src/Illuminate/Foundation/Validation/ValidatesRequests.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/auth/login.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/database/migrations/2017_02_20_182603_change_legal_case_datetime_to_date.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Providers/AppServiceProvider.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/migration-script-generator.json",
+		"/Users/Canales/Workspace/Projects/BufeTec/resources/views/auth/register.blade.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/config/amranidev/config.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Http/Controllers/CaseController.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/app/Case.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/foo.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/symfony/routing/RouteCollection.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/symfony/routing/Route.php",
+		"/Users/Canales/Workspace/Projects/BufeTec/vendor/league/flysystem/src/Config.php",
+		"/etc/hostconfig",
+		"/Users/Canales/.gitconfig",
+		"/Users/Canales/Workspace/Projects/MyLittleDuck-2017/lex-yacc-examples.tar.gz",
+		"/Users/Canales/.valet/dnsmasq.conf",
+		"/etc/resolv.conf"
+	],
+	"find":
+	{
+		"height": 38.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"",
+			"web_server/",
+			"",
+			"/",
+			"server/",
+			"master_server/",
+			"server/",
+			"master_server/",
+			"server/",
+			"master_server/",
+			"server/",
+			"master_server/",
+			"server/",
+			"",
+			"server/",
+			"server",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"function_Call",
+			"pyc",
+			".out",
+			"nav.all_messageboards",
+			"Todos",
+			"Locale",
+			"notification_prefere",
+			"_notification_prefere",
+			"nav.settings",
+			"Ajuste de ",
+			"recent_activity",
+			"thredded-alert-success-background",
+			"thredded--alert",
+			"brand",
+			"posts.form.create_btn",
+			"form.create_btn",
+			"Submit Rep",
+			"Sign out",
+			"Thredded::ApplicationController.render partial: 'thredded/users/posts",
+			"\"codersden\"",
+			"\"Codersden\"",
+			"Codersden",
+			"page_title",
+			"admin@codersden.com",
+			"BOOLEAN_",
+			"parameters_definition",
+			"NAME",
+			"lexer",
+			"names",
+			"NAME",
+			"PLUS",
+			",",
+			"laravelAdminMenus",
+			"',",
+			"updateed",
+			"sendPasswordResetNotification",
+			"use Illuminate\\Contracts\\Auth\\CanResetPassword",
+			"TokenRepositoryInterface",
+			"broker(",
+			"broker",
+			"reset(",
+			"reset",
+			"credentials",
+			"resetPassword",
+			"validationErrorMessages",
+			"resetPassword",
+			"password_resets",
+			"You are receiving this email because",
+			"String ",
+			"password.request",
+			"MailChannel::",
+			"toMail(",
+			"If you’re having trouble clic",
+			"\nIf you’re having trouble clic",
+			"If you did not request a password",
+			"You are receiving this email because we received a password reset request for your account.",
+			"Mail::to",
+			"SendsPasswordResetEmails",
+			"MAIL_DRIVER",
+			"mail",
+			"students",
+			"each",
+			"students",
+			"supervisor_id",
+			"select",
+			"user",
+			"User",
+			"Uer",
+			"firstOrFail",
+			"user",
+			"__('Logout')",
+			"__('",
+			"user",
+			"datepicker",
+			"validate(",
+			"bcrypt(",
+			"ready!",
+			"#app",
+			"phone",
+			",",
+			"validator",
+			"name",
+			"password",
+			"name",
+			"Dashboard",
+			"Role",
+			"bold",
+			"Created by ",
+			"keyword",
+			"debug($menus)",
+			"debug($me",
+			"debug",
+			"LegalCase",
+			"legalcase",
+			"<td>",
+			"<th>",
+			"->roles",
+			"radio-label",
+			"form-control",
+			"'class' => '', ",
+			"class=\"radio\"",
+			"form-control",
+			"radio-inline",
+			"control-label",
+			"radio inline ",
+			"control-label",
+			"!!",
+			"ltm-admin-translations",
+			"UserPrivilegeMapperServiceProvider",
+			"translation",
+			"\t'exclude_groups' => array(),\n",
+			".gitkeep",
+			"Waavi",
+			"Waavi\\Translation\\TranslationServiceProvider",
+			"Olvidaste",
+			"olvidaste",
+			"validation.",
+			"passwords.password",
+			"contraseña debe contener al menos 6 caracteres.",
+			"'validation.",
+			"__('validation.",
+			"__('auth.",
+			"Laravel",
+			"/home",
+			"supervisor",
+			"menu",
+			"roles",
+			"laravelAdminMenus"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"character_type",
+			"ModeratorEnabled",
+			"CharacterType",
+			"characterType",
+			" ",
+			"."
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 4,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "parser.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5308,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1499,
+								1499
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										1499,
+										1500
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/square_bracket.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										1497,
+										1498
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai (SL).tmTheme",
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 587.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "scanner.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1593,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								927,
+								927
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+									"1":
+									[
+										929,
+										930
+									]
+								},
+								"icon":
+								{
+									"1":
+									[
+										"Packages/BracketHighlighter/icons/single_quote.png",
+										"brackethighlighter.default"
+									]
+								},
+								"open":
+								{
+									"1":
+									[
+										927,
+										928
+									]
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai (SL).tmTheme",
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 390.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Users/Canales/Workspace/Projects/Compiler/Codecraft/.gitignore",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1627,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1615,
+								1615
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai (SL).tmTheme",
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Theme - Afterglow/Prefs/Langs/Git.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/Users/Canales/Workspace/Projects/Compiler/Codecraft/proposal/grammar.ebnf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1148,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								88,
+								88
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai (SL).tmTheme",
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "SymbolTable.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11,
+								11
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai (SL).tmTheme",
+							"git_gutter_enabled": true,
+							"open_with_edit": true,
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/Users/Canales/Workspace/Projects/Compiler/Codecraft/README.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1388,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								621,
+								621
+							]
+						],
+						"settings":
+						{
+							"bracket_highlighter.busy": false,
+							"bracket_highlighter.locations":
+							{
+								"close":
+								{
+								},
+								"icon":
+								{
+								},
+								"open":
+								{
+								},
+								"unmatched":
+								{
+								}
+							},
+							"bracket_highlighter.regions":
+							[
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_round_content",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_default_content",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_square_content",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_single_quote_content",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_double_quote_content",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_regex_content",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_unmatched_content",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_curly_content",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_angle_content",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_tag_content",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_c_define_content"
+							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai (SL).tmTheme",
+							"git_gutter_enabled": true,
+							"syntax": "Packages/Markdown Extended/Syntaxes/Markdown Extended.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 223.0
+	},
+	"output.find_results":
+	{
+		"height": 165.0
+	},
+	"output.git":
+	{
+		"height": 110.0
+	},
+	"output.godoc-output":
+	{
+		"height": 98.0
+	},
+	"output.gotools_syntax_errors":
+	{
+		"height": 98.0
+	},
+	"pinned_build_system": "",
+	"project": "/Users/Canales/Workspace/Projects/Compiler/Codecraft/codecraft.sublime-project",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"git",
+				".gitignore"
+			],
+			[
+				"es",
+				"config/locales/es.yml"
+			],
+			[
+				"read",
+				"README.md"
+			],
+			[
+				"route",
+				"config/routes.rb"
+			],
+			[
+				"en.",
+				"config/locales/en.yml"
+			],
+			[
+				"legale",
+				"app/Http/Controllers/LegalCaseController.php"
+			],
+			[
+				"menu",
+				"resources/laravel-admin/menus.json"
+			],
+			[
+				"menus",
+				"resources/laravel-admin/menus.json"
+			],
+			[
+				"user",
+				"app/User.php"
+			],
+			[
+				"legalcase",
+				"app/Http/Controllers/LegalCaseController.php"
+			],
+			[
+				"compose",
+				"composer.json"
+			],
+			[
+				"legal",
+				"app/LegalCase.php"
+			],
+			[
+				".env",
+				".env"
+			],
+			[
+				".en",
+				".env"
+			],
+			[
+				"appjs",
+				"resources/assets/js/app.js"
+			],
+			[
+				"processcon",
+				"vendor/appzcoder/laravel-admin/src/Controllers/ProcessController.php"
+			],
+			[
+				"compsoer",
+				"composer.json"
+			],
+			[
+				"userindex",
+				"resources/views/admin/users/index.blade.php"
+			],
+			[
+				"reset",
+				"vendor/laravel/framework/src/Illuminate/Foundation/Auth/ResetsPasswords.php"
+			],
+			[
+				"password",
+				"vendor/laravel/framework/src/Illuminate/Foundation/Auth/SendsPasswordResetEmails.php"
+			],
+			[
+				"viewreset",
+				"resources/views/auth/passwords/reset.blade.php"
+			],
+			[
+				"resetspass",
+				"vendor/laravel/framework/src/Illuminate/Foundation/Auth/ResetsPasswords.php"
+			],
+			[
+				"configauth",
+				"config/auth.php"
+			],
+			[
+				"es.js",
+				"resources/lang/es.json"
+			],
+			[
+				"passwordreset",
+				"vendor/laravel/framework/src/Illuminate/Foundation/Auth/SendsPasswordResetEmails.php"
+			],
+			[
+				"",
+				"app/Http/Controllers/Admin/UsersController.php"
+			],
+			[
+				"account",
+				"app/Notifications/AccountCreated.php"
+			],
+			[
+				"forgot",
+				"app/Http/Controllers/Auth/ForgotPasswordController.php"
+			],
+			[
+				"es.",
+				"resources/lang/es.json"
+			],
+			[
+				"web",
+				"routes/web.php"
+			],
+			[
+				"services",
+				"config/services.php"
+			],
+			[
+				"configapp",
+				"config/app.php"
+			],
+			[
+				"mail",
+				"config/mail.php"
+			],
+			[
+				"usercontr",
+				"app/Http/Controllers/Admin/UsersController.php"
+			],
+			[
+				"allowsuper",
+				"database/migrations/2017_03_02_003650_allow_supervisor_null.php"
+			],
+			[
+				"usershow",
+				"resources/views/admin/users/show.blade.php"
+			],
+			[
+				"resappcss",
+				"resources/assets/sass/app.scss"
+			],
+			[
+				"userind",
+				"resources/views/admin/users/index.blade.php"
+			],
+			[
+				"usercon",
+				"app/Http/Controllers/Admin/UsersController.php"
+			],
+			[
+				"esvalidation",
+				"resources/lang/es/validation.php"
+			],
+			[
+				"validation",
+				"resources/lang/en/validation.php"
+			],
+			[
+				"usercreate",
+				"resources/views/admin/users/create.blade.php"
+			],
+			[
+				"lara",
+				"storage/logs/laravel.log"
+			],
+			[
+				".log",
+				"storage/logs/laravel.log"
+			],
+			[
+				"legalform",
+				"resources/views/legal-case/form.blade.php"
+			],
+			[
+				"userform",
+				"resources/views/admin/users/form.blade.php"
+			],
+			[
+				"resoapp",
+				"resources/assets/sass/app.scss"
+			],
+			[
+				"app.css",
+				"resources/assets/sass/app.scss"
+			],
+			[
+				"app.js",
+				"public/js/app.js"
+			],
+			[
+				"packa",
+				"package.json"
+			],
+			[
+				"example.v",
+				"resources/assets/js/components/Example.vue"
+			],
+			[
+				"gulp",
+				"node_modules/macaddress/gulpfile.js"
+			],
+			[
+				"es.j",
+				"resources/lang/es.json"
+			],
+			[
+				"es.json",
+				"resources/lang/es.json"
+			],
+			[
+				"caseform",
+				"resources/views/legal-case/form.blade.php"
+			],
+			[
+				"useredit",
+				"resources/views/admin/users/edit.blade.php"
+			],
+			[
+				"usercont",
+				"app/Http/Controllers/Admin/UsersController.php"
+			],
+			[
+				"side",
+				"resources/views/admin/sidebar.blade.php"
+			],
+			[
+				"hasrop",
+				"app/HasRoles.php"
+			],
+			[
+				"editblade",
+				"resources/views/legal-case/edit.blade.php"
+			],
+			[
+				"formblade",
+				"resources/views/legal-case/form.blade.php"
+			],
+			[
+				"usersinde",
+				"resources/views/admin/users/index.blade.php"
+			],
+			[
+				"legalindex",
+				"resources/views/legal-case/index.blade.php"
+			],
+			[
+				"app.s",
+				"resources/assets/sass/app.scss"
+			],
+			[
+				"webp",
+				"node_modules/laravel-mix/setup/webpack.config.js"
+			],
+			[
+				"webpack.con",
+				"node_modules/laravel-mix/setup/webpack.config.js"
+			],
+			[
+				"admin",
+				"app/Http/Controllers/Admin/AdminController.php"
+			],
+			[
+				"translationmana",
+				"config/laravel-translation-manager.php"
+			],
+			[
+				"translation",
+				"config/translation-manager.php"
+			],
+			[
+				".git",
+				".gitignore"
+			],
+			[
+				"serviceprovider",
+				"vendor/barryvdh/laravel-debugbar/src/ServiceProvider.php"
+			],
+			[
+				"app",
+				"config/app.php"
+			],
+			[
+				"manager",
+				"vendor/barryvdh/laravel-translation-manager/src/ManagerServiceProvider.php"
+			],
+			[
+				"composer",
+				"composer.json"
+			],
+			[
+				".gitke",
+				"vendor/monolog/monolog/tests/Monolog/Handler/Fixtures/.gitkeep"
+			],
+			[
+				"serviceprov",
+				"vendor/barryvdh/laravel-debugbar/src/ServiceProvider.php"
+			],
+			[
+				"giti",
+				".gitignore"
+			],
+			[
+				"compo",
+				"composer.json"
+			],
+			[
+				"transla",
+				"config/translator.php"
+			],
+			[
+				"trans",
+				"config/translation-manager.php"
+			],
+			[
+				"managers",
+				"vendor/barryvdh/laravel-translation-manager/src/ManagerServiceProvider.php"
+			],
+			[
+				"regist",
+				"resources/views/auth/register.blade.php"
+			],
+			[
+				"login",
+				"resources/views/auth/login.blade.php"
+			],
+			[
+				"welcome",
+				"resources/views/welcome.blade.php"
+			],
+			[
+				"menu.",
+				"resources/laravel-admin/menus.json"
+			],
+			[
+				"sidebar",
+				"resources/views/admin/sidebar.blade.php"
+			],
+			[
+				"database",
+				"database/seeds/DatabaseSeeder.php"
+			],
+			[
+				"sideb",
+				"resources/views/admin/sidebar.blade.php"
+			],
+			[
+				"adminserv",
+				"vendor/appzcoder/laravel-admin/src/LaravelAdminServiceProvider.php"
+			],
+			[
+				"processcontr",
+				"vendor/appzcoder/laravel-admin/src/Controllers/ProcessController.php"
+			],
+			[
+				"admi",
+				"app/Http/Controllers/Admin/AdminController.php"
+			],
+			[
+				"handler",
+				"app/Exceptions/Handler.php"
+			],
+			[
+				"sublime-",
+				"bufetec.sublime-project"
+			],
+			[
+				"kernel",
+				"app/Http/Kernel.php"
+			],
+			[
+				"home",
+				"app/Http/Controllers/HomeController.php"
+			],
+			[
+				"adminc",
+				"app/Http/Controllers/Admin/AdminController.php"
+			],
+			[
+				"seeder",
+				"database/seeds/DatabaseSeeder.php"
+			],
+			[
+				"student",
+				"app/Http/Controllers/StudentController.php"
+			],
+			[
+				"addlawy",
+				"database/migrations/2017_02_20_212540_add_lawyer_id_to_user.php"
+			],
+			[
+				"add_case_name",
+				"database/migrations/2017_02_20_211755_add_case_name_to_legal_case.php"
+			],
+			[
+				"adminsidebar",
+				"resources/views/admin/sidebar.blade.php"
+			],
+			[
+				"permiss",
+				"app/Permission.php"
+			],
+			[
+				"validates",
+				"vendor/laravel/framework/src/Illuminate/Foundation/Validation/ValidatesRequests.php"
+			],
+			[
+				"roles",
+				"database/seeds/RoleSeeder.php"
+			],
+			[
+				"routeweb",
+				"routes/web.php"
+			],
+			[
+				"appser",
+				"app/Providers/AppServiceProvider.php"
+			],
+			[
+				"register",
+				"resources/views/auth/register.blade.php"
+			],
+			[
+				".e",
+				".env"
+			],
+			[
+				"com",
+				"composer.json"
+			],
+			[
+				"service",
+				"vendor/barryvdh/laravel-debugbar/src/ServiceProvider.php"
+			],
+			[
+				"appblade",
+				"resources/views/layouts/app.blade.php"
+			],
+			[
+				"config",
+				"config/amranidev/config.php"
+			],
+			[
+				"appcase",
+				"app/Case.php"
+			],
+			[
+				"case",
+				"app/Http/Controllers/CaseController.php"
+			],
+			[
+				"routecol",
+				"vendor/symfony/routing/RouteCollection.php"
+			],
+			[
+				"app.",
+				"config/app.php"
+			],
+			[
+				"casecon",
+				"app/Http/Controllers/CaseController.php"
+			],
+			[
+				"config/app",
+				"config/app.php"
+			],
+			[
+				"welc",
+				"resources/views/welcome.blade.php"
+			],
+			[
+				"gitig",
+				".gitignore"
+			],
+			[
+				"ann",
+				"app/assets/javascripts/announcements.json"
+			],
+			[
+				"chara",
+				"app/controllers/characters_controller.rb"
+			],
+			[
+				"show",
+				"app/views/characters/show.html.erb"
+			],
+			[
+				"characters.html",
+				"app/views/characters/characters.html.erb"
+			],
+			[
+				"application",
+				"app/views/layouts/application.html.erb"
+			],
+			[
+				"applicationcon",
+				"app/controllers/application_controller.rb"
+			],
+			[
+				"applicaionhtml",
+				"app/views/layouts/application.html.erb"
+			],
+			[
+				"applicati",
+				"app/assets/javascripts/application.js"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 296.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
