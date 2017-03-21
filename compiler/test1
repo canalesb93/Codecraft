@@ -1,0 +1,8 @@
+craft{
+	var int x = 1
+	var int y = 2
+	var float z = 3.0
+	var char c = 'z'
+	var string s = hola
+	var int a = 1, b = 2, c = 3
+}
