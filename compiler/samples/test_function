@@ -1,0 +1,7 @@
+craft { 
+  var int test1, test2
+  var bool test3
+  function void sample(int X, int Y) {  
+    var bool test4
+  } 
+}

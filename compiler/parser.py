@@ -5,19 +5,21 @@
 # -----------------------------------------------------------------------------
 
 import sys
-import ply.lex as lex
-import scanner
+from libraries.ply import lex
+from libraries.ply import yacc
 
 # Classes
-from symbols import SymbolTable
+
+import scanner
+from enumerators import *
+from classes import *
 
 if sys.version_info[0] >= 3:
     raw_input = input
 
-# Build the lexer
+# =============== Lexer SETUP ===============
 tokens = scanner.tokens
 lex.lex(module=scanner)
-
 
 precedence = (
     ('left', 'AND', 'OR'),
@@ -27,97 +29,139 @@ precedence = (
     ('right', 'UMINUS'),
 )
 
-# dictionary of names
-names = {}
+# =============== Lexer END ===============
 
-# Program Data
-global_symbol_table = SymbolTable()
-current_scope = global_symbol_table
+# =============== Global START ===============
 
-# ====== GRAMMAR ======
+'''
+Prepend "__" to all global variables for easy undestanding.
+Remember to use "global" when modifying these variables in 
+a different scope.
+''' 
+
+# Symbol Tables
+__varsGlobal = SymbolTable()
+__varsLocal = SymbolTable()
+__funcsGlobal = FunctionTable()
+
+# Temporary Var/Func data
+__tFuncArguments = []
+__tVarType = None
+__tFuncType = None
+__tVarName = None
+__tFuncName = None
+
+# Scope
+__scope = Scope.GLOBAL
+
+def setLocalScope():
+  global __scope 
+  __scope = Scope.LOCAL
+
+def setGlobalScope():
+  global __scope 
+  __scope = Scope.GLOBAL
+
+# =============== Global END ===============
+
+# =============== Grammar START ===============
 
 def p_program(p):
-    'program : CRAFT "{" vars block functions "}"'
+    'program : CRAFT "{" block functions "}"'
     pass
 
+def p_type(p):
+    '''type : VOID
+            | INT
+            | FLOAT
+            | CHAR
+            | BOOL
+            | STRING'''
+    if(p[1] == 'void'):
+      p[0] = Type.VOID
+    elif(p[1] == 'int'):
+      p[0] = Type.INT
+    elif(p[1] == 'float'):
+      p[0] = Type.FLOAT
+    elif(p[1] == 'char'):
+      p[0] = Type.CHAR
+    elif(p[1] == 'bool'):
+      p[0] = Type.BOOL
+    elif(p[1] == 'string'):
+      p[0] = Type.STRING
+
+# ===== VARIABLES =====
+
 def p_vars(p):
-    '''vars : var vars
-            | empty'''
-    pass
+    '''vars : VAR type saveVariableType var'''
+
+def p_var(p):
+    '''var : ID addVariable var_array var_assignment var_repeater
+           '''
+
+def p_var_repeater(p):
+    '''var_repeater : "," ID addVariable var_array var_assignment var_repeater
+                    | empty
+                    '''
+
+def p_var_assignment(p):
+    '''var_assignment : "=" expression
+                      | empty
+                      '''
+
+def p_var_array(p):
+    '''var_array : "[" NUMBER "]"
+                 | empty'''
 
 def p_functions(p):
     '''functions : function functions
                  | empty'''
     pass
 
-def p_var(p):
-    '''var : VAR type assignment
-           | VAR type "[" NUMBER "]" assignment_array
-           '''
-    if p[3] != "[":
-        p[3].type = p[2]
-    print p[3]
+# def p_assignment_array(p):
+#     '''assignment_array : ID "=" "{" parameters "}" ',' assignment
+#                         | ID "=" "{" parameters "}" 
+#                         | ID
+#                         '''
+#     pass
 
-def p_type(p):
-    '''type : INT
-            | FLOAT
-            | CHAR
-            | BOOL
-            | STRING'''
-    if p[1] == "int":
-        p[0] = 0
-    elif p[1] == "float":
-        p[0] = 1
-    elif p[1] == "char":
-        p[0] = 2
-    elif p[1] == "bool":
-        p[0] = 3
-    elif p[1] == "string":
-        p[0] = 4
-    pass
+def p_var_free_assignment(p):
+    '''var_free_assignment : ID var_assignment'''
 
-def p_assignment(p):
-    '''assignment : ID "=" expression ',' assignment
-                  | ID "=" expression 
-                  | ID
-                  '''
-    var = current_scope.insert(p[1])
-    if len(p) >= 4:
-        var.value = p[3]
-    p[0] = var
-    pass
-
-def p_assignment_array(p):
-    '''assignment_array : ID "=" "{" parameters "}" ',' assignment
-                        | ID "=" "{" parameters "}" 
-                        | ID
-                        '''
-    print(p[4])
-    pass
+# ===== FUNCTIONS =====
 
 def p_function(p):
-    ''' function : FUNCTION type ID "(" ")" "{" vars block "}"
-                 | FUNCTION type ID "(" parameters_definition ")" "{" vars block "}"
-                 | FUNCTION VOID ID "(" ")" "{" vars block "}"
-                 | FUNCTION VOID ID "(" parameters_definition ")" "{" vars block "}"'''
+    ''' function : FUNCTION setLocalScope type saveFunctionType ID saveFunctionName "(" parameters_definition ")" "{" block "}" setGlobalScope
+                 ''' 
+    global __tFuncArguments
+    addFunction(__tFuncName, __tFuncType, __tFuncArguments)
+    print('Local Variables: %s' % __varsLocal)
+    __varsLocal.clear()
+    __tFuncArguments = []
+
+def p_parameters_definition(p):
+    '''parameters_definition : type saveVariableType ID addArgument parameters_definition1
+                             | empty''' 
+    pass
+
+def p_parameters_definition1(p):
+    '''parameters_definition1 : "," type saveVariableType ID addArgument parameters_definition1
+                              | empty'''
     pass
 
 def p_parameters(p):
-    '''parameters : expression
-                  | expression "," parameters'''
-    if len(p) == 4:
-        p[3].insert(0, p[1])
-        p[0] = p[3]
-    elif len(p) == 2:
-        p[0] = [p[1]]
+    '''parameters : expression parameters1
+                  | empty'''
+    pass
 
-def p_parameters_definition(p):
-    '''parameters_definition : type
-                             | type "," parameters_definition'''
+def p_parameters1(p):
+    '''parameters1 : "," expression parameters1
+                   | empty'''
     pass
 
 def p_block(p):
-    '''block : assignment block
+    '''block : vars block
+             | var_free_assignment block
              | if block
              | cycle block
              | return block
@@ -151,15 +195,6 @@ def p_function_call(p):
                      | ID "(" parameters ")"'''
     pass
 
-# def p_statement_assign(p):
-#     'statement : ID "=" expression'
-#     names[p[1]] = p[3]
-
-
-# def p_statement_expr(p):
-#     'statement : expression'
-#     print(p[1])
-
 def p_expression_binop(p):
     '''expression : expression '+' expression
                   | expression '-' expression
@@ -173,30 +208,7 @@ def p_expression_binop(p):
                   | expression GREATER_EQ expression
                   | expression AND expression
                   | expression OR expression'''
-    if p[2] == '+':
-        p[0] = p[1] + p[3]
-    elif p[2] == '-':
-        p[0] = p[1] - p[3]
-    elif p[2] == '*':
-        p[0] = p[1] * p[3]
-    elif p[2] == '/':
-        p[0] = p[1] / p[3]
-    elif p[2] == '%':
-        p[0] = p[1] % p[3]
-    elif p[2] == '>':
-        p[0] = p[1] > p[3]
-    elif p[2] == '<':
-        p[0] = p[1] < p[3]
-    elif p[2] == '==':
-        p[0] = p[1] == p[3]
-    elif p[2] == '<=':
-        p[0] = p[1] <= p[3]
-    elif p[2] == '>=':
-        p[0] = p[1] >= p[3]
-    elif p[2] == 'and':
-        p[0] = p[1] and p[3]
-    elif p[2] == 'or':
-        p[0] = p[1] or p[3]
+    pass
 
 def p_expression_uminus(p):
     "expression : '-' expression %prec UMINUS"
@@ -242,14 +254,102 @@ def p_error(p):
     else:
         print("Syntax error at EOF")
 
-import ply.yacc as yacc
+# =============== Grammar Actions START ===============
+
+def p_setLocalScope(p):
+  'setLocalScope :'
+  setLocalScope()
+
+def p_setGlobalScope(p):
+  'setGlobalScope :'
+  setGlobalScope()
+
+def p_saveFunctionType(p):
+  'saveFunctionType :'
+  global __tFuncType
+  __tFuncType = p[-1]
+
+def p_saveFunctionName(p):
+  'saveFunctionName :'
+  global __tFuncName
+  __tFuncName = p[-1]
+
+def p_addArgument(p):
+  'addArgument :'
+  global __tVarName
+  global __tFuncArguments
+  __tVarName = p[-1]
+  addVariable(__tVarName, __tVarType)
+  __tFuncArguments.append(__varsLocal.lookup(__tVarName))
+
+def p_saveVariableType(p):
+  'saveVariableType :'
+  global __tVarType
+  __tVarType = p[-1]
+
+def p_addVariable(p):
+  'addVariable :'
+  global __tVarName
+  __tVarName = p[-1]
+  varName = __tVarName
+  addVariable(varName, __tVarType)
+
+# =============== Grammar Actions END ===============
+
+def addVariable(name, varType):
+  global __varsGlobal
+  global __varsLocal
+  if(varType == Type.VOID):
+    print("Variable error : can't be of VOID type")
+    return
+  
+  variable = Var(name, varType)
+  if __scope == Scope.GLOBAL:
+    # Construct variable globally
+    __varsGlobal.insert(variable)
+  elif __scope == Scope.LOCAL:
+    # Construct variable locally
+    __varsLocal.insert(variable)
+
+def addFunction(functionName, functionType, parameters):
+  global __funcsGlobal
+  function = Function(functionName, functionType, parameters)
+  __funcsGlobal.insert(function)
+
+
+# =============== Execution ===============
+
 yacc.yacc()
 
-while 1:
+def summary():
+  print("\nSummary:")
+  print("G-VARS:", __varsGlobal.vars)
+  print("L-VARS:", __varsLocal.vars)
+  print("G-FUNCS:", __funcsGlobal.functions)
+
+if __name__ == '__main__':
+  if (len(sys.argv) > 1):
+    file = sys.argv[1]
+    # Open file
     try:
-        s = raw_input('craft > ')
+      f = open(file, 'r')
+      data = f.read()
+      f.close()
+      # Parse the data
+      if (yacc.parse(data, tracking = True) == 'OK'):
+        print(dirProc);
+      summary()
     except EOFError:
+      print(EOFError)
+  else:
+    while 1:
+      try:
+        s = raw_input('craft > ')
+        s = "craft { " + s + "}"
+      except EOFError:
         break
-    if not s:
+      if not s:
         continue
-    yacc.parse(s)
+      yacc.parse(s)
+      summary()
+
