@@ -8,9 +8,9 @@ class FunctionTable:
 
     def insert(self, function):
         if self.lookup(function.name) != 0:
-            print "function error : ", name, "is already declared"
+            print "Function error : ", name, "is already declared"
         else:
-            print(function)
+            # print(function)
             self.functions[function.name] = function
             return self.functions[function.name]
         return 0
@@ -24,3 +24,9 @@ class FunctionTable:
 
     def clear(self):
         self.functions.clear()
+
+    def __str__(self):
+        description = ''
+        for name, function in self.functions.iteritems():
+            description = description + '\n%s: ()' % (function.name)
+        return description

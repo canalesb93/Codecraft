@@ -11,10 +11,6 @@ class Function:
         self.functionType = functionType
         self.parameters = parameters
 
-    def __del__(self):
-      class_name = self.__class__.__name__
-      print class_name, self.name, "destroyed"
-
     def clear(self):
         self.id = -1
         self.name = ""

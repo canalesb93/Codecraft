@@ -10,10 +10,7 @@ class Var:
         self.name = name
         self.variableType = variableType
         self.value = None
-
-    def __del__(self):
-      class_name = self.__class__.__name__
-      print class_name, self.name, "destroyed"
+        self.isArray = False
 
     def clear(self):
         self.id = -1
@@ -21,5 +18,8 @@ class Var:
         self.variableType = 0
         self.value = None
 
+    def setIsArray(self, isArray):
+        self.isArray = isArray
+
     def __str__(self):
-        return 'Variable: (%s, %s)' % (self.name, self.variableType)
+        return 'Variable: (%s, %s, %r)' % (self.name, self.variableType, self.isArray)

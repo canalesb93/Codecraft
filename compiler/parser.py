@@ -50,6 +50,7 @@ __tVarType = None
 __tFuncType = None
 __tVarName = None
 __tFuncName = None
+__tVarIsArray = False
 
 # Scope
 __scope = Scope.GLOBAL
@@ -110,7 +111,7 @@ def p_var_assignment(p):
                       '''
 
 def p_var_array(p):
-    '''var_array : "[" NUMBER "]"
+    '''var_array : "[" NUMBER "]" setTypeAsArray
                  | empty'''
 
 def p_functions(p):
@@ -135,7 +136,7 @@ def p_function(p):
                  ''' 
     global __tFuncArguments
     addFunction(__tFuncName, __tFuncType, __tFuncArguments)
-    print('Local Variables: %s' % __varsLocal)
+    # print('Local Variables: %s' % __varsLocal)
     __varsLocal.clear()
     __tFuncArguments = []
 
@@ -294,6 +295,10 @@ def p_addVariable(p):
   varName = __tVarName
   addVariable(varName, __tVarType)
 
+def p_setTypeAsArray(p):
+  'setTypeAsArray :'
+  setTypeAsArray()
+
 # =============== Grammar Actions END ===============
 
 def addVariable(name, varType):
@@ -316,16 +321,25 @@ def addFunction(functionName, functionType, parameters):
   function = Function(functionName, functionType, parameters)
   __funcsGlobal.insert(function)
 
+def setTypeAsArray():
+  if __scope == Scope.GLOBAL:
+    global __varsGlobal
+    variable = __varsGlobal.lookup(__tVarName)
+    variable.setIsArray(True)
+  elif __scope == Scope.LOCAL:
+    global __varsLocal
+    variable = __varsLocal.lookup(__tVarName)
+    variable.setIsArray(True)
 
 # =============== Execution ===============
 
 yacc.yacc()
 
 def summary():
-  print("\nSummary:")
-  print("G-VARS:", __varsGlobal.vars)
-  print("L-VARS:", __varsLocal.vars)
-  print("G-FUNCS:", __funcsGlobal.functions)
+  print "\nSummary:"
+  print "G-VARS:", __varsGlobal
+  print "L-VARS:", __varsLocal
+  print "G-FUNCS:", __funcsGlobal
 
 if __name__ == '__main__':
   if (len(sys.argv) > 1):

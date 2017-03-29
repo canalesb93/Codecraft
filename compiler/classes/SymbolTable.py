@@ -10,7 +10,7 @@ class SymbolTable:
         if self.lookup(variable.name) != 0:
             print "Variable error : ", variable.name, "is already declared"
         else:
-            print(variable)
+            # print(variable)
             self.vars[variable.name] = variable
             return self.vars[variable.name]
         return 0
@@ -24,3 +24,9 @@ class SymbolTable:
 
     def clear(self):
         self.vars.clear()
+
+    def __str__(self):
+        description = ''
+        for name, variable in self.vars.iteritems():
+            description = description + '\n%s: (%s, %r)' % (variable.name, variable.variableType, variable.isArray)
+        return description
