@@ -1,0 +1,7 @@
+craft {
+  var int A = 1, B = 10
+
+  while (A < B) {
+    A = A + 1
+  }
+}

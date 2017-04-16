@@ -182,16 +182,13 @@ def p_block(p):
 def p_if(p):
     '''if : IF "(" super_expression ")" ifConditional "{" block "}" endIfConditional
           | IF "(" super_expression ")" ifConditional "{" block "}" else'''
-    pass
 
 def p_else(p):
     '''else : ELSE elseConditional if
             | ELSE elseConditional "{" block "}" endIfConditional'''
-    pass
 
 def p_cycle(p):
-    'cycle : WHILE "(" super_expression ")" "{" block "}"'
-    pass
+    'cycle : WHILE startLoop "(" super_expression ")" loopConditional "{" block "}" endLoop'
 
 def p_return(p):
     '''return : RETURN
@@ -432,6 +429,24 @@ def p_elseConditional(p):
   print "__ Update ", lastIfPos, " result to ", __quadruples.size()
   # Save goto position
   __jumpStack.push(__quadruples.size()-1)
+
+def p_startLoop(p):
+  'startLoop :'
+  __jumpStack.push(__quadruples.size())
+
+def p_loopConditional(p):
+  'loopConditional : ifConditional'
+
+def p_endLoop(p):
+  'endLoop :'
+  lastWhilePos = __jumpStack.pop()
+  returnPos = __jumpStack.pop()
+  __quadruples.add(Quadruple('GOTO', None, None, returnPos))
+  lastWhileQ = __quadruples.list[lastWhilePos]
+  lastWhileQ.result = __quadruples.size()
+  print "__ Update ", lastWhilePos, " result to ", __quadruples.size()
+
+
 
 # =============== Grammar Actions END ===============
 
