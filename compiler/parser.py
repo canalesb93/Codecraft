@@ -446,8 +446,6 @@ def p_endLoop(p):
   lastWhileQ.result = __quadruples.size()
   print "__ Update ", lastWhilePos, " result to ", __quadruples.size()
 
-
-
 # =============== Grammar Actions END ===============
 
 # Create the quadruple for the requests operators

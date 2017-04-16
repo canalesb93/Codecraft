@@ -1,0 +1,15 @@
+craft {
+  var int A = 1 * 1 + 1 / 2, B = 1 + 2
+  var bool C = 5 * (10 + 1 * 10) < 10, D = false
+
+  function bool lessthan(int X, int Y) {  
+    if (X < Y) {
+      return true && true
+    } else {
+      return false
+    }
+  }
+  
+  lessthan(A, B)
+
+}

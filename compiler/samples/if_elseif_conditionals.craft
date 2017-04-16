@@ -1,0 +1,21 @@
+craft {
+  var int A, B, C, D
+
+  # if (A + B > D) {
+  #   D = B + A * C
+  # } else if (A < B) {
+  #   A = 0
+  #   B = B + D
+  # }
+
+  if (A + B > D) {
+    D = B + A * C
+  } else if (A < B) {
+    A = 0
+    B = B + D
+  } else if (B >= A) {
+    D= B
+  } else {
+    D = A + C
+  }
+}
