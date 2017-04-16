@@ -13,6 +13,8 @@ from libraries.ply import yacc
 import scanner
 from enumerators import *
 from classes import *
+from cube import *
+from operations import *
 
 if sys.version_info[0] >= 3:
     raw_input = input
@@ -20,16 +22,6 @@ if sys.version_info[0] >= 3:
 # =============== Lexer SETUP ===============
 tokens = scanner.tokens
 lex.lex(module=scanner)
-
-precedence = (
-    ('left', 'AND', 'OR'),
-    ('nonassoc', '<', '>', 'LESS_EQ', 'GREATER_EQ', 'EQ'),
-    ('left', '+', '-'),
-    ('left', '*', '/', '%'),
-    ('right', 'UMINUS'),
-)
-
-# =============== Lexer END ===============
 
 # =============== Global START ===============
 
@@ -39,7 +31,24 @@ Remember to use "global" when modifying these variables in
 a different scope.
 ''' 
 
+# Variable Memory Counter Maps
+
+__tempVarCount = {}
+__tempVarCount[Type.BOOL] = 0
+__tempVarCount[Type.INT] = 0
+__tempVarCount[Type.FLOAT] = 0
+__tempVarCount[Type.CHAR] = 0
+__tempVarCount[Type.STRING] = 0
+
+# Quadruple Setup
+__quadruples = QuadrupleList()
+__operandStack = Stack()
+__operationStack = Stack()
+__typeStack = Stack()
+__jumpStack = Stack()
+
 # Symbol Tables
+__constantTable = SymbolTable() # { 'address':counter, 'type':Type, 'val':value }
 __varsGlobal = SymbolTable()
 __varsLocal = SymbolTable()
 __funcsGlobal = FunctionTable()
@@ -69,7 +78,6 @@ def setGlobalScope():
 
 def p_program(p):
     'program : CRAFT "{" block functions "}"'
-    pass
 
 def p_type(p):
     '''type : VOID
@@ -101,23 +109,22 @@ def p_var(p):
            '''
 
 def p_var_repeater(p):
-    '''var_repeater : "," ID addVariable var_array var_assignment var_repeater
+    '''var_repeater : "," var
                     | empty
                     '''
 
 def p_var_assignment(p):
-    '''var_assignment : "=" expression
+    '''var_assignment : pushIdOperand "=" pushOperation super_expression addAssignmentQuadruple
                       | empty
                       '''
 
 def p_var_array(p):
-    '''var_array : "[" NUMBER "]" setTypeAsArray
+    '''var_array : "[" CTE_INT "]" setTypeAsArray
                  | empty'''
 
 def p_functions(p):
     '''functions : function functions
                  | empty'''
-    pass
 
 # def p_assignment_array(p):
 #     '''assignment_array : ID "=" "{" parameters "}" ',' assignment
@@ -127,7 +134,7 @@ def p_functions(p):
 #     pass
 
 def p_var_free_assignment(p):
-    '''var_free_assignment : ID var_assignment'''
+    '''var_free_assignment : ID lookupId var_assignment'''
 
 # ===== FUNCTIONS =====
 
@@ -151,12 +158,12 @@ def p_parameters_definition1(p):
     pass
 
 def p_parameters(p):
-    '''parameters : expression parameters1
+    '''parameters : super_expression parameters1
                   | empty'''
     pass
 
 def p_parameters1(p):
-    '''parameters1 : "," expression parameters1
+    '''parameters1 : "," super_expression parameters1
                    | empty'''
     pass
 
@@ -173,8 +180,8 @@ def p_block(p):
     pass
 
 def p_if(p):
-    '''if : IF "(" expression ")" "{" block "}"
-          | IF "(" expression ")" "{" block "}" else'''
+    '''if : IF "(" super_expression ")" "{" block "}"
+          | IF "(" super_expression ")" "{" block "}" else'''
     pass
 
 def p_else(p):
@@ -183,12 +190,12 @@ def p_else(p):
     pass
 
 def p_cycle(p):
-    'cycle : WHILE "(" expression ")" "{" block "}"'
+    'cycle : WHILE "(" super_expression ")" "{" block "}"'
     pass
 
 def p_return(p):
     '''return : RETURN
-              | RETURN expression'''
+              | RETURN super_expression'''
     pass
 
 def p_function_call(p):
@@ -196,54 +203,62 @@ def p_function_call(p):
                      | ID "(" parameters ")"'''
     pass
 
-def p_expression_binop(p):
-    '''expression : expression '+' expression
-                  | expression '-' expression
-                  | expression '*' expression
-                  | expression '/' expression
-                  | expression '%' expression
-                  | expression '>' expression
-                  | expression '<' expression
-                  | expression EQ expression
-                  | expression LESS_EQ expression
-                  | expression GREATER_EQ expression
-                  | expression AND expression
-                  | expression OR expression'''
-    pass
+# ===== Binary Operations (cascades through here) =====
 
-def p_expression_uminus(p):
-    "expression : '-' expression %prec UMINUS"
-    p[0] = -p[2]
+def p_super_expression(p):
+  '''super_expression : expression tryLogicalQuadruple
+                      | expression tryLogicalQuadruple AND pushOperation super_expression
+                      | expression tryLogicalQuadruple OR pushOperation super_expression'''
 
+def p_expression(p):
+  '''expression : exp tryRelationalQuadruple
+                | exp tryRelationalQuadruple '>' pushOperation expression
+                | exp tryRelationalQuadruple '<' pushOperation expression
+                | exp tryRelationalQuadruple EQ pushOperation expression
+                | exp tryRelationalQuadruple LESS_EQ pushOperation expression
+                | exp tryRelationalQuadruple GREATER_EQ pushOperation expression'''
 
-def p_expression_group(p):
-    "expression : '(' expression ')'"
-    p[0] = p[2]
+def p_exp(p):
+  '''exp : term tryAddSubQuadruple
+         | term tryAddSubQuadruple '+' pushOperation exp
+         | term tryAddSubQuadruple '-' pushOperation exp '''
 
+def p_term(p):
+  '''term : factor tryMultDivQuadruple
+          | factor tryMultDivQuadruple '*' pushOperation term
+          | factor tryMultDivQuadruple '/' pushOperation term'''
 
-def p_expression_number(p):
-    "expression : NUMBER"
-    p[0] = p[1]
+# pending UMINUS
+def p_factor(p):
+  '''factor : '(' super_expression ')'
+            | value'''
 
-def p_expression_boolean(p):
-    '''expression : FALSE
-                  | TRUE'''
+def p_value(p):
+  '''value : constant addConstant pushConstantOperand
+           | ID lookupId pushIdOperand
+           | function_call'''
+
+# Constants
+def p_constant_int(p):
+    "constant : CTE_INT"
+    p[0] = int(p[1])
+
+def p_constant_boolean(p):
+    '''constant : FALSE
+                | TRUE'''
     if p[1] == 'false':
         p[0] = False
     elif p[1] == 'true':
         p[0] = True
 
-def p_expression_id(p):
-    "expression : ID"
-    try:
-        p[0] = names[p[1]]
-    except LookupError:
-        print("Undefined name '%s'" % p[1])
-        p[0] = 0
+def p_constant_float(p):
+    "constant : CTE_FLOAT"
+    p[0] = float(p[1])
 
-def p_expression_function_call(p):
-    'expression : function_call'
-    pass
+def p_constant_strings(p):
+    '''constant : CTE_STRING
+                | CTE_CHAR'''
+    p[0] = str(p[1])
 
 def p_empty(p):
     'empty :'
@@ -292,20 +307,126 @@ def p_addVariable(p):
   'addVariable :'
   global __tVarName
   __tVarName = p[-1]
-  varName = __tVarName
-  addVariable(varName, __tVarType)
+  addVariable(__tVarName, __tVarType)
+
+def p_addConstant(p):
+  'addConstant :'
+  constRaw = p[-1]
+  addConstant(constRaw)
 
 def p_setTypeAsArray(p):
   'setTypeAsArray :'
   setTypeAsArray()
 
+def p_lookupId(p):
+  'lookupId :'
+  global __tVarName, __tVarType
+
+  operandID = p[-1]
+  if __scope == Scope.GLOBAL:
+    variable = __varsGlobal.lookup(operandID)
+  elif __scope == Scope.LOCAL:
+    variable = __varsLocal.lookup(operandID)
+
+  if variable is None:
+    print("Variable error: variable not found")
+    summary()
+    exit(1)
+    return
+  else:
+    __tVarName = variable.name
+    __tVarType = variable.symbolType
+
+# == Quadruples ==
+
+def p_pushOperation(p):
+  'pushOperation :'
+  global __operationStack
+  __operationStack.push(p[-1])
+
+def p_pushIdOperand(p):
+  'pushIdOperand :'
+  global __operandStack, __typeStack
+  __operandStack.push(__tVarName)
+  __typeStack.push(__tVarType)
+
+def p_pushConstantOperand(p):
+  'pushConstantOperand :'
+  global __operandStack, __typeStack
+  constName = str(p[-2])
+  constant = __constantTable.lookup(constName)
+  if constant is not None:
+    __operandStack.push(constant.name)
+    __typeStack.push(constant.symbolType)
+  else:
+    print "Constant error: constant not found", constName
+
+def p_tryLogicalQuadruple(p):
+  'tryLogicalQuadruple :'
+  addExpressionQuadruple(['and', 'or'])
+
+def p_tryRelationalQuadruple(p):
+  'tryRelationalQuadruple :'
+  addExpressionQuadruple(['<', '>', '==', '!=', '<=', '>='])
+
+def p_tryAddSubQuadruple(p):
+  'tryAddSubQuadruple :'
+  addExpressionQuadruple(['+', '-'])
+
+def p_tryMultDivQuadruple(p):
+  'tryMultDivQuadruple :'
+  addExpressionQuadruple(['*', '/', '%'])
+
+def p_addAssignmentQuadruple(p):
+  'addAssignmentQuadruple :'
+  global __operationStack, __operandStack, __typeStack
+  operator = __operationStack.pop()
+  # Operands
+  rightOp = __operandStack.pop()
+  leftOp = __operandStack.pop()
+  # Types
+  rightType = __typeStack.pop()
+  leftType = __typeStack.pop()
+  resultType = getResultType(leftType, operator, rightType)
+  if resultType is not None:
+    # Generate quadruple
+    __quadruples.add(Quadruple(operator, rightOp, None, leftOp))
+  else:
+    print "Expression error : result type mismatch"
+    summary()
+    exit(1)
+
 # =============== Grammar Actions END ===============
 
+# Create the quadruple for the requests operators
+def addExpressionQuadruple(operators):
+  global __operationStack, __operandStack, __typeStack
+  global __tempVarCount
+  operator = __operationStack.top()
+  if operator in operators:
+    operator = __operationStack.pop()
+    # Operands
+    rightOp = __operandStack.pop()
+    leftOp = __operandStack.pop()
+    # Types
+    rightType = __typeStack.pop()
+    leftType = __typeStack.pop()
+    resultType = getResultType(leftType, operator, rightType)
+    if resultType is not None:
+      # Generate quadruple
+      __quadruples.add(Quadruple(operator, leftOp, rightOp, resultType.name.lower() + str(__tempVarCount[resultType])))
+      # Update stacks
+      __operandStack.push(resultType.name.lower() + str(__tempVarCount[resultType]))
+      __typeStack.push(resultType)
+      __tempVarCount[resultType] += 1
+    else:
+      summary()
+      exit(1)
+
 def addVariable(name, varType):
-  global __varsGlobal
-  global __varsLocal
-  if(varType == Type.VOID):
-    print("Variable error : can't be of VOID type")
+  global __varsGlobal, __varsLocal
+  if varType == Type.VOID:
+    print "Variable error : can't be of VOID type"
     return
   
   variable = Var(name, varType)
@@ -315,6 +436,28 @@ def addVariable(name, varType):
   elif __scope == Scope.LOCAL:
     # Construct variable locally
     __varsLocal.insert(variable)
+
+def addConstant(const):
+  global __constantTable
+  # Scan raw
+  if __constantTable.lookup(str(const)) is None:
+    if isinstance(const, bool):  
+      constType = Type.BOOL
+      constValue = const
+    elif isinstance(const, int):  
+      constType = Type.INT
+      constValue = const
+    elif isinstance(const, float):  
+      constType = Type.FLOAT
+      constValue = const
+    elif isinstance(const, str) and len(str(const)) == 3:  
+      constType = Type.CHAR
+      constValue = str(const)
+    else:  
+      constType = Type.STRING
+      constValue = str(const)
+    # Create constant
+    __constantTable.insert(Constant(str(const), constType, constValue))
 
 def addFunction(functionName, functionType, parameters):
   global __funcsGlobal
@@ -336,11 +479,22 @@ def setTypeAsArray():
 yacc.yacc()
 
 def summary():
-  print "\nSummary:"
-  print "G-VARS:", __varsGlobal
-  print "L-VARS:", __varsLocal
+  print "================================ START SUMMARY ================================:"
+  print "_________QUADRUPLES_________:"
+  print __quadruples
+  print "_________Stacks_________:"
+  print "Operations:", __operationStack
+  print "Operands:", __operandStack
+  print "Types:", __typeStack
+  print "Jump:", __jumpStack
+  print "_________Tables_________:"
+  print "G-VARS: (", __varsGlobal.size(), ")", __varsGlobal
+  print "L-VARS: (", __varsLocal.size(), ")", __varsLocal
+  print "CONSTS: (", __constantTable.size(), ")", __constantTable
   print "G-FUNCS:", __funcsGlobal
+  print "================================ END SUMMARY ================================\n"
 
+# Main Method
 if __name__ == '__main__':
   if (len(sys.argv) > 1):
     file = sys.argv[1]

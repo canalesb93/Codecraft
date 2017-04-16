@@ -35,7 +35,10 @@ reserved = {
 }
 
 tokens = [
-    'NUMBER',
+    'CTE_INT',
+    'CTE_FLOAT',
+    'CTE_CHAR',
+    'CTE_STRING',
     'ID',
     'EQ',
     'LESS_EQ',
@@ -46,20 +49,14 @@ tokens = [
 t_EQ  = r'=='
 t_GREATER_EQ  = r'>='
 t_LESS_EQ  = r'<='
-
+t_CTE_INT = r'\d+'
+t_CTE_FLOAT = r'[-+]?[0-9]+\.[0-9]+([Ee][\+-]?[0-9+])?'
+t_CTE_CHAR = r'\'.*\''
+t_CTE_STRING = r'\".*\"'
 # Literals 
 literals = [ '+','-','*','/', '%','=','(',')','{','}','[',']','<','>', ',' ]
 
 # Regular expressions with action code
-
-def t_NUMBER(t):
-    r'\d+'
-    try:
-        t.value = int(t.value)
-    except ValueError:
-        print("Integer value too large %d", t.value)
-        t.value = 0
-    return t
 
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'

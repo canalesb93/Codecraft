@@ -106,15 +106,16 @@ cube['FLOAT>=FLOAT'] = Type.BOOL
 cube['CHAR>=INT'] = Type.BOOL
 cube['CHAR>=CHAR'] = Type.BOOL
 
-# && and ||
-cube['BOOL&&BOOL'] = Type.BOOL
-cube['BOOL||BOOL'] = Type.BOOL
+# and and or
+cube['BOOLandBOOL'] = Type.BOOL
+cube['BOOLorBOOL'] = Type.BOOL
 
 def getResultType(leftType, operator, rightType):
   l = leftType.name
   r = rightType.name
   key = l + operator + r
   if not key in cube.keys():
-    return -1
+    print "Expression error : result type mismatch. [", key, "]"
+    return None
   else:
     return cube[key]

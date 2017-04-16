@@ -1,0 +1,16 @@
+craft{
+  var int A = 1 * 1 + 1 / 2, B = 1 + 2
+  var int C = 0, D = 0
+  var bool works = true or true
+  if (A + B > D) {
+    if (A < B) {
+      A = 0
+      B = B + D
+    } else {
+      C = A + B
+    }
+  } else {
+    A = B + C
+  }
+  D = B + A * C
+}
