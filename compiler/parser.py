@@ -230,7 +230,7 @@ def p_term(p):
 
 # pending UMINUS
 def p_factor(p):
-  '''factor : '(' super_expression ')'
+  '''factor : '(' addFakeBottom super_expression removeFakeBottom ')'
             | value'''
 
 def p_value(p):
@@ -376,6 +376,16 @@ def p_tryAddSubQuadruple(p):
 def p_tryMultDivQuadruple(p):
   'tryMultDivQuadruple :'
   addExpressionQuadruple(['*', '/', '%'])
+
+def p_addFakeBottom(p):
+  'addFakeBottom :'
+  global __operationStack
+  __operationStack.push('(')
+
+def p_removeFakeBottom(p):
+  'removeFakeBottom :'
+  global __operationStack
+  __operationStack.pop()
 
 def p_addAssignmentQuadruple(p):
   'addAssignmentQuadruple :'
