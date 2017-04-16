@@ -1,7 +1,5 @@
 craft {
   var int A, B, C, D
-  # var int A = 1 * 1 + 1 / 2, B = 1 + 2
-  # var int C = 5 * (10 + 1 * 10), D = 0
 
   if (A + B > D) {
     if (A < B) {
