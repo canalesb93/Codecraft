@@ -180,13 +180,13 @@ def p_block(p):
     pass
 
 def p_if(p):
-    '''if : IF "(" super_expression ")" "{" block "}"
-          | IF "(" super_expression ")" "{" block "}" else'''
+    '''if : IF "(" super_expression ")" ifConditional "{" block "}" endIfConditional
+          | IF "(" super_expression ")" ifConditional "{" block "}" else'''
     pass
 
 def p_else(p):
-    '''else : ELSE if
-            | ELSE "{" block "}"'''
+    '''else : ELSE elseConditional if
+            | ELSE elseConditional "{" block "}" endIfConditional'''
     pass
 
 def p_cycle(p):
@@ -269,6 +269,8 @@ def p_error(p):
         print("Syntax error at '%s'" % p.value)
     else:
         print("Syntax error at EOF")
+    summary()
+    exit(1)
 
 # =============== Grammar Actions START ===============
 
@@ -341,18 +343,15 @@ def p_lookupId(p):
 
 def p_pushOperation(p):
   'pushOperation :'
-  global __operationStack
   __operationStack.push(p[-1])
 
 def p_pushIdOperand(p):
   'pushIdOperand :'
-  global __operandStack, __typeStack
   __operandStack.push(__tVarName)
   __typeStack.push(__tVarType)
 
 def p_pushConstantOperand(p):
   'pushConstantOperand :'
-  global __operandStack, __typeStack
   constName = str(p[-2])
   constant = __constantTable.lookup(constName)
   if constant is not None:
@@ -379,17 +378,14 @@ def p_tryMultDivQuadruple(p):
 
 def p_addFakeBottom(p):
   'addFakeBottom :'
-  global __operationStack
   __operationStack.push('(')
 
 def p_removeFakeBottom(p):
   'removeFakeBottom :'
-  global __operationStack
   __operationStack.pop()
 
 def p_addAssignmentQuadruple(p):
   'addAssignmentQuadruple :'
-  global __operationStack, __operandStack, __typeStack
   operator = __operationStack.pop()
   # Operands
   rightOp = __operandStack.pop()
@@ -405,6 +401,37 @@ def p_addAssignmentQuadruple(p):
     print "Expression error : result type mismatch"
     summary()
     exit(1)
+
+def p_ifConditional(p):
+  'ifConditional :'
+  conditionalType = __typeStack.pop()
+  if conditionalType == Type.BOOL:
+    result = __operandStack.pop()
+    __quadruples.add(Quadruple('GOTOF', result, None, -1))
+    # Save if position
+    __jumpStack.push(__quadruples.size()-1)
+  else:
+    print "Conditional error : result type mismatch"
+    summary()
+    exit(1)
+
+def p_endIfConditional(p):
+  'endIfConditional :'
+  lastIfPos = __jumpStack.pop()
+  lastIfQ = __quadruples.list[lastIfPos]
+  lastIfQ.result = __quadruples.size()
+  print "__ Update ", lastIfPos, " result to ", __quadruples.size()
+
+def p_elseConditional(p):
+  'elseConditional :'
+  __quadruples.add(Quadruple('GOTO', None, None, -1))
+  # Set else position
+  lastIfPos = __jumpStack.pop()
+  lastIfQ = __quadruples.list[lastIfPos]
+  lastIfQ.result = __quadruples.size()
+  print "__ Update ", lastIfPos, " result to ", __quadruples.size()
+  # Save goto position
+  __jumpStack.push(__quadruples.size()-1)
 
 # =============== Grammar Actions END ===============
 
