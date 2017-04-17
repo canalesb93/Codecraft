@@ -7,8 +7,8 @@ class FunctionTable:
         self.functions = {}
 
     def insert(self, function):
-        if self.lookup(function.name) != 0:
-            print "Function error : ", name, "is already declared"
+        if self.lookup(function.name) is not None:
+            print "Function error : ", function.name, "is already declared"
         else:
             # print(function)
             self.functions[function.name] = function
@@ -20,7 +20,7 @@ class FunctionTable:
             return self.functions[name]
         else:
             # Symbol does not exist
-            return 0
+            return None
 
     def clear(self):
         self.functions.clear()

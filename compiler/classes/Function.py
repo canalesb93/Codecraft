@@ -17,5 +17,8 @@ class Function:
         self.functionType = 0
         self.parameters = []
 
+    def parametersSize(self):
+        return len(self.parameters)
+
     def __str__(self):
         return 'Function: (%s, %s, %s)' % (self.name, self.functionType, self.parameters)

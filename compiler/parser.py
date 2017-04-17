@@ -54,12 +54,18 @@ __varsLocal = SymbolTable()
 __funcsGlobal = FunctionTable()
 
 # Temporary Var/Func data
-__tFuncArguments = []
+# Vars
 __tVarType = None
-__tFuncType = None
 __tVarName = None
-__tFuncName = None
 __tVarIsArray = False
+# Funcs
+__tFuncName = None
+__tFuncType = None
+__tFuncParameters = []
+# Func Calls
+__tCallName = None
+__tCallType = None
+__tCallArgCount = 0
 
 # Scope
 __scope = Scope.GLOBAL
@@ -77,7 +83,12 @@ def setGlobalScope():
 # =============== Grammar START ===============
 
 def p_program(p):
-    'program : CRAFT "{" block functions "}"'
+  'program : CRAFT "{" canvas_block "}"'
+
+def p_canvas_block(p):
+  '''canvas_block : block canvas_block
+                  | function canvas_block
+                  | empty'''
 
 def p_type(p):
     '''type : VOID
@@ -122,10 +133,6 @@ def p_var_array(p):
     '''var_array : "[" CTE_INT "]" setTypeAsArray
                  | empty'''
 
-def p_functions(p):
-    '''functions : function functions
-                 | empty'''
-
 # def p_assignment_array(p):
 #     '''assignment_array : ID "=" "{" parameters "}" ',' assignment
 #                         | ID "=" "{" parameters "}" 
@@ -139,68 +146,62 @@ def p_var_free_assignment(p):
 # ===== FUNCTIONS =====
 
 def p_function(p):
-    ''' function : FUNCTION setLocalScope type saveFunctionType ID saveFunctionName "(" parameters_definition ")" "{" block "}" setGlobalScope
+    ''' function : FUNCTION setLocalScope type saveFunctionType ID saveFunctionName "(" parameters_definition ")" addFunction "{" block_repeater "}" endFunction setGlobalScope
                  ''' 
-    global __tFuncArguments
-    addFunction(__tFuncName, __tFuncType, __tFuncArguments)
-    # print('Local Variables: %s' % __varsLocal)
-    __varsLocal.clear()
-    __tFuncArguments = []
 
 def p_parameters_definition(p):
-    '''parameters_definition : type saveVariableType ID addArgument parameters_definition1
+    '''parameters_definition : type saveVariableType ID addParameter parameters_definition1
                              | empty''' 
-    pass
 
 def p_parameters_definition1(p):
-    '''parameters_definition1 : "," type saveVariableType ID addArgument parameters_definition1
+    '''parameters_definition1 : "," type saveVariableType ID addParameter parameters_definition1
                               | empty'''
-    pass
 
 def p_parameters(p):
-    '''parameters : super_expression parameters1
+    '''parameters : super_expression addArgument parameters1
                   | empty'''
-    pass
 
 def p_parameters1(p):
-    '''parameters1 : "," super_expression parameters1
+    '''parameters1 : "," super_expression addArgument parameters1
                    | empty'''
-    pass
+
+# pending: return on void and when free roaming the return
+def p_return(p):
+    '''return : RETURN
+              | RETURN super_expression returnFunctionValue'''
+
+def p_function_call(p):
+    '''function_call : ID "(" lookupFunction startFunctionCall parameters ")" verifyArguments endFunctionCall checkForReturn
+                     | ID "(" lookupFunction ")" endFunctionCall checkForReturn'''
+
+def p_block_repeater(p):
+    '''block_repeater : block block_repeater
+                      | empty'''
 
 def p_block(p):
-    '''block : vars block
-             | var_free_assignment block
-             | if block
-             | cycle block
-             | return block
-             | BREAK block
-             | CONTINUE block
-             | function_call block
-             | empty'''
-    pass
+    '''block : vars
+             | var_free_assignment
+             | if
+             | cycle
+             | return
+             | BREAK
+             | CONTINUE
+             | function_call'''
+
+# ===== CONDITIONALS =====
 
 def p_if(p):
-    '''if : IF "(" super_expression ")" ifConditional "{" block "}" endIfConditional
-          | IF "(" super_expression ")" ifConditional "{" block "}" else'''
+    '''if : IF "(" super_expression ")" ifConditional "{" block_repeater "}" endIfConditional
+          | IF "(" super_expression ")" ifConditional "{" block_repeater "}" else'''
 
 def p_else(p):
     '''else : ELSE elseConditional if
-            | ELSE elseConditional "{" block "}" endIfConditional'''
+            | ELSE elseConditional "{" block_repeater "}" endIfConditional'''
 
 def p_cycle(p):
-    'cycle : WHILE startLoop "(" super_expression ")" loopConditional "{" block "}" endLoop'
+    'cycle : WHILE startLoop "(" super_expression ")" loopConditional "{" block_repeater "}" endLoop'
 
-def p_return(p):
-    '''return : RETURN
-              | RETURN super_expression'''
-    pass
-
-def p_function_call(p):
-    '''function_call : ID "(" ")" 
-                     | ID "(" parameters ")"'''
-    pass
-
-# ===== Binary Operations (cascades through here) =====
+# ===== EXPRESSIONS =====
 
 def p_super_expression(p):
   '''super_expression : expression tryLogicalQuadruple
@@ -235,7 +236,7 @@ def p_value(p):
            | ID lookupId pushIdOperand
            | function_call'''
 
-# Constants
+# ===== Constants =====
 def p_constant_int(p):
     "constant : CTE_INT"
     p[0] = int(p[1])
@@ -279,24 +280,6 @@ def p_setGlobalScope(p):
   'setGlobalScope :'
   setGlobalScope()
 
-def p_saveFunctionType(p):
-  'saveFunctionType :'
-  global __tFuncType
-  __tFuncType = p[-1]
-
-def p_saveFunctionName(p):
-  'saveFunctionName :'
-  global __tFuncName
-  __tFuncName = p[-1]
-
-def p_addArgument(p):
-  'addArgument :'
-  global __tVarName
-  global __tFuncArguments
-  __tVarName = p[-1]
-  addVariable(__tVarName, __tVarType)
-  __tFuncArguments.append(__varsLocal.lookup(__tVarName))
-
 def p_saveVariableType(p):
   'saveVariableType :'
   global __tVarType
@@ -336,7 +319,7 @@ def p_lookupId(p):
     __tVarName = variable.name
     __tVarType = variable.symbolType
 
-# == Quadruples ==
+# === Expressions ==
 
 def p_pushOperation(p):
   'pushOperation :'
@@ -399,6 +382,8 @@ def p_addAssignmentQuadruple(p):
     summary()
     exit(1)
 
+# == Conditionals == 
+
 def p_ifConditional(p):
   'ifConditional :'
   conditionalType = __typeStack.pop()
@@ -430,6 +415,8 @@ def p_elseConditional(p):
   # Save goto position
   __jumpStack.push(__quadruples.size()-1)
 
+# == Loops == 
+
 def p_startLoop(p):
   'startLoop :'
   __jumpStack.push(__quadruples.size())
@@ -445,6 +432,108 @@ def p_endLoop(p):
   lastWhileQ = __quadruples.list[lastWhilePos]
   lastWhileQ.result = __quadruples.size()
   print "__ Update ", lastWhilePos, " result to ", __quadruples.size()
+
+# == Functions
+
+def p_saveFunctionType(p):
+  'saveFunctionType :'
+  global __tFuncType
+  __tFuncType = p[-1]
+
+def p_saveFunctionName(p):
+  'saveFunctionName :'
+  global __tFuncName
+  __tFuncName = p[-1]
+
+def p_endFunction(p):
+  'endFunction :'
+  global __tFuncParameters
+  __varsLocal.clear()
+  __tFuncParameters = []
+  __quadruples.add(Quadruple('ENDPROC', None, None, None))
+
+def p_addParameter(p):
+  'addParameter :'
+  global __tVarName
+  global __tFuncParameters
+  __tVarName = p[-1]
+  addVariable(__tVarName, __tVarType)
+  __tFuncParameters.append(__varsLocal.lookup(__tVarName))
+
+def p_addFunction(p):
+  'addFunction :'
+  addFunction(__tFuncName, __tFuncType, __tFuncParameters)
+  # print('Local Variables: %s' % __varsLocal)
+
+def p_lookupFunctionId(p):
+  'lookupFunction :'
+  global __tCallName, __tCallType
+  functionId = p[-2]
+  function = __funcsGlobal.lookup(functionId)
+  if function is not None:
+    __tCallName = function.name
+    __tCallType = function.functionType
+  else:
+    print("Function error: function not found")
+    summary()
+    exit(1)
+
+def p_startFunctionCall(p):
+  'startFunctionCall :'
+  global __tCallArgCount
+  __quadruples.add(Quadruple("ERA", __tFuncName, None, None))
+  __tCallArgCount = 0
+
+def p_addArgument(p):
+  'addArgument :'
+  global __tCallArgCount
+  argument = __operandStack.pop()
+  argumentType = __typeStack.pop()
+  function = __funcsGlobal.lookup(__tCallName)
+  parameter = function.parameters[__tCallArgCount]
+  if argumentType == parameter.symbolType:
+    __quadruples.add(Quadruple('PARAM', argument, None, __tCallArgCount))
+    __tCallArgCount += 1 
+  else:
+    print "Function error: parameter type mismatch"
+    summary()
+    exit(1)
+
+# def p_increaseArguments(p):
+#   'increaseArguments :'
+#   global __tCallArgCount
+    # __tCallArgCount += 1 
+
+def p_verifyArguments(p):
+  'verifyArguments :'
+  function = __funcsGlobal.lookup(__tCallName)
+  if function.parametersSize() != __tCallArgCount:
+    print "Function error: incorrect number of arguments"
+    summary()
+    exit(1)
+
+def p_endFunctionCall(p):
+  'endFunctionCall :'
+  __quadruples.add(Quadruple('GOSUB', __tCallName, None, None))
+
+def p_checkForReturn(p):
+  'checkForReturn :'
+  if __tCallType != Type.VOID and __tCallType != None:
+    __quadruples.add(Quadruple('=', __tCallName, None, __tempVarCount[__tCallType]))
+    __operandStack.push(__tempVarCount[__tCallType])
+    __typeStack.push(__tCallType)
+    __tempVarCount[__tCallType] += 1
+
+def p_returnFunctionValue(p):
+  'returnFunctionValue :'
+  returnType = __typeStack.pop()
+  returnValue = __operandStack.pop()
+  if returnType == __tFuncType:
+    __quadruples.add(Quadruple('RETURN', None, None, returnValue))
+  else:
+    print "Function error: return type mismatch"
+    summary()
+    exit(1)
 
 # =============== Grammar Actions END ===============
 
