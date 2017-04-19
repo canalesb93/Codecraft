@@ -4,7 +4,7 @@ craft {
 
   function bool lessthan(int X, int Y) {  
     if (X < Y) {
-      return true && true
+      return true and true
     } else {
       return false
     }

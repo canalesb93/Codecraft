@@ -195,8 +195,16 @@ def p_if(p):
           | IF "(" super_expression ")" ifConditional "{" block_repeater "}" else'''
 
 def p_else(p):
-    '''else : ELSE elseConditional if
-            | ELSE elseConditional "{" block_repeater "}" endIfConditional'''
+    '''else : ELSE elseConditional else_if
+            | ELSE "{" elseConditional block_repeater "}" endIfConditional'''
+
+def p_else_if(p):
+    '''else_if : IF "(" super_expression ")" ifConditional "{" block_repeater "}" endElseIfConditional 
+               | IF "(" super_expression ")" ifConditional "{" block_repeater "}" else_if_else'''
+
+def p_else_if_else(p):
+    '''else_if_else : ELSE elseIfConditional else_if
+                    | ELSE "{" elseIfConditional block_repeater "}" endIfConditional'''
 
 def p_cycle(p):
     'cycle : WHILE startLoop "(" super_expression ")" loopConditional "{" block_repeater "}" endLoop'
@@ -399,21 +407,28 @@ def p_ifConditional(p):
 
 def p_endIfConditional(p):
   'endIfConditional :'
-  lastIfPos = __jumpStack.pop()
-  lastIfQ = __quadruples.list[lastIfPos]
-  lastIfQ.result = __quadruples.size()
-  print "__ Update ", lastIfPos, " result to ", __quadruples.size()
+  setLastJumpPosition(__quadruples.size())
 
 def p_elseConditional(p):
   'elseConditional :'
   __quadruples.add(Quadruple('GOTO', None, None, -1))
   # Set else position
-  lastIfPos = __jumpStack.pop()
-  lastIfQ = __quadruples.list[lastIfPos]
-  lastIfQ.result = __quadruples.size()
-  print "__ Update ", lastIfPos, " result to ", __quadruples.size()
+  setLastJumpPosition(__quadruples.size())
   # Save goto position
   __jumpStack.push(__quadruples.size()-1)
+
+def p_elseIfConditional(p):
+  'elseIfConditional :'
+  setLastJumpPosition(__quadruples.size() + 1)
+  setLastJumpPosition(__quadruples.size())
+  __quadruples.add(Quadruple('GOTO', None, None, -1))
+  # Save goto position
+  __jumpStack.push(__quadruples.size()-1)
+
+def p_endElseIfConditional(p):
+  'endElseIfConditional :'
+  setLastJumpPosition(__quadruples.size())
+  setLastJumpPosition(__quadruples.size())
 
 # == Loops == 
 
@@ -519,8 +534,8 @@ def p_endFunctionCall(p):
 def p_checkForReturn(p):
   'checkForReturn :'
   if __tCallType != Type.VOID and __tCallType != None:
-    __quadruples.add(Quadruple('=', __tCallName, None, __tempVarCount[__tCallType]))
-    __operandStack.push(__tempVarCount[__tCallType])
+    __quadruples.add(Quadruple('=', __tCallName, None, __tCallType.name.lower() + str(__tempVarCount[__tCallType])))
+    __operandStack.push(__tCallType.name.lower() + str(__tempVarCount[__tCallType]))
     __typeStack.push(__tCallType)
     __tempVarCount[__tCallType] += 1
 
@@ -536,6 +551,13 @@ def p_returnFunctionValue(p):
     exit(1)
 
 # =============== Grammar Actions END ===============
+
+# Pops the jump stack ands sets that quadruples result to a position
+def setLastJumpPosition(position):
+  lastPos = __jumpStack.pop()
+  quadruple = __quadruples.list[lastPos]
+  quadruple.result = position
+  print "__ Update ", lastPos, " result to ", position
 
 # Create the quadruple for the requests operators
 def addExpressionQuadruple(operators):
@@ -619,14 +641,14 @@ yacc.yacc()
 
 def summary():
   print "================================ START SUMMARY ================================:"
-  print "_________QUADRUPLES_________:"
+  print "_________Quadruples_________:"
   print __quadruples
-  print "_________Stacks_________:"
+  print "_________  Stacks  _________:"
   print "Operations:", __operationStack
   print "Operands:", __operandStack
   print "Types:", __typeStack
   print "Jump:", __jumpStack
-  print "_________Tables_________:"
+  print "_________  Tables  _________:"
   print "G-VARS: (", __varsGlobal.size(), ")", __varsGlobal
   print "L-VARS: (", __varsLocal.size(), ")", __varsLocal
   print "CONSTS: (", __constantTable.size(), ")", __constantTable
