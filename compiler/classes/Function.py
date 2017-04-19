@@ -5,17 +5,19 @@ class Function:
     Object containing information about variables
     '''
 
-    def __init__(self, name, functionType, parameters):
+    def __init__(self, name, functionType, parameters, position):
         self.id = -1
         self.name = name
         self.functionType = functionType
         self.parameters = parameters
+        self.quadruplePosition = position
 
     def clear(self):
         self.id = -1
         self.name = ""
         self.functionType = 0
         self.parameters = []
+        self.quadruplePosition = -1
 
     def parametersSize(self):
         return len(self.parameters)

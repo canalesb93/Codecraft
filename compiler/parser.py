@@ -477,7 +477,7 @@ def p_addParameter(p):
 
 def p_addFunction(p):
   'addFunction :'
-  addFunction(__tFuncName, __tFuncType, __tFuncParameters)
+  addFunction(__tFuncName, __tFuncType, __tFuncParameters, __quadruples.size())
   # print('Local Variables: %s' % __varsLocal)
 
 def p_lookupFunctionId(p):
@@ -529,7 +529,11 @@ def p_verifyArguments(p):
 
 def p_endFunctionCall(p):
   'endFunctionCall :'
-  __quadruples.add(Quadruple('GOSUB', __tCallName, None, None))
+  function = __funcsGlobal.lookup(__tCallName)
+  if function is not None:
+    __quadruples.add(Quadruple('GOSUB', __tCallName, None, function.quadruplePosition))
+  else:
+    print "Function error: function not found"
 
 def p_checkForReturn(p):
   'checkForReturn :'
@@ -620,9 +624,9 @@ def addConstant(const):
     # Create constant
     __constantTable.insert(Constant(str(const), constType, constValue))
 
-def addFunction(functionName, functionType, parameters):
+def addFunction(functionName, functionType, parameters, position):
   global __funcsGlobal
-  function = Function(functionName, functionType, parameters)
+  function = Function(functionName, functionType, parameters, position)
   __funcsGlobal.insert(function)
 
 def setTypeAsArray():
