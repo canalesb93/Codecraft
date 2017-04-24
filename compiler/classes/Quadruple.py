@@ -9,4 +9,4 @@ class Quadruple:
         self.result = result
 
     def __str__(self):
-        return '[%s, %s, %s, %s]' % (str(self.operator), str(self.operand1), str(self.operand2), str(self.result))
+        return '[%7s, %7s, %7s, %7s]' % (str(self.operator), str(self.operand1), str(self.operand2), str(self.result))

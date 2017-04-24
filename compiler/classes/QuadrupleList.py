@@ -18,7 +18,8 @@ class QuadrupleList:
     def __str__(self):
         description = ''
         for i, val in enumerate(self.list):
-            description = description + str(i) + ". " + str(val)
+            number = ("%-2d" % (i))
+            description = description + number + ". " + str(val)
             if i != len(self.list) - 1:
                  description = description + '\n'
         return description

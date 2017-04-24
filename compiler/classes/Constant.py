@@ -12,7 +12,7 @@ class Constant:
         self.value = value
 
     def address(self):
-        return self.symbolType.name + str(self.id)
+        return self.id
 
     def __str__(self):
         return 'Constant: (%s, %s, %s)' % (self.name, self.symbolType.name, self.address())

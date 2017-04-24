@@ -15,6 +15,7 @@ from enumerators import *
 from classes import *
 from cube import *
 from operations import *
+from memory import MemorySystem
 
 if sys.version_info[0] >= 3:
     raw_input = input
@@ -30,15 +31,6 @@ Prepend "__" to all global variables for easy undestanding.
 Remember to use "global" when modifying these variables in 
 a different scope.
 ''' 
-
-# Variable Memory Counter Maps
-
-__tempVarCount = {}
-__tempVarCount[Type.BOOL] = 0
-__tempVarCount[Type.INT] = 0
-__tempVarCount[Type.FLOAT] = 0
-__tempVarCount[Type.CHAR] = 0
-__tempVarCount[Type.STRING] = 0
 
 # Quadruple Setup
 __quadruples = QuadrupleList()
@@ -69,6 +61,7 @@ __tCallArgCount = 0
 
 # Scope
 __scope = Scope.GLOBAL
+__memory = MemorySystem()
 
 def setLocalScope():
   global __scope 
@@ -538,10 +531,10 @@ def p_endFunctionCall(p):
 def p_checkForReturn(p):
   'checkForReturn :'
   if __tCallType != Type.VOID and __tCallType != None:
-    __quadruples.add(Quadruple('=', __tCallName, None, __tCallType.name.lower() + str(__tempVarCount[__tCallType])))
-    __operandStack.push(__tCallType.name.lower() + str(__tempVarCount[__tCallType]))
+    address =  __memory.generateTemporary(__tCallType)
+    __quadruples.add(Quadruple('=', __tCallName, None, address))
+    __operandStack.push(address)
     __typeStack.push(__tCallType)
-    __tempVarCount[__tCallType] += 1
 
 def p_returnFunctionValue(p):
   'returnFunctionValue :'
@@ -566,7 +559,6 @@ def setLastJumpPosition(position):
 # Create the quadruple for the requests operators
 def addExpressionQuadruple(operators):
   global __operationStack, __operandStack, __typeStack
-  global __tempVarCount
   operator = __operationStack.top()
   if operator in operators:
     operator = __operationStack.pop()
@@ -579,11 +571,11 @@ def addExpressionQuadruple(operators):
     resultType = getResultType(leftType, operator, rightType)
     if resultType is not None:
       # Generate quadruple
-      __quadruples.add(Quadruple(operator, leftOp, rightOp, resultType.name.lower() + str(__tempVarCount[resultType])))
+      address =  __memory.generateTemporary(resultType)
+      __quadruples.add(Quadruple(operator, leftOp, rightOp, address))
       # Update stacks
-      __operandStack.push(resultType.name.lower() + str(__tempVarCount[resultType]))
+      __operandStack.push(address)
       __typeStack.push(resultType)
-      __tempVarCount[resultType] += 1
     else:
       summary()
       exit(1)
@@ -598,9 +590,11 @@ def addVariable(name, varType):
   if __scope == Scope.GLOBAL:
     # Construct variable globally
     __varsGlobal.insert(variable)
+    variable.id = __memory.generateGlobal(varType)
   elif __scope == Scope.LOCAL:
     # Construct variable locally
     __varsLocal.insert(variable)
+    variable.id = __memory.generateLocal(varType)
 
 def addConstant(const):
   global __constantTable
@@ -622,7 +616,8 @@ def addConstant(const):
       constType = Type.STRING
       constValue = str(const)
     # Create constant
-    __constantTable.insert(Constant(str(const), constType, constValue))
+    c = __constantTable.insert(Constant(str(const), constType, constValue))
+    c.id = __memory.generateConstant(constType)
 
 def addFunction(functionName, functionType, parameters, position):
   global __funcsGlobal
