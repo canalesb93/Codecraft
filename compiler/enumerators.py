@@ -4,12 +4,13 @@
 from libraries.enum import *
 
 class Type(Enum):
-  VOID = 0
+  __order__ = 'BOOL INT FLOAT CHAR STRING VOID'
+  BOOL = 0
   INT = 1
   FLOAT = 2
   CHAR = 3
-  BOOL = 4
-  STRING = 5
+  STRING = 4
+  VOID = 5
 
 class Scope(Enum):
   LOCAL = 0

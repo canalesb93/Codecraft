@@ -1,4 +1,4 @@
-from enumerators import Type
+from enumerators import *
 
 # Memory System
 class MemorySystem:
@@ -10,15 +10,16 @@ class MemorySystem:
     self.constantPointer = {}
 
     # Generate Memory Maps
-    space = 1000 # memory space per type
-    types = [Type.BOOL, Type.INT, Type.FLOAT, Type.CHAR, Type.STRING]
-    for index, t in enumerate(types):
-      self.tempPointer[t] = index * space
-      self.localPointer[t] = (index + 5) * space
-      self.globalPointer[t] = (index + 10) * space
-      self.constantPointer[t] = (index + 15) * space
+    self.space = 1000 # memory space per type
+    for t in Type:
+      if t is Type.VOID:
+        continue
+      self.tempPointer[t] = t.value * self.space
+      self.localPointer[t] = (t.value + 5) * self.space
+      self.globalPointer[t] = (t.value + 10) * self.space
+      self.constantPointer[t] = (t.value + 15) * self.space
 
-    self.memory = [None]*space*20
+    self.memory = [None]*self.space*20
 
   def generateTemporary(self, variableType, size=1):
     if variableType is not None:
@@ -51,37 +52,66 @@ class MemorySystem:
   def __generateAddress(self, memoryMap, variableType, size):
     address = memoryMap[variableType]
     memoryMap[variableType] += size
-
-    # Fill Array with defaults
-    # if size > 1:
-    #   for a in range(address, memoryMap[variableType]):
-    #     if variableType is Type.BOOL:
-    #       self.memory[a] = False
-    #     elif variableType is Type.INT:
-    #       self.memory[a] = 0
-    #     elif variableType is Type.FLOAT:
-    #       self.memory[a] = 0.0
-    #     elif variableType is Type.CHAR:
-    #       self.memory[a] = 0
-    #     elif variableType is Type.STRING:
-    #       self.memory[a] = ""
-
     return address
 
+  def __validateAddress(self, address):
+    if not isinstance(address, int):
+      address = int(address)
+    if address >= 0 and address < len(self.memory):
+      return address
+    else:
+      print "Memory error: address out of bounds"
+
+  def getAddressType(self, address):
+    address = self.__validateAddress(address)
+    address = address % (self.space * 5)
+    for t in Type:
+      if t is Type.VOID:
+        continue
+      if address >= t.value * self.space and address < t.value * self.space + self.space:
+        return t
+    print "Memory error: address not in type bounds"
+    return None
+
   def setValue(self, address, value):
+    address = self.__validateAddress(address)
     if (address >= 0 and address < len(self.memory)):
       if self.memory[address] is None:
         self.memory[address] = value
       else:
-        print("Memory error: address is already used")
+        print "Memory error: address is already used"
     else:
-      print("Memory error: address out of bounds")
+      print "Memory error: address out of bounds"
 
   def getValue(self, address):
-    if (address >= 0 and address < len(self.memory)):
-      if self.memory[address] is not None:
-        return self.memory[address]
-      else:
-        print("Memory error: address is empty")
+    address = self.__validateAddress(address)
+    if self.memory[address] is not None:
+      t = self.getAddressType(address)
+      v = self.memory[address]
+      if t is Type.BOOL:
+        # If value is set as string compare
+        # Else return as is
+        if isinstance(v, str):
+          return v == "True"
+        else:
+          return v
+      elif t is Type.INT:
+        return int(v)
+      elif t is Type.FLOAT:
+        return float(v)
+      elif t is Type.CHAR:
+        return str(v)
+      elif t is Type.STRING:
+        return str(v)
     else:
-      print("Memory error: address out of bounds")
+      print "Memory error: address is empty"
+
+  def getAddressScope(self, address):
+    address = self.__validateAddress(address)
+    if address >= self.space * 5 and address < self.space * 10:
+      return Scope.LOCAL
+    elif address >= self.space * 10 and address < self.space * 15:
+      return Scope.GLOBAL
+    else:
+      print "Memory error: address out of scope"
+      return None
