@@ -18,35 +18,70 @@ class MemorySystem:
       self.globalPointer[t] = (index + 10) * space
       self.constantPointer[t] = (index + 15) * space
 
+    self.memory = [None]*space*20
+
   def generateTemporary(self, variableType, size=1):
     if variableType is not None:
-      return "t-" + self.__generateAddress(self.tempPointer, variableType, size)
+      return self.__generateAddress(self.tempPointer, variableType, size)
     else:
       print("Memory error: variable type not found")
       return None
 
   def generateLocal(self, variableType, size=1):
     if variableType is not None:
-      return "l-" + self.__generateAddress(self.localPointer, variableType, size)
+      return self.__generateAddress(self.localPointer, variableType, size)
     else:
       print("Memory error: variable type not found")
       return None
 
   def generateGlobal(self, variableType, size=1):
     if variableType is not None:
-      return "g-" + self.__generateAddress(self.globalPointer, variableType, size)
+      return self.__generateAddress(self.globalPointer, variableType, size)
     else:
       print("Memory error: variable type not found")
       return None
 
   def generateConstant(self, variableType, size=1):
     if variableType is not None:
-      return "c-" + self.__generateAddress(self.constantPointer, variableType, size)
+      return self.__generateAddress(self.constantPointer, variableType, size)
     else:
       print("Memory error: variable type not found")
       return None
 
   def __generateAddress(self, memoryMap, variableType, size):
-      address = memoryMap[variableType]
-      memoryMap[variableType] += size
-      return variableType.name[0].lower() + str(address)
+    address = memoryMap[variableType]
+    memoryMap[variableType] += size
+
+    # Fill Array with defaults
+    # if size > 1:
+    #   for a in range(address, memoryMap[variableType]):
+    #     if variableType is Type.BOOL:
+    #       self.memory[a] = False
+    #     elif variableType is Type.INT:
+    #       self.memory[a] = 0
+    #     elif variableType is Type.FLOAT:
+    #       self.memory[a] = 0.0
+    #     elif variableType is Type.CHAR:
+    #       self.memory[a] = 0
+    #     elif variableType is Type.STRING:
+    #       self.memory[a] = ""
+
+    return address
+
+  def setValue(self, address, value):
+    if (address >= 0 and address < len(self.memory)):
+      if self.memory[address] is None:
+        self.memory[address] = value
+      else:
+        print("Memory error: address is already used")
+    else:
+      print("Memory error: address out of bounds")
+
+  def getValue(self, address):
+    if (address >= 0 and address < len(self.memory)):
+      if self.memory[address] is not None:
+        return self.memory[address]
+      else:
+        print("Memory error: address is empty")
+    else:
+      print("Memory error: address out of bounds")

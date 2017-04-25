@@ -10,6 +10,6 @@ craft {
     }
   }
   
-  lessthan(A, B)
+  D = lessthan(A, B)
 
 }

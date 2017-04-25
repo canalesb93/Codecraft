@@ -5,11 +5,10 @@ class Constant:
     Object containing information about a constant
     '''
 
-    def __init__(self, name, symbolType, value):
-        self.id = -1
+    def __init__(self, id, name, symbolType):
+        self.id = id
         self.name = name
         self.symbolType = symbolType
-        self.value = value
 
     def address(self):
         return self.id

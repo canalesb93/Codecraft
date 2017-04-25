@@ -9,6 +9,9 @@ class QuadrupleList:
         print self.size(), ". Quadruple: ", quadruple
         self.list.append(quadruple)
 
+    def lookup(self, index):
+        return self.list[index]
+
     def clear(self):
         self.list.clear()
 

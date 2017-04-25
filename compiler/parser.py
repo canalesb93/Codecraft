@@ -10,11 +10,11 @@ from libraries.ply import yacc
 
 # Classes
 
+import csv
 import scanner
 from enumerators import *
 from classes import *
 from cube import *
-from operations import *
 from memory import MemorySystem
 
 if sys.version_info[0] >= 3:
@@ -40,7 +40,7 @@ __typeStack = Stack()
 __jumpStack = Stack()
 
 # Symbol Tables
-__constantTable = SymbolTable() # { 'address':counter, 'type':Type, 'val':value }
+__constantTable = SymbolTable()
 __varsGlobal = SymbolTable()
 __varsLocal = SymbolTable()
 __funcsGlobal = FunctionTable()
@@ -328,7 +328,15 @@ def p_pushOperation(p):
 
 def p_pushIdOperand(p):
   'pushIdOperand :'
-  __operandStack.push(__tVarName)
+  if __scope == Scope.GLOBAL:
+    variable = __varsGlobal.lookup(__tVarName)
+    if variable is None:
+      print "GlobalVar error: variable not found"
+  elif __scope == Scope.LOCAL:
+    variable = __varsLocal.lookup(__tVarName)
+    if variable is None:
+      print "LocalVar error: variable not found"
+  __operandStack.push(variable.address())
   __typeStack.push(__tVarType)
 
 def p_pushConstantOperand(p):
@@ -336,7 +344,7 @@ def p_pushConstantOperand(p):
   constName = str(p[-2])
   constant = __constantTable.lookup(constName)
   if constant is not None:
-    __operandStack.push(constant.name)
+    __operandStack.push(constant.address())
     __typeStack.push(constant.symbolType)
   else:
     print "Constant error: constant not found", constName
@@ -616,8 +624,10 @@ def addConstant(const):
       constType = Type.STRING
       constValue = str(const)
     # Create constant
-    c = __constantTable.insert(Constant(str(const), constType, constValue))
-    c.id = __memory.generateConstant(constType)
+    cid = __memory.generateConstant(constType)
+    c = __constantTable.insert(Constant(cid ,str(const), constType))
+    # Set a constants values in memory
+    __memory.setValue(cid, constValue)
 
 def addFunction(functionName, functionType, parameters, position):
   global __funcsGlobal
@@ -654,6 +664,19 @@ def summary():
   print "G-FUNCS:", __funcsGlobal
   print "================================ END SUMMARY ================================\n"
 
+def export(filename):
+  with open(filename, 'wb') as fp:
+    writer = csv.writer(fp, delimiter=',')
+    # Export Quadruples
+    for q in __quadruples.list:
+      writer.writerow([q.operator, q.operand1, q.operand2, q.result])
+    writer.writerow(['END'])
+    # Export Main Memory
+    for i, a in enumerate(__memory.memory):
+      if a is not None:
+        writer.writerow([i, a])
+    writer.writerow(['END'])
+
 # Main Method
 if __name__ == '__main__':
   if (len(sys.argv) > 1):
@@ -666,6 +689,8 @@ if __name__ == '__main__':
       # Parse the data
       if (yacc.parse(data, tracking = True) == 'OK'):
         print(dirProc);
+      # Export program to csv
+      export(file.replace(".craft", ".crafted"))
       summary()
     except EOFError:
       print(EOFError)

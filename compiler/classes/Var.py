@@ -9,7 +9,6 @@ class Var:
         self.id = -1
         self.name = name
         self.symbolType = symbolType
-        self.value = None
         self.isArray = False
 
     def setIsArray(self, isArray):
