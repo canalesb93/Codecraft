@@ -1,15 +1,20 @@
 craft {
-  var int A = 1 * 1 + 1 / 2, B = 1 + 2
-  var bool C = 5 * (10 + 1 * 10) < 10, D = false
+  var float A = 1 * 1 + 1.0 / 2, B = 1 + 2
+  var bool C = 5 * (10 + 1 * 10) > 10, D = false or true
 
-  function bool lessthan(int X, int Y) {  
-    if (X < Y) {
-      return true and true
-    } else {
-      return false
-    }
-  }
+  # function bool lessthan(int X, int Y) {  
+  #   if (X < Y) {
+  #     return true and true
+  #   } else {
+  #     return false
+  #   }
+  # }
   
-  D = lessthan(A, B)
+  # D = lessthan(A, B)
+  output(A)
+  output(B)
+  output(C)
+  output(D)
+  output("Testing sending strings" + "asfsadf")
 
 }

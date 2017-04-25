@@ -6,7 +6,6 @@ class QuadrupleList:
         self.list = []
 
     def add(self, quadruple):
-        print self.size(), ". Quadruple: ", quadruple
         self.list.append(quadruple)
 
     def lookup(self, index):
