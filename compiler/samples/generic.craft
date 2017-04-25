@@ -15,6 +15,6 @@ craft {
   output(B)
   output(C)
   output(D)
-  output("Testing sending strings" + "asfsadf")
+  output("Testing \"sending\" strings" + "asfsadf")
 
 }

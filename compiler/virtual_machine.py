@@ -32,7 +32,6 @@ def execute():
   ip = 0
   while ip < __quadruples.size():
     q = __quadruples.lookup(ip)
-
     op = q.operator
 
     if isExpression(op):
