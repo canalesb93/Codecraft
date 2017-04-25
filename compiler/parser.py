@@ -261,7 +261,7 @@ def p_constant_float(p):
 def p_constant_strings(p):
     '''constant : CTE_STRING
                 | CTE_CHAR '''
-    p[0] = str(p[1])[1:-1]
+    p[0] = str(p[1])[1:-1].decode('string_escape')
 
 def p_empty(p):
     'empty :'
@@ -627,12 +627,12 @@ def addConstant(const):
     elif isinstance(const, float):  
       constType = Type.FLOAT
       constValue = const
-    elif isinstance(const, str) and len(str(const)) == 3:  
+    elif isinstance(const, str) and len(const) == 1:
       constType = Type.CHAR
-      constValue = str(const)
+      constValue = const
     else:
       constType = Type.STRING
-      constValue = str(const)
+      constValue = const
     # Create constant
     cid = __memory.generateConstant(constType)
     c = __constantTable.insert(Constant(cid ,str(const), constType))

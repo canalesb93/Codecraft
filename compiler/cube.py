@@ -20,7 +20,7 @@ cube['INT+CHAR'] = Type.INT
 cube['FLOAT+INT'] = Type.FLOAT
 cube['FLOAT+FLOAT'] = Type.FLOAT
 cube['CHAR+INT'] = Type.INT
-cube['CHAR+CHAR'] = Type.INT
+cube['CHAR+CHAR'] = Type.STRING
 cube['STRING+STRING'] = Type.STRING
 
 # Substraction

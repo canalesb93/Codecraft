@@ -51,7 +51,7 @@ t_GREATER_EQ  = r'>='
 t_LESS_EQ  = r'<='
 t_CTE_INT = r'\d+'
 t_CTE_FLOAT = r'[-+]?[0-9]+\.[0-9]+([Ee][\+-]?[0-9+])?'
-t_CTE_CHAR = r'\'.*\''
+t_CTE_CHAR = r'\'(?:\\.|[^\'\\])\''
 t_CTE_STRING = r'\"((?:\\.|[^"\\])*)\"'
 
 # Literals 
