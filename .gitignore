@@ -1,5 +1,8 @@
 # Created by https://www.gitignore.io/api/osx,python
 
+# CodeCraft
+*.crafted
+
 ### OSX ###
 *.DS_Store
 .AppleDouble
