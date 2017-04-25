@@ -42,7 +42,7 @@ tokens = [
     'ID',
     'EQ',
     'LESS_EQ',
-    'GREATER_EQ',
+    'GREATER_EQ'
 ] + list(reserved.values())
 
 # Regular expressions for tokens
@@ -52,9 +52,10 @@ t_LESS_EQ  = r'<='
 t_CTE_INT = r'\d+'
 t_CTE_FLOAT = r'[-+]?[0-9]+\.[0-9]+([Ee][\+-]?[0-9+])?'
 t_CTE_CHAR = r'\'.*\''
-t_CTE_STRING = r'\".*\"'
+t_CTE_STRING = r'(\")(?:(?=(\\?)).)*?(\")'
+# ALTERNATE REGEX: t_CTE_STRING = r'(\")(\\?.)*?(\")'
 # Literals 
-literals = [ '+','-','*','/', '%','=','(',')','{','}','[',']','<','>', ',' ]
+literals = [ '+','-','*','/', '%','=','(',')','{','}','[',']','<','>', ',']
 
 # Regular expressions with action code
 

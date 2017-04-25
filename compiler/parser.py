@@ -5,12 +5,12 @@
 # -----------------------------------------------------------------------------
 
 import sys
+import csv
 from libraries.ply import lex
 from libraries.ply import yacc
 
 # Classes
 
-import csv
 import scanner
 from enumerators import *
 from classes import *
@@ -39,12 +39,6 @@ __operationStack = Stack()
 __typeStack = Stack()
 __jumpStack = Stack()
 
-# Symbol Tables
-__constantTable = SymbolTable()
-__varsGlobal = SymbolTable()
-__varsLocal = SymbolTable()
-__funcsGlobal = FunctionTable()
-
 # Temporary Var/Func data
 # Vars
 __tVarType = None
@@ -59,9 +53,15 @@ __tCallName = None
 __tCallType = None
 __tCallArgCount = 0
 
+# Symbol Tables
+__constantTable = SymbolTable()
+__varsGlobal = SymbolTable()
+__varsLocal = SymbolTable()
+__funcsGlobal = FunctionTable()
+__memory = MemorySystem()
+
 # Scope
 __scope = Scope.GLOBAL
-__memory = MemorySystem()
 
 def setLocalScope():
   global __scope 
@@ -179,7 +179,11 @@ def p_block(p):
              | return
              | BREAK
              | CONTINUE
+             | output
              | function_call'''
+
+def p_output(p):
+    '''output : OUTPUT "(" super_expression ")" addOutputQuadruple'''
 
 # ===== CONDITIONALS =====
 
@@ -256,8 +260,8 @@ def p_constant_float(p):
 
 def p_constant_strings(p):
     '''constant : CTE_STRING
-                | CTE_CHAR'''
-    p[0] = str(p[1])
+                | CTE_CHAR '''
+    p[0] = str(p[1])[1:-1]
 
 def p_empty(p):
     'empty :'
@@ -319,6 +323,12 @@ def p_lookupId(p):
   else:
     __tVarName = variable.name
     __tVarType = variable.symbolType
+
+def p_addOutputQuadruple(p):
+  'addOutputQuadruple :'
+  output = __operandStack.pop()
+  __typeStack.pop()
+  __quadruples.add(Quadruple("OUTPUT", None, None, output))
 
 # === Expressions ==
 
@@ -620,7 +630,7 @@ def addConstant(const):
     elif isinstance(const, str) and len(str(const)) == 3:  
       constType = Type.CHAR
       constValue = str(const)
-    else:  
+    else:
       constType = Type.STRING
       constValue = str(const)
     # Create constant
@@ -649,7 +659,7 @@ def setTypeAsArray():
 yacc.yacc()
 
 def summary():
-  print "================================ START SUMMARY ================================:"
+  print "============================= COMPILATION SUMMARY ==========================="
   print "_________Quadruples_________:"
   print __quadruples
   print "_________  Stacks  _________:"
