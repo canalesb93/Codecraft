@@ -15,7 +15,7 @@ import scanner
 from enumerators import *
 from classes import *
 from cube import *
-from memory import MemorySystem
+from memory import AddressSystem
 
 if sys.version_info[0] >= 3:
     raw_input = input
@@ -58,7 +58,7 @@ __constantTable = SymbolTable()
 __varsGlobal = SymbolTable()
 __varsLocal = SymbolTable()
 __funcsGlobal = FunctionTable()
-__memory = MemorySystem()
+__address = AddressSystem()
 
 # Scope
 __scope = Scope.GLOBAL
@@ -475,6 +475,8 @@ def p_endFunction(p):
   'endFunction :'
   global __tFuncParameters
   __varsLocal.clear()
+  f = __funcsGlobal.lookup(__tFuncName)
+  f.limits = __address.retrieveLocalLimits()
   __tFuncParameters = []
   __quadruples.add(Quadruple('ENDPROC', None, None, None))
 
@@ -549,7 +551,7 @@ def p_endFunctionCall(p):
 def p_checkForReturn(p):
   'checkForReturn :'
   if __tCallType != Type.VOID and __tCallType != None:
-    address =  __memory.generateTemporary(__tCallType)
+    address =  __address.generateGlobalTemporary(__tCallType)
     __quadruples.add(Quadruple('=', __tCallName, None, address))
     __operandStack.push(address)
     __typeStack.push(__tCallType)
@@ -589,7 +591,10 @@ def addExpressionQuadruple(operators):
     resultType = getResultType(leftType, operator, rightType)
     if resultType is not None:
       # Generate quadruple
-      address =  __memory.generateTemporary(resultType)
+      if __scope == Scope.GLOBAL:
+        address =  __address.generateGlobalTemporary(resultType)
+      elif __scope == Scope.LOCAL:
+        address =  __address.generateTemporary(resultType)
       __quadruples.add(Quadruple(operator, leftOp, rightOp, address))
       # Update stacks
       __operandStack.push(address)
@@ -608,11 +613,11 @@ def addVariable(name, varType):
   if __scope == Scope.GLOBAL:
     # Construct variable globally
     __varsGlobal.insert(variable)
-    variable.id = __memory.generateGlobal(varType)
+    variable.id = __address.generateGlobal(varType)
   elif __scope == Scope.LOCAL:
     # Construct variable locally
     __varsLocal.insert(variable)
-    variable.id = __memory.generateLocal(varType)
+    variable.id = __address.generateLocal(varType)
 
 def addConstant(const):
   global __constantTable
@@ -634,10 +639,9 @@ def addConstant(const):
       constType = Type.STRING
       constValue = const
     # Create constant
-    cid = __memory.generateConstant(constType)
-    c = __constantTable.insert(Constant(cid ,str(const), constType))
-    # Set a constants values in memory
-    __memory.setValue(cid, constValue)
+    cid = __address.generateConstant(constType)
+    # Save Constant to table
+    __constantTable.insert(Constant(cid ,str(const), constType, constValue))
 
 def addFunction(functionName, functionType, parameters, position):
   global __funcsGlobal
@@ -680,18 +684,17 @@ def export(filename):
     # Export Quadruples
     for q in __quadruples.list:
       writer.writerow([q.operator, q.operand1, q.operand2, q.result])
-    writer.writerow(['END'])
+    writer.writerow(['END', "QUADRUPLES"])
     # Export Main Memory
-    for i, a in enumerate(__memory.memory):
-      if a is not None:
-        writer.writerow([i, a])
-    writer.writerow(['END'])
+    for k, c in __constantTable.symbols.iteritems():
+      writer.writerow([c.id, c.name, c.symbolType, c.value])
+    writer.writerow(['END', "CONSTANTS"])
     # Export Function Table
     for f in __funcsGlobal.functions.itervalues():
       writer.writerow([f.name, f.functionType.value, len(f.parameters), f.quadruplePosition])
       for v in f.parameters:
         writer.writerow([v.id, v.name, v.symbolType.value, v.isArray])
-    writer.writerow(['END'])
+    writer.writerow(['END', "FUNCTIONS"])
 
 # Main Method
 if __name__ == '__main__':

@@ -10,6 +10,7 @@ class Function:
         self.functionType = functionType
         self.parameters = parameters
         self.quadruplePosition = position
+        self.limits = []
 
     def parametersSize(self):
         return len(self.parameters)
