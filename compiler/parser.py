@@ -681,20 +681,31 @@ def summary():
 def export(filename):
   with open(filename, 'wb') as fp:
     writer = csv.writer(fp, delimiter=',')
+    # Export Pointer Limits
+    writer.writerow(limitDictToArray(__address.gtempPointer))
+    writer.writerow(limitDictToArray(__address.localPointer))
+    writer.writerow(limitDictToArray(__address.globalPointer))
+    writer.writerow(limitDictToArray(__address.constantPointer))
+    writer.writerow(['END', "MEM_LIMITS"])
     # Export Quadruples
     for q in __quadruples.list:
       writer.writerow([q.operator, q.operand1, q.operand2, q.result])
     writer.writerow(['END', "QUADRUPLES"])
     # Export Main Memory
     for k, c in __constantTable.symbols.iteritems():
-      writer.writerow([c.id, c.name, c.symbolType, c.value])
+      writer.writerow([c.id, c.value])
     writer.writerow(['END', "CONSTANTS"])
     # Export Function Table
     for f in __funcsGlobal.functions.itervalues():
       writer.writerow([f.name, f.functionType.value, len(f.parameters), f.quadruplePosition])
+      writer.writerow(limitDictToArray(f.limits[0]))
+      writer.writerow(limitDictToArray(f.limits[1]))
       for v in f.parameters:
         writer.writerow([v.id, v.name, v.symbolType.value, v.isArray])
     writer.writerow(['END', "FUNCTIONS"])
+
+def limitDictToArray(limit):
+  return [limit[Type.BOOL], limit[Type.INT], limit[Type.FLOAT], limit[Type.CHAR], limit[Type.STRING]]
 
 # Main Method
 if __name__ == '__main__':

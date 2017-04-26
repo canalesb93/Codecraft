@@ -7,12 +7,14 @@ from memory import MemorySystem
 
 __quadruples = QuadrupleList()
 __constantTable = SymbolTable()
-__varsGlobal = SymbolTable()
-__varsLocal = SymbolTable()
 __funcsGlobal = FunctionTable()
-__memory = MemorySystem()
+
+
+__executionStack = Stack()
 
 def import_memory(filename):
+  global __memory
+
   with open(filename, 'rb') as f:
     reader = csv.reader(f)
     stage = 0 # 0 = quadruples, 1 = constants
@@ -22,16 +24,27 @@ def import_memory(filename):
         if row[0] == 'END':
           stage += 1
           continue
+
         if stage == 0:
+          # Load Limits and Start Memory
+          tgl = rowToLimitDict(row)
+          ll = rowToLimitDict(reader.next())
+          gl = rowToLimitDict(reader.next())
+          cl = rowToLimitDict(reader.next())
+          __memory = MemorySystem([tgl, ll, gl, cl])
+        elif stage == 1:
           # Load Quadruples
           __quadruples.add(Quadruple(row[0], row[1], row[2], row[3]))
-        elif stage == 1:
-          # Load Contants to Memory
-          __memory.setValue(int(row[0]), row[1])
         elif stage == 2:
+          # Load Contants to Memory
+          __memory.setValue(row[0], row[1])
+        elif stage == 3:
           # Load Function Table
           params = []
-          __funcsGlobal.insert(Function(row[0], Type(int(row[1])), params, int(row[3])))
+          f = __funcsGlobal.insert(Function(row[0], Type(int(row[1])), params, int(row[3])))
+          tLimit = rowToLimitDict(reader.next())
+          lLimit = rowToLimitDict(reader.next())
+          f.limits = [tLimit, lLimit]
           paramlen = int(row[2])
           for i in range(0, paramlen):
             row = reader.next()
@@ -46,6 +59,7 @@ def import_memory(filename):
 
 def execute():
   ip = 0 # Instruction Pointer
+
   while ip < __quadruples.size():
     q = __quadruples.lookup(ip)
     op = q.operator
@@ -79,9 +93,24 @@ def execute():
       # Handles teleport
       ip = int(q.result)
 
-    
+    # elif op == "GOSUB":
+    #   # Sends to method
+    #   __executionStack.push(ip)
+    #   ip = int(q.result)
 
+    # elif op == "ERA":
+
+    
 # =============== Helpers ===============
+
+def rowToLimitDict(row):
+  limit = {}
+  limit[Type.BOOL] = int(row[0])
+  limit[Type.INT] = int(row[1])
+  limit[Type.FLOAT] = int(row[2])
+  limit[Type.CHAR] = int(row[3])
+  limit[Type.STRING] = int(row[4])
+  return limit
 
 def isExpression(s):
   if s in ['+', '-', '*', '/', '<', '>', '<=', '>=', '==', '!=', 'and', 'or']:

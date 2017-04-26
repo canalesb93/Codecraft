@@ -80,8 +80,8 @@ class AddressSystem:
 class MemorySystem():
 
   def __init__(self, limits):
-    self.tempLimit = limits[0]
-    self.gtempLimit = limits[1]
+    self.gtempLimit = limits[0]
+    self.localLimit = limits[1]
     self.globalLimit = limits[2]
     self.constantLimit = limits[3]
 
@@ -103,7 +103,7 @@ class MemorySystem():
 
     # Holds ActivationRecord
     self.controlStack = Stack()
-    self.controlStack.push(ActivationRecord([self.gtempLimit, self.tempLimit]))
+    self.controlStack.push(ActivationRecord([self.gtempLimit, self.localLimit]))
 
 
   def __validateAddress(self, address):
@@ -148,7 +148,7 @@ class MemorySystem():
     elif scope is Scope.CONSTANT:
       for t in Type:
         if aType is t:
-          self.constantMemory[t][address] = value
+          self.constantMemory[t.value][address] = value
 
     elif scope is Scope.TEMPORARY or scope is Scope.LOCAL:
       self.controlStack.top().setValue(address, value, aType, scope)
