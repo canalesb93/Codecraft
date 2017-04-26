@@ -190,8 +190,6 @@ class MemorySystem():
     elif t is Type.STRING:
       return str(v)
 
-
-# Memory Instance for procedure
 class ActivationRecord():
   
   def __init__(self, limits):
@@ -239,18 +237,3 @@ class ActivationRecord():
       for t in Type:
         if aType is t:
           return self.localMemory[t.value][address]
-
-
-# TESTS
-'''ms = AddressSystem()
-g1 = ms.generateGlobal(Type.BOOL)
-g2 = ms.generateGlobal(Type.INT)
-g3 = ms.generateGlobal(Type.INT)
-tg1 = ms.generateGlobalTemporary(Type.INT)
-
-m = MemorySystem([ms.tempPointer, ms.gtempPointer, ms.globalPointer, ms.constantPointer])
-
-m.setValue(g3, '120')
-m.setValue(tg1, '412')
-
-print m.getValue(tg1)'''

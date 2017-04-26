@@ -563,14 +563,6 @@ def p_endFunctionCall(p):
   else:
     print "Function error: function not found"
 
-# def p_checkForReturn(p):
-#   'checkForReturn :'
-#   if __tCallType != Type.VOID and __tCallType != None:
-#     address =  __address.generateGlobalTemporary(__tCallType)
-#     __quadruples.add(Quadruple('=', __tCallName, None, address))
-#     __operandStack.push(address)
-#     __typeStack.push(__tCallType)
-
 def p_returnFunctionValue(p):
   'returnFunctionValue :'
   returnType = __typeStack.pop()
