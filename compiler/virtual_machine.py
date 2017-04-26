@@ -79,7 +79,12 @@ def execute():
     elif op == "OUTPUT":
       # Handles printing data
       value = __memory.getValue(q.result)
-      print value
+      sys.stdout.write(str(value))
+      sys.stdout.flush()
+
+    elif op == "OUTPUTLN":
+      sys.stdout.write('\n')
+      sys.stdout.flush()
 
     elif op == "GOTOF":
       # Handles teleport on false condition

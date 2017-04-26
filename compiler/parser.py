@@ -183,7 +183,12 @@ def p_block(p):
              | function_call'''
 
 def p_output(p):
-    '''output : OUTPUT "(" super_expression ")" addOutputQuadruple'''
+    '''output : OUTPUT "(" super_expression addOutputQuadruple output1 ")"
+              | OUTPUTLN "(" super_expression addOutputQuadruple output1 addNewLineQuadruple ")"'''
+
+def p_output1(p):
+    '''output1 : "," super_expression addOutputQuadruple output1
+               | empty'''
 
 # ===== CONDITIONALS =====
 
@@ -329,6 +334,10 @@ def p_addOutputQuadruple(p):
   output = __operandStack.pop()
   __typeStack.pop()
   __quadruples.add(Quadruple("OUTPUT", None, None, output))
+
+def p_addNewLineQuadruple(p):
+  'addNewLineQuadruple :'
+  __quadruples.add(Quadruple("OUTPUTLN", None, None, None))
 
 # === Expressions ==
 

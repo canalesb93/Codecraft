@@ -11,6 +11,7 @@ reserved = {
     'or' : 'OR',
     'input' : 'INPUT',
     'output' : 'OUTPUT',
+    'outputln' : 'OUTPUTLN',
     
     # Functions tokens
     'return' : 'RETURN',
