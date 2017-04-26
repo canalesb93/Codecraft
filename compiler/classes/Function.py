@@ -6,21 +6,13 @@ class Function:
     '''
 
     def __init__(self, name, functionType, parameters, position):
-        self.id = -1
         self.name = name
         self.functionType = functionType
         self.parameters = parameters
         self.quadruplePosition = position
 
-    def clear(self):
-        self.id = -1
-        self.name = ""
-        self.functionType = 0
-        self.parameters = []
-        self.quadruplePosition = -1
-
     def parametersSize(self):
         return len(self.parameters)
 
     def __str__(self):
-        return 'Function: (%s, %s, %s)' % (self.name, self.functionType, self.parameters)
+        return 'Function: (%s, %s, %s, %d)' % (self.name, self.functionType, self.parameters, self.quadruplePosition)

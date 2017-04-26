@@ -686,6 +686,12 @@ def export(filename):
       if a is not None:
         writer.writerow([i, a])
     writer.writerow(['END'])
+    # Export Function Table
+    for f in __funcsGlobal.functions.itervalues():
+      writer.writerow([f.name, f.functionType.value, len(f.parameters), f.quadruplePosition])
+      for v in f.parameters:
+        writer.writerow([v.id, v.name, v.symbolType.value, v.isArray])
+    writer.writerow(['END'])
 
 # Main Method
 if __name__ == '__main__':

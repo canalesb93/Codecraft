@@ -18,4 +18,4 @@ class Var:
         return self.id
 
     def __str__(self):
-        return 'Variable: (%s, %s, %r)' % (self.name, self.symbolType, self.isArray)
+        return 'Variable: (%d, %s, %s, %r)' % (self.id, self.name, self.symbolType, self.isArray)
