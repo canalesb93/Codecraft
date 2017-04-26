@@ -160,12 +160,12 @@ def p_parameters1(p):
 
 # pending: return on void and when free roaming the return
 def p_return(p):
-    '''return : RETURN
+    '''return : RETURN returnFunction
               | RETURN super_expression returnFunctionValue'''
 
 def p_function_call(p):
     '''function_call : ID "(" lookupFunction startFunctionCall addFakeBottom parameters removeFakeBottom ")" verifyArguments endFunctionCall
-                     | ID "(" lookupFunction ")" endFunctionCall'''
+                     | ID "(" lookupFunction startFunctionCall ")" endFunctionCall'''
 
 def p_block_repeater(p):
     '''block_repeater : block block_repeater
@@ -572,6 +572,10 @@ def p_returnFunctionValue(p):
     print "Function error: return type mismatch"
     summary()
     exit(1)
+
+def p_returnFunction(p):
+  'returnFunction :'
+  __quadruples.add(Quadruple('RETURN', None, None, None))
 
 # =============== Grammar Actions END ===============
 

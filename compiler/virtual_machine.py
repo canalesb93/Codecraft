@@ -116,7 +116,7 @@ def execute():
       func = __funcsGlobal.lookup(name)
       ar = __memory.callStack.pop()
       ar.callPosition = ip
-      if q.result is not None:
+      if q.result:
         ar.returnAddress = q.result
       __memory.controlStack.push(ar)
       # Sends to method
@@ -124,9 +124,10 @@ def execute():
 
     elif op == "RETURN":
       # Pop ActivationRecord send return value
-      if ar.returnAddress is not None and q.result is not None:
+      ar = __memory.controlStack.top()
+      if q.result:
         value = __memory.getValue(q.result)
-        ar = __memory.controlStack.pop()
+        __memory.controlStack.pop()
         __memory.setValue(ar.returnAddress, value)
       else:
         __memory.controlStack.pop()
