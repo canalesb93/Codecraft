@@ -103,6 +103,7 @@ class MemorySystem():
 
     # Holds ActivationRecord
     self.controlStack = Stack()
+    self.callStack = Stack()
     self.controlStack.push(ActivationRecord([self.gtempLimit, self.localLimit]))
 
 
@@ -196,6 +197,10 @@ class ActivationRecord():
   def __init__(self, limits):
     self.tempLimit = limits[0]
     self.localLimit = limits[1]
+
+    self.parameters = []
+    self.callPosition = 0
+    self.returnAddress = None
 
     self.space = 1000
 

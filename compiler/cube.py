@@ -119,3 +119,9 @@ def getResultType(leftType, operator, rightType):
     return None
   else:
     return cube[key]
+
+def assignmentCompatible(leftType, rightType):
+  r = getResultType(leftType, '=', rightType)
+  if r is None:
+    return False  
+  return True

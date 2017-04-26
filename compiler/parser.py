@@ -164,8 +164,8 @@ def p_return(p):
               | RETURN super_expression returnFunctionValue'''
 
 def p_function_call(p):
-    '''function_call : ID "(" lookupFunction startFunctionCall parameters ")" verifyArguments endFunctionCall checkForReturn
-                     | ID "(" lookupFunction ")" endFunctionCall checkForReturn'''
+    '''function_call : ID "(" lookupFunction startFunctionCall addFakeBottom parameters removeFakeBottom ")" verifyArguments endFunctionCall
+                     | ID "(" lookupFunction ")" endFunctionCall'''
 
 def p_block_repeater(p):
     '''block_repeater : block block_repeater
@@ -422,7 +422,7 @@ def p_endIfConditional(p):
 
 def p_elseConditional(p):
   'elseConditional :'
-  __quadruples.add(Quadruple('GOTO', None, None, -1))
+  __quadruples.add(Quadruple("GOTO", None, None, -1))
   # Set else position
   setLastJumpPosition(__quadruples.size())
   # Save goto position
@@ -432,7 +432,7 @@ def p_elseIfConditional(p):
   'elseIfConditional :'
   setLastJumpPosition(__quadruples.size() + 1)
   setLastJumpPosition(__quadruples.size())
-  __quadruples.add(Quadruple('GOTO', None, None, -1))
+  __quadruples.add(Quadruple("GOTO", None, None, -1))
   # Save goto position
   __jumpStack.push(__quadruples.size()-1)
 
@@ -479,6 +479,7 @@ def p_endFunction(p):
   f.limits = __address.retrieveLocalLimits()
   __tFuncParameters = []
   __quadruples.add(Quadruple('ENDPROC', None, None, None))
+  setLastJumpPosition(__quadruples.size())
 
 def p_addParameter(p):
   'addParameter :'
@@ -490,8 +491,9 @@ def p_addParameter(p):
 
 def p_addFunction(p):
   'addFunction :'
+  __quadruples.add(Quadruple("SKIP", None, None, -1))
+  __jumpStack.push(__quadruples.size()-1)
   addFunction(__tFuncName, __tFuncType, __tFuncParameters, __quadruples.size())
-  # print('Local Variables: %s' % __varsLocal)
 
 def p_lookupFunctionId(p):
   'lookupFunction :'
@@ -509,7 +511,7 @@ def p_lookupFunctionId(p):
 def p_startFunctionCall(p):
   'startFunctionCall :'
   global __tCallArgCount
-  __quadruples.add(Quadruple("ERA", __tFuncName, None, None))
+  __quadruples.add(Quadruple("ERA", __tCallName, None, None))
   __tCallArgCount = 0
 
 def p_addArgument(p):
@@ -520,17 +522,12 @@ def p_addArgument(p):
   function = __funcsGlobal.lookup(__tCallName)
   parameter = function.parameters[__tCallArgCount]
   if argumentType == parameter.symbolType:
-    __quadruples.add(Quadruple('PARAM', argument, None, __tCallArgCount))
+    __quadruples.add(Quadruple("PARAM", argument, None, __tCallArgCount))
     __tCallArgCount += 1 
   else:
     print "Function error: parameter type mismatch"
     summary()
     exit(1)
-
-# def p_increaseArguments(p):
-#   'increaseArguments :'
-#   global __tCallArgCount
-    # __tCallArgCount += 1 
 
 def p_verifyArguments(p):
   'verifyArguments :'
@@ -544,23 +541,32 @@ def p_endFunctionCall(p):
   'endFunctionCall :'
   function = __funcsGlobal.lookup(__tCallName)
   if function is not None:
-    __quadruples.add(Quadruple('GOSUB', __tCallName, None, function.quadruplePosition))
+    if __tCallType != Type.VOID and __tCallType != None:
+      if __scope == Scope.GLOBAL:
+        address =  __address.generateGlobalTemporary(__tCallType)
+      elif __scope == Scope.LOCAL:
+        address =  __address.generateTemporary(__tCallType)
+      __operandStack.push(address)
+      __typeStack.push(__tCallType)
+      __quadruples.add(Quadruple('GOSUB', __tCallName, None, address))
+    else:
+      __quadruples.add(Quadruple('GOSUB', __tCallName, None, None))
   else:
     print "Function error: function not found"
 
-def p_checkForReturn(p):
-  'checkForReturn :'
-  if __tCallType != Type.VOID and __tCallType != None:
-    address =  __address.generateGlobalTemporary(__tCallType)
-    __quadruples.add(Quadruple('=', __tCallName, None, address))
-    __operandStack.push(address)
-    __typeStack.push(__tCallType)
+# def p_checkForReturn(p):
+#   'checkForReturn :'
+#   if __tCallType != Type.VOID and __tCallType != None:
+#     address =  __address.generateGlobalTemporary(__tCallType)
+#     __quadruples.add(Quadruple('=', __tCallName, None, address))
+#     __operandStack.push(address)
+#     __typeStack.push(__tCallType)
 
 def p_returnFunctionValue(p):
   'returnFunctionValue :'
   returnType = __typeStack.pop()
   returnValue = __operandStack.pop()
-  if returnType == __tFuncType:
+  if assignmentCompatible(returnType, __tFuncType):
     __quadruples.add(Quadruple('RETURN', None, None, returnValue))
   else:
     print "Function error: return type mismatch"

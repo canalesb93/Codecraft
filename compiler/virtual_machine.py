@@ -4,13 +4,11 @@ import csv
 from enumerators import *
 from classes import *
 from memory import MemorySystem
+from memory import ActivationRecord
 
 __quadruples = QuadrupleList()
 __constantTable = SymbolTable()
 __funcsGlobal = FunctionTable()
-
-
-__executionStack = Stack()
 
 def import_memory(filename):
   global __memory
@@ -89,16 +87,56 @@ def execute():
       if conditional is False:
         ip = int(q.result)
 
-    elif op == "GOTO":
+    elif op == "GOTO" or op == "SKIP":
       # Handles teleport
       ip = int(q.result)
 
-    # elif op == "GOSUB":
-    #   # Sends to method
-    #   __executionStack.push(ip)
-    #   ip = int(q.result)
+    elif op == "ERA":
+      # Push ActivationRecord to control stack
+      name = q.operand1
+      func = __funcsGlobal.lookup(name)
+      ar = ActivationRecord(func.limits)
+      ar.parameters = func.parameters
+      __memory.callStack.push(ar)
 
-    # elif op == "ERA":
+    elif op == "PARAM":
+      # Setup ActivationRecord local values
+      value = __memory.getValue(q.operand1)
+      position = int(q.result)
+      ar = __memory.callStack.top()
+      # HACK: Push and pop ar after setting param value
+      __memory.controlStack.push(ar)
+      __memory.setValue(ar.parameters[position].address(), value)
+      __memory.controlStack.pop()
+
+    elif op == "GOSUB":
+      # Setup ActivationRecord callPos and returnAddress
+      # Handles teleport
+      name = q.operand1
+      func = __funcsGlobal.lookup(name)
+      ar = __memory.callStack.pop()
+      ar.callPosition = ip
+      if q.result is not None:
+        ar.returnAddress = q.result
+      __memory.controlStack.push(ar)
+      # Sends to method
+      ip = func.quadruplePosition
+
+    elif op == "RETURN":
+      # Pop ActivationRecord send return value
+      if ar.returnAddress is not None and q.result is not None:
+        value = __memory.getValue(q.result)
+        ar = __memory.controlStack.pop()
+        __memory.setValue(ar.returnAddress, value)
+      else:
+        __memory.controlStack.pop()
+      # Return to call position
+      ip = ar.callPosition
+
+    elif op == "ENDPROC":
+      ar = __memory.controlStack.pop()
+      ip = ar.callPosition
+
 
     
 # =============== Helpers ===============
