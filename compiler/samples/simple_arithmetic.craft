@@ -1,0 +1,7 @@
+craft {
+  var int A = 1 * (1 + 1 / 2)
+  var float B = 3 / 2.0
+  output(A + B)
+}
+
+# 2.5

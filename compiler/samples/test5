@@ -1,7 +1,0 @@
-craft{
-	var int arr[5] = {0, 1, 2, 3, 4}
-	var int x = 0
-	while(x < 5){
-		output(arr[x])
-	}
-}

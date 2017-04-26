@@ -1,0 +1,10 @@
+craft { 
+
+  var int test1 = 1 + 1, test2 = 0
+
+  function bool sample(int X, int Y) {  
+    return X < Y
+  }
+
+  var bool answer = sample(test1, test2)
+}

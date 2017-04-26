@@ -1,21 +1,42 @@
 craft {
   var float A = 1 * 1 + 1.0 / 2, B = 1 + 2
-  var bool C = 5 * (10 + 1 * 10) > 10, D = false or true
+  var bool C = 5 * (10 + 1 * 10) < 10, D = false or true
+  var int E = 5 * (10 + 1 * 10)
 
-  # function bool lessthan(int X, int Y) {  
-  #   if (X < Y) {
-  #     return true and true
-  #   } else {
-  #     return false
-  #   }
-  # }
-  
+  function bool lessthan(int X, int Y) {  
+    if (X < Y) {
+      return true and true
+    } else {
+      return false
+    }
+  }
+
+  function float floater(int random) {
+    if (random <= 50) {
+      return random * 1.5
+    } else if (random > 50) {
+      return random * 0.5
+    }
+    return random
+  }
+
+  if (lessthan(E, 100)) {
+    output("LESSTHAN TRUE")
+  } else {
+    output("LESSTHAN FALSE")
+  }
+
+  output(floater(50))
+
+  function void justprint(bool flag) {
+    if (flag == false) {
+      return
+    }
+    output("PRINTING")
+  }
+
+  justprint(true)
   # D = lessthan(A, B)
-  output(A)
-  output(B)
-  output(C)
-  output(D)
-  output("Testing \"sending\" strings" + "asfsadf")
-  output('a' + '\'')
-
+  # output("Testing \"sending\" strings" + "asfsadf")
+  # output('a' + '\'')
 }

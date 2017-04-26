@@ -1,7 +1,9 @@
 craft {
-  var int A, B, C, D
+  var int A = 3, B = 5, C, D
+  C = 10
+  D = 8
 
-  if (A + B > D) {
+  if (A + B >= D) {
     if (A < B) {
       A = 0
       B = B + D
@@ -12,4 +14,9 @@ craft {
     A = B + C
   }
   D = B + A * C
+
+  outputln("A: ", A)
+  outputln("B: ", B)
+  outputln("C: ", C)
+  outputln("D: ", D)
 }

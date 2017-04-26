@@ -1,1 +1,0 @@
-craft{var bool b = (1 < 2) and ((1 > 2) or (1 > 0)) output(b)}
