@@ -43,15 +43,15 @@ __jumpStack = Stack()
 # Vars
 __tVarType = None
 __tVarName = None
-__tVarIsArray = False
+__tVarSize = 1
 # Funcs
 __tFuncName = None
 __tFuncType = None
 __tFuncParameters = []
 # Func Calls
-__tCallName = None
-__tCallType = None
-__tCallArgCount = 0
+__tCallName = Stack()
+__tCallType = Stack()
+__tCallArgCount = Stack()
 
 # Symbol Tables
 __constantTable = SymbolTable()
@@ -109,7 +109,7 @@ def p_vars(p):
     '''vars : VAR type saveVariableType var'''
 
 def p_var(p):
-    '''var : ID addVariable var_array var_assignment var_repeater
+    '''var : ID addVariable var_array_size var_assignment var_repeater
            '''
 
 def p_var_repeater(p):
@@ -122,9 +122,11 @@ def p_var_assignment(p):
                       | empty
                       '''
 
-def p_var_array(p):
-    '''var_array : "[" CTE_INT "]" setTypeAsArray
-                 | empty'''
+# ===== ARRAYS =====
+
+def p_var_array_size(p):
+    '''var_array_size : "[" CTE_INT setArraySize "]"
+                      | empty'''
 
 # def p_assignment_array(p):
 #     '''assignment_array : ID "=" "{" parameters "}" ',' assignment
@@ -306,9 +308,18 @@ def p_addConstant(p):
   constRaw = p[-1]
   addConstant(constRaw)
 
-def p_setTypeAsArray(p):
-  'setTypeAsArray :'
-  setTypeAsArray()
+def p_setArraySize(p):
+  'setArraySize :'
+  size = int(p[-1])
+
+  if __scope == Scope.GLOBAL:
+    variable = __varsGlobal.lookup(__tVarName)
+    variable.setSize(size)
+    __address.generateGlobal(variable.symbolType, size - 1)
+  elif __scope == Scope.LOCAL:
+    variable = __varsLocal.lookup(__tVarName)
+    variable.setSize(size)
+    __address.generateLocal(variable.symbolType, size - 1)
 
 def p_lookupId(p):
   'lookupId :'
@@ -506,12 +517,11 @@ def p_addFunction(p):
 
 def p_lookupFunctionId(p):
   'lookupFunction :'
-  global __tCallName, __tCallType
   functionId = p[-2]
   function = __funcsGlobal.lookup(functionId)
   if function is not None:
-    __tCallName = function.name
-    __tCallType = function.functionType
+    __tCallName.push(function.name)
+    __tCallType.push(function.functionType)
   else:
     print("Function error: function not found")
     summary()
@@ -519,20 +529,19 @@ def p_lookupFunctionId(p):
 
 def p_startFunctionCall(p):
   'startFunctionCall :'
-  global __tCallArgCount
-  __quadruples.add(Quadruple("ERA", __tCallName, None, None))
-  __tCallArgCount = 0
+  __quadruples.add(Quadruple("ERA", __tCallName.top(), None, None))
+  __tCallArgCount.push(0)
 
 def p_addArgument(p):
   'addArgument :'
-  global __tCallArgCount
   argument = __operandStack.pop()
   argumentType = __typeStack.pop()
-  function = __funcsGlobal.lookup(__tCallName)
-  parameter = function.parameters[__tCallArgCount]
+  function = __funcsGlobal.lookup(__tCallName.top())
+  parameter = function.parameters[__tCallArgCount.top()]
   if argumentType == parameter.symbolType:
-    __quadruples.add(Quadruple("PARAM", argument, None, __tCallArgCount))
-    __tCallArgCount += 1 
+    argCount = __tCallArgCount.pop()
+    __quadruples.add(Quadruple("PARAM", argument, None, argCount))
+    __tCallArgCount.push(argCount + 1) 
   else:
     print "Function error: parameter type mismatch"
     summary()
@@ -540,26 +549,29 @@ def p_addArgument(p):
 
 def p_verifyArguments(p):
   'verifyArguments :'
-  function = __funcsGlobal.lookup(__tCallName)
-  if function.parametersSize() != __tCallArgCount:
+  function = __funcsGlobal.lookup(__tCallName.top())
+  if function.parametersSize() != __tCallArgCount.top():
     print "Function error: incorrect number of arguments"
     summary()
     exit(1)
 
 def p_endFunctionCall(p):
   'endFunctionCall :'
-  function = __funcsGlobal.lookup(__tCallName)
+  function = __funcsGlobal.lookup(__tCallName.top())
+  __tCallName.pop()
+  __tCallType.pop()
+  __tCallArgCount.pop()
   if function is not None:
-    if __tCallType != Type.VOID and __tCallType != None:
+    if __tCallType != Type.VOID and function.functionType != None:
       if __scope == Scope.GLOBAL:
-        address =  __address.generateGlobalTemporary(__tCallType)
+        address =  __address.generateGlobalTemporary(function.functionType)
       elif __scope == Scope.LOCAL:
-        address =  __address.generateTemporary(__tCallType)
+        address =  __address.generateTemporary(function.functionType)
       __operandStack.push(address)
-      __typeStack.push(__tCallType)
-      __quadruples.add(Quadruple('GOSUB', __tCallName, None, address))
+      __typeStack.push(function.functionType)
+      __quadruples.add(Quadruple('GOSUB', function.name, None, address))
     else:
-      __quadruples.add(Quadruple('GOSUB', __tCallName, None, None))
+      __quadruples.add(Quadruple('GOSUB', function.name, None, None))
   else:
     print "Function error: function not found"
 
@@ -659,15 +671,6 @@ def addFunction(functionName, functionType, parameters, position):
   function = Function(functionName, functionType, parameters, position)
   __funcsGlobal.insert(function)
 
-def setTypeAsArray():
-  if __scope == Scope.GLOBAL:
-    global __varsGlobal
-    variable = __varsGlobal.lookup(__tVarName)
-    variable.setIsArray(True)
-  elif __scope == Scope.LOCAL:
-    global __varsLocal
-    variable = __varsLocal.lookup(__tVarName)
-    variable.setIsArray(True)
 
 # =============== Execution ===============
 
@@ -687,7 +690,7 @@ def summary():
   print "L-VARS: (", __varsLocal.size(), ")", __varsLocal
   print "CONSTS: (", __constantTable.size(), ")", __constantTable
   print "G-FUNCS:", __funcsGlobal
-  print "================================ END SUMMARY ================================\n"
+  print "================================ END SUMMARY ================================"
 
 def export(filename):
   with open(filename, 'wb') as fp:
@@ -712,7 +715,7 @@ def export(filename):
       writer.writerow(limitDictToArray(f.limits[0]))
       writer.writerow(limitDictToArray(f.limits[1]))
       for v in f.parameters:
-        writer.writerow([v.id, v.name, v.symbolType.value, v.isArray])
+        writer.writerow([v.id, v.name, v.symbolType.value, v.size])
     writer.writerow(['END', "FUNCTIONS"])
 
 def limitDictToArray(limit):

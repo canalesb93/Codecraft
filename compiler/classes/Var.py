@@ -9,10 +9,11 @@ class Var:
         self.id = -1
         self.name = name
         self.symbolType = symbolType
-        self.isArray = False
+        self.size = 1
 
-    def setIsArray(self, isArray):
-        self.isArray = isArray
+    def setSize(self, size):
+        self.size = size
+
 
     def address(self):
         return self.id
