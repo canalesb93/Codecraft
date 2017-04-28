@@ -1,7 +1,26 @@
+# -----------------------------------------------------------------------------
+# memory.py
+#
+# Author: Ricardo Canales and Gabriel Berlanga
+#
+# This module implements the memory management for CodeCraft programming
+# language.
+# -----------------------------------------------------------------------------
+
 from enumerators import *
 from classes import *
 
-# Memory System
+# -----------------------------------------------------------------------------
+# AddressSystem
+#
+# This object holds information about memory address pointers
+#
+# When an address is requested, pointers are increased. This keeps track of 
+# the amount of space the program will need to run. Addresses are used in 
+# generated quadruples.
+# Note: This class is only used in compilation phase
+# -----------------------------------------------------------------------------
+
 class AddressSystem:
 
   def __init__(self):
@@ -76,6 +95,19 @@ class AddressSystem:
     address = memoryMap[variableType]
     memoryMap[variableType] += size
     return address
+
+# -----------------------------------------------------------------------------
+# MemorySystem
+#
+# This object holds the values used during a program's run-time.
+#
+# Functioning as the main gateway to all values, global and constant 
+# values are held directly here. When a value is requested or modified 
+# it's type and scope are parsed from the address (based on ranges).
+# The MemorySystem also manages the control-stack, sending and requesting
+# local and temporary values through it.
+# Note: This class is only used in Execution phase
+# -----------------------------------------------------------------------------
 
 class MemorySystem():
 
@@ -189,6 +221,20 @@ class MemorySystem():
       return str(v)
     elif t is Type.STRING:
       return str(v)
+
+# -----------------------------------------------------------------------------
+# ActivationRecord
+#
+# This object holds the local and temporary values used during a FUNCTION in 
+# the program's run-time.
+#
+# Created during run-time, ActivationRecords are added and removed from the 
+# control-stack in the MemorySystem. An activation record will contain 
+# values from an instance(important!) of a function. When that function 
+# has concluded the activation record is removed from the control-stack. 
+# This allows recursive calls and more.
+# Note: This class is only used in Execution phase
+# -----------------------------------------------------------------------------      
 
 class ActivationRecord():
   

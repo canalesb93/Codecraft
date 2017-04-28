@@ -1,3 +1,11 @@
+# -----------------------------------------------------------------------------
+# virtual_machine.py
+#
+# Author: Ricardo Canales and Gabriel Berlanga
+#
+# This module simulates memory and executes the compiled program.
+# -----------------------------------------------------------------------------
+
 import sys
 import csv
 
@@ -6,9 +14,34 @@ from classes import *
 from memory import MemorySystem
 from memory import ActivationRecord
 
+# \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+# =============================================================================
+# Setup and Import
+#
+# Prepend "__" to all global variables for easy undestanding. Remember to use 
+# "global" when modifying these variables in a different scope.
+# 
+# Handles importing memory from compiled program file.
+# =============================================================================
+# /////////////////////////////////////////////////////////////////////////////
+
 __quadruples = QuadrupleList()
 __constantTable = SymbolTable()
 __funcsGlobal = FunctionTable()
+
+# -----------------------------------------------------------------------------
+# import_memory()
+#
+# Opens the compiled program and parsers its data into memory. The process
+# is divided in 4 stages:
+# 
+#     1. Load Limits
+#     2. Load Quadruples
+#     3. Load Constants
+#     4. Load Function Table
+# 
+# Once done the program will begin execution.
+# -----------------------------------------------------------------------------
 
 def import_memory(filename):
   global __memory
@@ -53,6 +86,22 @@ def import_memory(filename):
         print "CSV error: import memory failed"
       except StopIteration:
         break
+
+# \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+# =============================================================================
+# Execution
+# 
+# General execution of program file instructions
+# =============================================================================
+# /////////////////////////////////////////////////////////////////////////////
+
+# -----------------------------------------------------------------------------
+# execute()
+#
+# Iterates through the list of quadruples with "ip"(instruction pointer). 
+# Each processed quadruple will contain a expression of ID of an action which 
+# will be realized. Memory manipulation happens here.
+# -----------------------------------------------------------------------------
 
 def execute():
   ip = 0 # Instruction Pointer
@@ -142,9 +191,16 @@ def execute():
       ar = __memory.controlStack.pop()
       ip = ar.callPosition
 
+# =============================================================================
+# Helpers
+# =============================================================================
 
-    
-# =============== Helpers ===============
+# -----------------------------------------------------------------------------
+# rowToLimitDict()
+#
+# Converts a OBJ file row to a dictionary with types limit. Used by the
+# importer.
+# -----------------------------------------------------------------------------
 
 def rowToLimitDict(row):
   limit = {}
@@ -155,11 +211,21 @@ def rowToLimitDict(row):
   limit[Type.STRING] = int(row[4])
   return limit
 
+# -----------------------------------------------------------------------------
+# isExpression()
+#
+# Confirms wether the string is an operation.
+# -----------------------------------------------------------------------------
+
 def isExpression(s):
-  if s in ['+', '-', '*', '/', '<', '>', '<=', '>=', '==', '!=', 'and', 'or']:
-    return True
-  else:
-    return False
+  return s in ['+', '-', '*', '/', '<', '>', '<=', '>=', '==', '!=', 'and', 'or']
+
+# -----------------------------------------------------------------------------
+# performArithmeticExpression()
+#
+# Given a left value, str(operator) and right value. Performs the expression. 
+# Returns the performed expression value.
+# -----------------------------------------------------------------------------
 
 def performArithmeticExpression(left, op, right):
   if op == '+':
@@ -194,7 +260,12 @@ def performArithmeticExpression(left, op, right):
     print "Operation error: operator not found (!)"
     exit()
 
-# =============== Main ===============
+def pause():
+  programPause = raw_input("Press the <ENTER> key to continue...")
+
+# =============================================================================
+# Main
+# =============================================================================
 
 if __name__ == '__main__':
   if (len(sys.argv) > 1):
