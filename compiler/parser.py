@@ -242,11 +242,16 @@ def p_exp(p):
          | term tryAddSubQuadruple '-' pushOperation exp '''
 
 def p_term(p):
-  '''term : factor tryMultDivQuadruple
-          | factor tryMultDivQuadruple '*' pushOperation term
-          | factor tryMultDivQuadruple '/' pushOperation term'''
+  '''term : uminus tryMultDivQuadruple
+          | uminus tryMultDivQuadruple '*' pushOperation term
+          | uminus tryMultDivQuadruple '/' pushOperation term'''
 
 # pending UMINUS
+
+def p_uminus(p):
+  '''uminus : '-' factor generateUMinusQuadruple 
+            | factor'''
+
 def p_factor(p):
   '''factor : '(' addFakeBottom super_expression removeFakeBottom ')'
             | value'''
@@ -474,6 +479,24 @@ def p_addAddressBase(p):
   __tVarName.pop()
   __tVarType.pop()
 
+def p_generateUMinusQuadruple(p):
+  'generateUMinusQuadruple :'
+  rightOp = __operandStack.pop()
+  t = __typeStack.pop()
+  if t is Type.BOOL or t is Type.CHAR or t is Type.STRING:
+    print "Arithmetic error: can't negate expression"
+    summary()
+    exit(1)
+  addConstant(-1)
+  c = __constantTable.lookup("-1")
+  resultType = getResultType(c.symbolType, "*", t)
+  if __scope == Scope.GLOBAL:
+    address =  __address.generateGlobalTemporary(Type.INT)
+  elif __scope == Scope.LOCAL:
+    address =  __address.generateTemporary(Type.INT)
+  __quadruples.add(Quadruple('*', c.address(), rightOp, address))
+  __operandStack.push(address)
+  __typeStack.push(resultType)
 
 # === Expressions ===
 
