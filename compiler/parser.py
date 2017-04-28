@@ -19,7 +19,6 @@ from classes import *
 from cube import *
 from memory import AddressSystem
 
-
 # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 # =============================================================================
 # Setup
@@ -91,24 +90,24 @@ def p_canvas_block(p):
                   | empty'''
 
 def p_type(p):
-    '''type : VOID
-            | INT
-            | FLOAT
-            | CHAR
-            | BOOL
-            | STRING'''
-    if(p[1] == 'void'):
-      p[0] = Type.VOID
-    elif(p[1] == 'int'):
-      p[0] = Type.INT
-    elif(p[1] == 'float'):
-      p[0] = Type.FLOAT
-    elif(p[1] == 'char'):
-      p[0] = Type.CHAR
-    elif(p[1] == 'bool'):
-      p[0] = Type.BOOL
-    elif(p[1] == 'string'):
-      p[0] = Type.STRING
+  '''type : VOID
+          | INT
+          | FLOAT
+          | CHAR
+          | BOOL
+          | STRING'''
+  if(p[1] == 'void'):
+    p[0] = Type.VOID
+  elif(p[1] == 'int'):
+    p[0] = Type.INT
+  elif(p[1] == 'float'):
+    p[0] = Type.FLOAT
+  elif(p[1] == 'char'):
+    p[0] = Type.CHAR
+  elif(p[1] == 'bool'):
+    p[0] = Type.BOOL
+  elif(p[1] == 'string'):
+    p[0] = Type.STRING
 
 # =============================================================================
 # Variables
@@ -294,38 +293,37 @@ def p_value(p):
 # =============================================================================
 
 def p_constant_int(p):
-    "constant : CTE_INT"
-    p[0] = int(p[1])
+  "constant : CTE_INT"
+  p[0] = int(p[1])
 
 def p_constant_boolean(p):
-    '''constant : FALSE
-                | TRUE'''
-    if p[1] == 'false':
-        p[0] = False
-    elif p[1] == 'true':
-        p[0] = True
+  '''constant : FALSE
+              | TRUE'''
+  if p[1] == 'false':
+      p[0] = False
+  elif p[1] == 'true':
+      p[0] = True
 
 def p_constant_float(p):
-    "constant : CTE_FLOAT"
-    p[0] = float(p[1])
+  "constant : CTE_FLOAT"
+  p[0] = float(p[1])
 
 def p_constant_strings(p):
-    '''constant : CTE_STRING
-                | CTE_CHAR '''
-    p[0] = str(p[1])[1:-1].decode('string_escape')
+  '''constant : CTE_STRING
+              | CTE_CHAR '''
+  p[0] = str(p[1])[1:-1].decode('string_escape')
 
 def p_empty(p):
-    'empty :'
-    pass
+  'empty :'
+  pass
 
 def p_error(p):
-    if p:
-        print("Syntax error at '%s'" % p.value)
-    else:
-        print("Syntax error at EOF")
-    summary()
-    exit(1)
-
+  if p:
+      print("Syntax error at '%s'" % p.value)
+  else:
+      print("Syntax error at EOF")
+  summary()
+  exit(1)
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 # =============================================================================

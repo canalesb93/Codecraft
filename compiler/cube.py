@@ -1,3 +1,11 @@
+# -----------------------------------------------------------------------------
+# cube.py
+#
+# Author: Ricardo Canales and Gabriel Berlanga
+#
+# This module is used ot validate expressions compatibility in types.
+# -----------------------------------------------------------------------------
+
 from enumerators import Type
 
 cube = {}
