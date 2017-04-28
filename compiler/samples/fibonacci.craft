@@ -21,8 +21,8 @@ craft {
     return x
   }
 
-  outputln(fibonacciRecursive(9))
-  outputln(fibonacciIterative(8))
+  outputln(fibonacciRecursive(22))
+  outputln(fibonacciIterative(20))
 }
 
 # 21

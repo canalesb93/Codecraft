@@ -110,7 +110,7 @@ def p_vars(p):
     '''vars : VAR type saveVariableType var eraseVariableType'''
 
 def p_var(p):
-    '''var : ID addVariable var_array_init var_assignment eraseVariableName var_repeater
+    '''var : ID saveVariableName addVariable var_array_init var_assignment eraseVariableName var_repeater
            '''
 
 def p_var_repeater(p):
@@ -119,7 +119,7 @@ def p_var_repeater(p):
                     '''
 
 def p_var_assignment(p):
-    '''var_assignment : pushRepIdOperand "=" pushOperation super_expression addAssignmentQuadruple
+    '''var_assignment : pushIdOperand "=" pushOperation super_expression addAssignmentQuadruple
                       | empty'''
 
 # ===== ARRAYS =====
@@ -140,10 +140,10 @@ def p_var_array_dimension(p):
 #     pass
 
 def p_var_free_assignment(p):
-    '''var_free_assignment : pushIdOperand "=" pushOperation super_expression addAssignmentQuadruple'''
+    '''var_free_assignment : pushIdOperand eraseVariableName eraseVariableType "=" pushOperation super_expression addAssignmentQuadruple'''
 
 def p_var_arr_free_assignment(p):
-    '''var_arr_free_assignment : saveDimension index_selector "=" pushOperation super_expression addAssignmentQuadruple'''
+    '''var_arr_free_assignment : index_selector "=" pushOperation super_expression addAssignmentQuadruple'''
 
 # ===== FUNCTIONS =====
 
@@ -258,15 +258,15 @@ def p_factor(p):
 
 def p_value(p):
   '''value : constant addConstant pushConstantOperand
-           | id_lookup pushIdOperand
-           | id_lookup saveDimension index_selector
+           | id_lookup pushIdOperand eraseVariableName eraseVariableType
+           | id_lookup index_selector
            | function_call'''
 
 def p_id_lookup(p):
   '''id_lookup : ID lookupId'''
 
 def p_index_selector(p):
-  '''index_selector : "[" addFakeBottom exp removeFakeBottom validateArrayIndex "]" index_selector1 addAddressBase'''
+  '''index_selector : saveVariableDimension "[" addFakeBottom exp removeFakeBottom validateArrayIndex "]" index_selector1 addAddressBase eraseVariableName eraseVariableType eraseVariableDimension'''
 
 def p_index_selector1(p):
   '''index_selector1 : offsetForDimension "[" addFakeBottom exp removeFakeBottom validateArrayIndex "]" accummulateDisplacement index_selector1
@@ -324,17 +324,24 @@ def p_eraseVariableType(p):
   'eraseVariableType :'
   __tVarType.pop()
 
+def p_saveVariableName(p):
+  'saveVariableName :'
+  __tVarName.push(p[-1])
+
 def p_eraseVariableName(p):
   'eraseVariableName :'
   __tVarName.pop()
 
-def p_setDimension(p):
-  'saveDimension :'
+def p_saveVariableDimension(p):
+  'saveVariableDimension :'
   __tVarArrDim.push(0)
+
+def p_eraseVariableDimension(p):
+  'eraseVariableDimension :'
+  __tVarArrDim.pop()
 
 def p_addVariable(p):
   'addVariable :'
-  __tVarName.push(p[-1])
   addVariable(__tVarName.top(), __tVarType.top())
 
 def p_addConstant(p):
@@ -475,9 +482,6 @@ def p_addAddressBase(p):
   __quadruples.add(Quadruple('ACUM', leftOp, variable.address(), address))
   __operandStack.push(address)
   __typeStack.push(variable.symbolType)
-  __tVarArrDim.pop()
-  __tVarName.pop()
-  __tVarType.pop()
 
 def p_generateUMinusQuadruple(p):
   'generateUMinusQuadruple :'
@@ -506,19 +510,6 @@ def p_pushOperation(p):
 
 def p_pushIdOperand(p):
   'pushIdOperand :'
-  if __scope == Scope.GLOBAL:
-    variable = __varsGlobal.lookup(__tVarName.pop())
-    if variable is None:
-      print "GlobalVar error: variable not found"
-  elif __scope == Scope.LOCAL:
-    variable = __varsLocal.lookup(__tVarName.pop())
-    if variable is None:
-      print "LocalVar error: variable not found"
-  __operandStack.push(variable.address())
-  __typeStack.push(__tVarType.pop())
-
-def p_pushRepIdOperand(p):
-  'pushRepIdOperand :'
   if __scope == Scope.GLOBAL:
     variable = __varsGlobal.lookup(__tVarName.top())
     if variable is None:
