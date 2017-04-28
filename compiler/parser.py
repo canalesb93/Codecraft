@@ -41,9 +41,10 @@ __jumpStack = Stack()
 
 # Temporary Var/Func data
 # Vars
-__tVarType = None
-__tVarName = None
-__tVarSize = 1
+__tVarType = Stack()
+__tVarName = Stack()
+__tVarArrDim = Stack()
+
 # Funcs
 __tFuncName = None
 __tFuncType = None
@@ -106,10 +107,10 @@ def p_type(p):
 # ===== VARIABLES =====
 
 def p_vars(p):
-    '''vars : VAR type saveVariableType var'''
+    '''vars : VAR type saveVariableType var eraseVariableType'''
 
 def p_var(p):
-    '''var : ID addVariable var_array_size var_assignment var_repeater
+    '''var : ID addVariable var_array_init var_assignment eraseVariableName var_repeater
            '''
 
 def p_var_repeater(p):
@@ -118,15 +119,18 @@ def p_var_repeater(p):
                     '''
 
 def p_var_assignment(p):
-    '''var_assignment : pushIdOperand "=" pushOperation super_expression addAssignmentQuadruple
-                      | empty
-                      '''
+    '''var_assignment : pushRepIdOperand "=" pushOperation super_expression addAssignmentQuadruple
+                      | empty'''
 
 # ===== ARRAYS =====
 
-def p_var_array_size(p):
-    '''var_array_size : "[" CTE_INT setArraySize "]"
+def p_var_array_init(p):
+    '''var_array_init : var_array_dimension generateDimensionSpace
                       | empty'''
+
+def p_var_array_dimension(p):
+    '''var_array_dimension : "[" CTE_INT addDimension "]" 
+                           | "[" CTE_INT addDimension "]" "[" CTE_INT addDimension "]"'''
 
 # def p_assignment_array(p):
 #     '''assignment_array : ID "=" "{" parameters "}" ',' assignment
@@ -136,7 +140,10 @@ def p_var_array_size(p):
 #     pass
 
 def p_var_free_assignment(p):
-    '''var_free_assignment : ID lookupId var_assignment'''
+    '''var_free_assignment : pushIdOperand "=" pushOperation super_expression addAssignmentQuadruple'''
+
+def p_var_arr_free_assignment(p):
+    '''var_arr_free_assignment : saveDimension index_selector "=" pushOperation super_expression addAssignmentQuadruple'''
 
 # ===== FUNCTIONS =====
 
@@ -145,11 +152,11 @@ def p_function(p):
                  ''' 
 
 def p_parameters_definition(p):
-    '''parameters_definition : type saveVariableType ID addParameter parameters_definition1
+    '''parameters_definition : type ID addParameter parameters_definition1
                              | empty''' 
 
 def p_parameters_definition1(p):
-    '''parameters_definition1 : "," type saveVariableType ID addParameter parameters_definition1
+    '''parameters_definition1 : "," type ID addParameter parameters_definition1
                               | empty'''
 
 def p_parameters(p):
@@ -175,7 +182,8 @@ def p_block_repeater(p):
 
 def p_block(p):
     '''block : vars
-             | var_free_assignment
+             | id_lookup var_free_assignment
+             | id_lookup var_arr_free_assignment
              | if
              | cycle
              | return
@@ -245,8 +253,19 @@ def p_factor(p):
 
 def p_value(p):
   '''value : constant addConstant pushConstantOperand
-           | ID lookupId pushIdOperand
+           | id_lookup pushIdOperand
+           | id_lookup saveDimension index_selector
            | function_call'''
+
+def p_id_lookup(p):
+  '''id_lookup : ID lookupId'''
+
+def p_index_selector(p):
+  '''index_selector : "[" addFakeBottom exp removeFakeBottom validateArrayIndex "]" index_selector1 addAddressBase'''
+
+def p_index_selector1(p):
+  '''index_selector1 : offsetForDimension "[" addFakeBottom exp removeFakeBottom validateArrayIndex "]" accummulateDisplacement index_selector1
+                     | empty'''                    
 
 # ===== Constants =====
 def p_constant_int(p):
@@ -294,37 +313,32 @@ def p_setGlobalScope(p):
 
 def p_saveVariableType(p):
   'saveVariableType :'
-  global __tVarType
-  __tVarType = p[-1]
+  __tVarType.push(p[-1])
+
+def p_eraseVariableType(p):
+  'eraseVariableType :'
+  __tVarType.pop()
+
+def p_eraseVariableName(p):
+  'eraseVariableName :'
+  __tVarName.pop()
+
+def p_setDimension(p):
+  'saveDimension :'
+  __tVarArrDim.push(0)
 
 def p_addVariable(p):
   'addVariable :'
-  global __tVarName
-  __tVarName = p[-1]
-  addVariable(__tVarName, __tVarType)
+  __tVarName.push(p[-1])
+  addVariable(__tVarName.top(), __tVarType.top())
 
 def p_addConstant(p):
   'addConstant :'
   constRaw = p[-1]
   addConstant(constRaw)
 
-def p_setArraySize(p):
-  'setArraySize :'
-  size = int(p[-1])
-
-  if __scope == Scope.GLOBAL:
-    variable = __varsGlobal.lookup(__tVarName)
-    variable.setSize(size)
-    __address.generateGlobal(variable.symbolType, size - 1)
-  elif __scope == Scope.LOCAL:
-    variable = __varsLocal.lookup(__tVarName)
-    variable.setSize(size)
-    __address.generateLocal(variable.symbolType, size - 1)
-
 def p_lookupId(p):
   'lookupId :'
-  global __tVarName, __tVarType
-
   operandID = p[-1]
   if __scope == Scope.GLOBAL:
     variable = __varsGlobal.lookup(operandID)
@@ -337,8 +351,8 @@ def p_lookupId(p):
     exit(1)
     return
   else:
-    __tVarName = variable.name
-    __tVarType = variable.symbolType
+    __tVarName.push(variable.name)
+    __tVarType.push(variable.symbolType)
 
 def p_addOutputQuadruple(p):
   'addOutputQuadruple :'
@@ -350,7 +364,118 @@ def p_addNewLineQuadruple(p):
   'addNewLineQuadruple :'
   __quadruples.add(Quadruple("OUTPUTLN", None, None, None))
 
-# === Expressions ==
+# === Arrays ===
+
+def p_addDimension(p):
+  'addDimension :'
+  size = int(p[-1])
+  if __scope == Scope.GLOBAL:
+    variable = __varsGlobal.lookup(__tVarName.top())
+    if variable.dimensionCount() >= 2:
+      print "Array error: too many dimensions"
+      summary()
+      exit(1)
+    variable.addDimension(size)
+    __address.generateGlobal(variable.symbolType, size - 1)
+  elif __scope == Scope.LOCAL:
+    variable = __varsLocal.lookup(__tVarName.top())
+    if variable.dimensionCount() >= 2:
+      print "Array error: too many dimensions"
+      summary()
+      exit(1)
+    variable.addDimension(size)
+    __address.generateLocal(variable.symbolType, size - 1)
+
+def p_generateDimensionSpace(p):
+  'generateDimensionSpace :'
+  if __scope == Scope.GLOBAL:
+    variable = __varsGlobal.lookup(__tVarName.top())
+    size = variable.totalSpace()
+    # -1 for already defined address
+    __address.generateGlobal(variable.symbolType, size - 1)
+  elif __scope == Scope.LOCAL:
+    variable = __varsLocal.lookup(__tVarName.top())
+    size = variable.totalSpace()
+    __address.generateLocal(variable.symbolType, size - 1)
+
+def p_validateArrayIndex(p):
+  'validateArrayIndex :'
+  dimension = __tVarArrDim.pop()
+  index = __operandStack.top()
+  if __typeStack.top() is not Type.INT:
+    print "Array error: index should be integer"
+    summary()
+    exit(1)
+  if __scope == Scope.GLOBAL:
+    variable = __varsGlobal.lookup(__tVarName.top())
+  elif __scope == Scope.LOCAL:
+    variable = __varsLocal.lookup(__tVarName.top())
+  if (dimension >= variable.dimensionCount()):
+    print "Array error: incorrect dimension count"
+    summary()
+    exit(1)
+  __quadruples.add(Quadruple("VER", index, 0, variable.dimensions[dimension]))
+  __tVarArrDim.push(dimension + 1)
+
+def p_offsetForDimension(p):
+  'offsetForDimension :'
+  dimension = __tVarArrDim.pop() - 1
+  if __scope == Scope.GLOBAL:
+    variable = __varsGlobal.lookup(__tVarName.top())
+  elif __scope == Scope.LOCAL:
+    variable = __varsLocal.lookup(__tVarName.top())
+    # Operands
+  leftOp = __operandStack.pop()
+  leftType = __typeStack.pop()
+  limit = variable.dimensions[dimension]
+  # Generate quadruple
+  if __scope == Scope.GLOBAL:
+    address =  __address.generateGlobalTemporary(Type.INT)
+  elif __scope == Scope.LOCAL:
+    address =  __address.generateTemporary(Type.INT)
+  __quadruples.add(Quadruple('+', leftOp, limit, address))
+  # Update stacks
+  __operandStack.push(address)
+  __typeStack.push(Type.INT)
+  __tVarArrDim.push(dimension + 1)
+
+def p_accummulateDisplacement(p):
+  'accummulateDisplacement :'
+  rightOp = __operandStack.pop()
+  leftOp = __operandStack.pop()
+  # Unused Types
+  __typeStack.pop()
+  __typeStack.pop()
+  if __scope == Scope.GLOBAL:
+    address =  __address.generateGlobalTemporary(Type.INT)
+  elif __scope == Scope.LOCAL:
+    address =  __address.generateTemporary(Type.INT)
+  __quadruples.add(Quadruple('+', leftOp, rightOp, address))
+  __operandStack.push(address)
+  __typeStack.push(Type.INT)
+
+def p_addAddressBase(p):
+  'addAddressBase :'
+  leftOp = __operandStack.pop()
+  __typeStack.pop()
+  if __scope == Scope.GLOBAL:
+    variable = __varsGlobal.lookup(__tVarName.top())
+  elif __scope == Scope.LOCAL:
+    variable = __varsLocal.lookup(__tVarName.top())
+  if __scope == Scope.GLOBAL:
+    address =  __address.generateGlobalTemporary(Type.INT)
+  elif __scope == Scope.LOCAL:
+    address =  __address.generateTemporary(Type.INT)
+  address = '(' + str(address) + ')'
+  __quadruples.add(Quadruple('ACUM', leftOp, variable.address(), address))
+  __operandStack.push(address)
+  __typeStack.push(variable.symbolType)
+  __tVarArrDim.pop()
+  __tVarName.pop()
+  __tVarType.pop()
+
+
+# === Expressions ===
 
 def p_pushOperation(p):
   'pushOperation :'
@@ -359,15 +484,28 @@ def p_pushOperation(p):
 def p_pushIdOperand(p):
   'pushIdOperand :'
   if __scope == Scope.GLOBAL:
-    variable = __varsGlobal.lookup(__tVarName)
+    variable = __varsGlobal.lookup(__tVarName.pop())
     if variable is None:
       print "GlobalVar error: variable not found"
   elif __scope == Scope.LOCAL:
-    variable = __varsLocal.lookup(__tVarName)
+    variable = __varsLocal.lookup(__tVarName.pop())
     if variable is None:
       print "LocalVar error: variable not found"
   __operandStack.push(variable.address())
-  __typeStack.push(__tVarType)
+  __typeStack.push(__tVarType.pop())
+
+def p_pushRepIdOperand(p):
+  'pushRepIdOperand :'
+  if __scope == Scope.GLOBAL:
+    variable = __varsGlobal.lookup(__tVarName.top())
+    if variable is None:
+      print "GlobalVar error: variable not found"
+  elif __scope == Scope.LOCAL:
+    variable = __varsLocal.lookup(__tVarName.top())
+    if variable is None:
+      print "LocalVar error: variable not found"
+  __operandStack.push(variable.address())
+  __typeStack.push(__tVarType.top())
 
 def p_pushConstantOperand(p):
   'pushConstantOperand :'
@@ -503,11 +641,10 @@ def p_endFunction(p):
 
 def p_addParameter(p):
   'addParameter :'
-  global __tVarName
-  global __tFuncParameters
-  __tVarName = p[-1]
-  addVariable(__tVarName, __tVarType)
-  __tFuncParameters.append(__varsLocal.lookup(__tVarName))
+  varName = p[-1]
+  varType = p[-2]
+  addVariable(varName, varType)
+  __tFuncParameters.append(__varsLocal.lookup(varName))
 
 def p_addFunction(p):
   'addFunction :'
@@ -641,6 +778,9 @@ def addVariable(name, varType):
     # Construct variable locally
     __varsLocal.insert(variable)
     variable.id = __address.generateLocal(varType)
+    print variable.id
+    print __varsLocal
+
 
 def addConstant(const):
   global __constantTable
@@ -669,7 +809,7 @@ def addConstant(const):
 def addFunction(functionName, functionType, parameters, position):
   global __funcsGlobal
   function = Function(functionName, functionType, parameters, position)
-  __funcsGlobal.insert(function)
+  f = __funcsGlobal.insert(function)
 
 
 # =============== Execution ===============
@@ -685,6 +825,9 @@ def summary():
   print "Operands:", __operandStack
   print "Types:", __typeStack
   print "Jump:", __jumpStack
+  print "Name:", __tVarName
+  print "Type:", __tVarType
+  print "DIM:", __tVarArrDim
   print "_________  Tables  _________:"
   print "G-VARS: (", __varsGlobal.size(), ")", __varsGlobal
   print "L-VARS: (", __varsLocal.size(), ")", __varsLocal
@@ -715,7 +858,7 @@ def export(filename):
       writer.writerow(limitDictToArray(f.limits[0]))
       writer.writerow(limitDictToArray(f.limits[1]))
       for v in f.parameters:
-        writer.writerow([v.id, v.name, v.symbolType.value, v.size])
+        writer.writerow([v.id, v.name, v.symbolType.value])
     writer.writerow(['END', "FUNCTIONS"])
 
 def limitDictToArray(limit):

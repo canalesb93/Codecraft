@@ -48,7 +48,6 @@ def import_memory(filename):
             row = reader.next()
             v = Var(row[1], Type(int(row[2])))
             v.id = int(row[0])
-            v.size = int(row[3])
             params.append(v)
       except csv.Error:
         print "CSV error: import memory failed"

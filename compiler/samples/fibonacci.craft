@@ -1,16 +1,29 @@
 craft {
   
-  function int fibonacci(int n) {
-    if (n <= 0) {
+  function int fibonacciRecursive(int n) {
+    if (n == 0) {
       return 0
     } else if (n == 1) {
       return 1
     } else {
-      return fibonacci(n - 1) + fibonacci(n - 2)
+      return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2)
     }
   }
 
-  output(fibonacci(8))
+  function int fibonacciIterative(int n) {
+    var int x=0, y=1, z=1, i=0
+    while (i < n) {
+      x = y
+      y = z
+      z = x + y
+      i = i + 1
+    }
+    return x
+  }
+
+  outputln(fibonacciRecursive(9))
+  outputln(fibonacciIterative(8))
 }
 
+# 21
 # 21
