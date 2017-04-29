@@ -1,0 +1,21 @@
+craft {
+  
+  function int factorialRecursive (int n) {
+    if (n <= 1) {
+      return 1
+    }
+    return n * factorialRecursive(n - 1)
+  }
+
+  function int factorialIterative (int n){
+    var int i = 2, sum = 1
+    while (i <= n) {
+      sum = sum * i
+      i = i + 1
+    }
+    return sum
+  }
+
+  outputln("Factorial Iterative: ", factorialIterative(15))
+  outputln("Factorial Recursive: ", factorialRecursive(15))
+}
