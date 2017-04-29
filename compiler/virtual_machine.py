@@ -29,7 +29,6 @@ from memory import ActivationRecord
 # /////////////////////////////////////////////////////////////////////////////
 
 __quadruples = QuadrupleList()
-__constantTable = SymbolTable()
 __funcsGlobal = FunctionTable()
 
 # -----------------------------------------------------------------------------
@@ -137,6 +136,11 @@ def execute():
     elif op == "OUTPUTLN":
       sys.stdout.write('\n')
       sys.stdout.flush()
+
+    elif op == "INPUT":
+      value = input()
+      address = q.result
+      __memory.setValue(address, value)
 
     elif op == "GOTOF":
       # Handles teleport on false condition

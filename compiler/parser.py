@@ -210,6 +210,7 @@ def p_block(p):
            | BREAK
            | CONTINUE
            | output
+           | input
            | function_call'''
 
 def p_output(p):
@@ -220,6 +221,10 @@ def p_output(p):
 def p_output1(p):
   '''output1 : "," super_expression addOutputQuadruple output1
              | empty'''
+
+def p_input(p):
+  ''' input : INPUT "(" ID lookupId pushIdOperand eraseVariableName eraseVariableType ")" addInputQuadruple
+            | INPUT "(" ID lookupId index_selector ")" addInputQuadruple'''
 
 # =============================================================================
 # Conditionals and Loops
@@ -405,12 +410,6 @@ def p_lookupId(p):
   else:
     __tVarName.push(variable.name)
     __tVarType.push(variable.symbolType)
-
-def p_addOutputQuadruple(p):
-  'addOutputQuadruple :'
-  output = __operandStack.pop()
-  __typeStack.pop()
-  __quadruples.add(Quadruple("OUTPUT", None, None, output))
 
 def p_addNewLineQuadruple(p):
   'addNewLineQuadruple :'
@@ -792,6 +791,18 @@ def p_returnFunctionValue(p):
 def p_returnFunction(p):
   'returnFunction :'
   __quadruples.add(Quadruple('RETURN', None, None, None))
+
+def p_addOutputQuadruple(p):
+  'addOutputQuadruple :'
+  output = __operandStack.pop()
+  __typeStack.pop()
+  __quadruples.add(Quadruple("OUTPUT", None, None, output))
+
+def p_addInputQuadruple(p):
+  'addInputQuadruple :'
+  inp = __operandStack.pop()
+  __typeStack.pop()
+  __quadruples.add(Quadruple("INPUT", None, None, inp))
 
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
