@@ -1,3 +1,4 @@
+#!python2 
 # -----------------------------------------------------------------------------
 # virtual_machine.py
 #
@@ -6,6 +7,7 @@
 # This module simulates memory and executes the compiled program.
 # -----------------------------------------------------------------------------
 
+from __future__ import division
 import sys
 import csv
 import time
