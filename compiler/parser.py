@@ -764,11 +764,8 @@ def p_verifyArguments(p):
 def p_endFunctionCall(p):
   'endFunctionCall :'
   function = __funcsGlobal.lookup(__tCallName.top())
-  __tCallName.pop()
-  __tCallType.pop()
-  __tCallArgCount.pop()
   if function is not None:
-    if __tCallType != Type.VOID and function.functionType != None:
+    if __tCallType.top() != Type.VOID and function.functionType != None:
       if __scope == Scope.GLOBAL:
         address =  __address.generateGlobalTemporary(function.functionType)
       elif __scope == Scope.LOCAL:
@@ -780,6 +777,9 @@ def p_endFunctionCall(p):
       __quadruples.add(Quadruple('GOSUB', function.name, None, None))
   else:
     print "Function error: function not found"
+  __tCallName.pop()
+  __tCallType.pop()
+  __tCallArgCount.pop()
 
 def p_returnFunctionValue(p):
   'returnFunctionValue :'
