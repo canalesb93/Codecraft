@@ -124,14 +124,14 @@ class MemorySystem():
     for t in Type:
       if t is Type.VOID:
         continue
-      self.globalMemory[t.value] = range(self.globalLimit[t] % self.space) 
+      self.globalMemory[t.value] = [None]* (self.globalLimit[t] % self.space) 
 
     # Constant Memory
     self.constantMemory = range(5)
     for t in Type:
       if t is Type.VOID:
         continue
-      self.constantMemory[t.value] = range(self.constantLimit[t] % self.space) 
+      self.constantMemory[t.value] = [None]* (self.constantLimit[t] % self.space) 
 
     # Holds ActivationRecord
     self.controlStack = Stack()
@@ -215,6 +215,9 @@ class MemorySystem():
       return self.__safeValue(self.controlStack.top().getValue(address, aType, scope), aType)
 
   def __safeValue(self, v, t):
+    if v is None:
+      print "Memory error: undefined variable"
+      exit()
     if t is Type.BOOL:
       # If value is set as string compare
       # Else return as is
@@ -262,14 +265,14 @@ class ActivationRecord():
     for t in Type:
       if t is Type.VOID:
         continue
-      self.tempMemory[t.value] = range(self.tempLimit[t] % self.space)
+      self.tempMemory[t.value] = [None]* (self.tempLimit[t] % self.space)
 
     # Local Memory
     self.localMemory = range(5)
     for t in Type:
       if t is Type.VOID:
         continue
-      self.localMemory[t.value] = range(self.localLimit[t] % self.space)
+      self.localMemory[t.value] = [None]* (self.localLimit[t] % self.space)
 
   def setValue(self, address, value, aType, scope):
     if scope is Scope.TEMPORARY:
