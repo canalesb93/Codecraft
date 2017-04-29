@@ -206,9 +206,6 @@ def execute():
       arrAddress = left + int(q.operand2)
       __memory.setValue(q.result[1:-1], arrAddress)
 
-
-
-
 # =============================================================================
 # Helpers
 # =============================================================================
@@ -291,7 +288,6 @@ if __name__ == '__main__':
     import_memory(file)
     executionTime = time.time()
     execute()
-    print time.time() - executionTime
-    print
+    print "\nExecution ended, total time: %fs" % (time.time() - executionTime)
   else:
     print "Execution error: no filename given"

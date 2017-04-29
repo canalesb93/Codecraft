@@ -1,22 +1,27 @@
 craft {
-  # var int test[5], index = 0
-  # while (index < 5) {
-  #   test[index] = index
-  #   index = index + 1
-  # }
 
-  # index = 0
-  # while(index < 5) {
-  #   outputln(test[index])
-  #   index = index + 1
-  # }
+  function int generateAndPrintArray() {
+    var int test[5], index = 0
+    while (index < 5) {
+      test[index] = index
+      index = index + 1
+    }
+
+    index = 0
+    while(index < 5) {
+      output(test[index])
+      index = index + 1
+    }
+    outputln("")
+  }
 
 
 
-  var int i = 0, j = 0
-  var int test[5][5]
 
-  function void generateMatrix() {
+  function void generateAndPrintMatrix() {
+    var int i = 0, j = 0
+    var int test[5][5]
+
     while (i < 5) {
       while(j < 5) {
         test[i][j] = i * j
@@ -25,9 +30,7 @@ craft {
       j = 0
       i = i + 1 
     }
-  }
 
-  function void printMatrix() {
     i = 0
     j = 0
     while (i < 5) {
@@ -41,6 +44,6 @@ craft {
     }
   }
 
-  generateMatrix()
-  printMatrix()
+  generateAndPrintArray()
+  generateAndPrintMatrix()
 }
