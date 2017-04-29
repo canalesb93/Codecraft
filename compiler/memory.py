@@ -124,14 +124,14 @@ class MemorySystem():
     for t in Type:
       if t is Type.VOID:
         continue
-      self.globalMemory[t.value] = [None]* (self.globalLimit[t] % self.space) 
+      self.globalMemory[t.value] = range(self.globalLimit[t] % self.space) 
 
     # Constant Memory
     self.constantMemory = range(5)
     for t in Type:
       if t is Type.VOID:
         continue
-      self.constantMemory[t.value] = [None]* (self.constantLimit[t] % self.space) 
+      self.constantMemory[t.value] = range(self.constantLimit[t] % self.space) 
 
     # Holds ActivationRecord
     self.controlStack = Stack()
@@ -181,11 +181,13 @@ class MemorySystem():
       for t in Type:
         if aType is t:
           self.globalMemory[t.value][address] = value
+          return
 
     elif scope is Scope.CONSTANT:
       for t in Type:
         if aType is t:
           self.constantMemory[t.value][address] = value
+          return
 
     elif scope is Scope.TEMPORARY or scope is Scope.LOCAL:
       self.controlStack.top().setValue(address, value, aType, scope)
@@ -260,25 +262,27 @@ class ActivationRecord():
     for t in Type:
       if t is Type.VOID:
         continue
-      self.tempMemory[t.value] = [None]* (self.tempLimit[t] % self.space)
+      self.tempMemory[t.value] = range(self.tempLimit[t] % self.space)
 
     # Local Memory
     self.localMemory = range(5)
     for t in Type:
       if t is Type.VOID:
         continue
-      self.localMemory[t.value] = [None]* (self.localLimit[t] % self.space)
+      self.localMemory[t.value] = range(self.localLimit[t] % self.space)
 
   def setValue(self, address, value, aType, scope):
     if scope is Scope.TEMPORARY:
       for t in Type:
         if aType is t:
           self.tempMemory[t.value][address] = value
+          return
 
     elif scope is Scope.LOCAL:
       for t in Type:
         if aType is t:
           self.localMemory[t.value][address] = value
+          return
 
   def getValue(self, address, aType, scope):
     if scope is Scope.TEMPORARY:
