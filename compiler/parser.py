@@ -141,8 +141,11 @@ def p_var_array_init(p):
                     | empty'''
 
 def p_var_array_dimension(p):
-  '''var_array_dimension : "[" CTE_INT addDimension "]" 
-                         | "[" CTE_INT addDimension "]" "[" CTE_INT addDimension "]"'''
+  '''var_array_dimension : "[" CTE_INT addDimension "]" var_array_dimension1'''
+
+def p_var_array_dimension1(p):
+  '''var_array_dimension1 : "[" CTE_INT addDimension "]" var_array_dimension1
+                          | empty'''
 
 # def p_assignment_array(p):
 #     '''assignment_array : ID "=" "{" parameters "}" ',' assignment
@@ -420,19 +423,11 @@ def p_addDimension(p):
   size = int(p[-1])
   if __scope == Scope.GLOBAL:
     variable = __varsGlobal.lookup(__tVarName.top())
-    if variable.dimensionCount() > 2:
-      print "Array error: too many dimensions"
-      summary()
-      exit(1)
     variable.addDimension(size)
   elif __scope == Scope.LOCAL:
     variable = __varsLocal.lookup(__tVarName.top())
     if variable is None:
       variable = __varsGlobal.lookup(__tVarName.top())
-    if variable.dimensionCount() > 2:
-      print "Array error: too many dimensions"
-      summary()
-      exit(1)
     variable.addDimension(size)
 
 def p_generateDimensionSpace(p):

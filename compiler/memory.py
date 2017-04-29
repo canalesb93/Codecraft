@@ -31,7 +31,7 @@ class AddressSystem:
     self.constantPointer = {}
 
     # Generate Memory Maps
-    self.space = 1000 # memory space per type
+    self.space = 5000 # memory space per type
     for t in Type:
       if t is Type.VOID:
         continue
@@ -117,7 +117,7 @@ class MemorySystem():
     self.globalLimit = limits[2]
     self.constantLimit = limits[3]
 
-    self.space = 1000 # memory space per type
+    self.space = 5000 # memory space per type
     
     # Global Memory
     self.globalMemory = range(5)
@@ -258,7 +258,7 @@ class ActivationRecord():
     self.callPosition = 0
     self.returnAddress = None
 
-    self.space = 1000
+    self.space = 5000
 
     # Temporary Memory
     self.tempMemory = range(5)
