@@ -1,7 +1,24 @@
 craft {
-  
+
+  var int cache[100], index = 0
+  while(index < 100) {
+    cache[index] = -1
+    index = index + 1
+  }
+  cache[0] = 0
+  cache[1] = 1
+
+  function int fibonacciRecursiveCached(int n) {
+    if(cache[n] >= 0) {
+      return cache[n]
+    } else {
+      cache[n] = fibonacciRecursiveCached(n - 1) + fibonacciRecursiveCached(n - 2)
+      return cache[n]
+    }
+  }
+
   function int fibonacciRecursive(int n) {
-    if (n == 0) {
+    if(n == 0) {
       return 0
     } else if (n == 1) {
       return 1
@@ -21,9 +38,11 @@ craft {
     return x
   }
 
-  outputln(fibonacciRecursive(19))
-  outputln(fibonacciIterative(20))
+  outputln("Fibonnacci Recursive Cached: ", fibonacciRecursiveCached(50))
+  outputln("Fibonnacci Iterative: ", fibonacciIterative(50))
+  outputln("Fibonnacci Recursive: ", fibonacciRecursive(13))
 }
 
-# 21
-# 21
+Fibonnacci Recursive Cached: 12586269025
+Fibonnacci Iterative: 12586269025
+Fibonnacci Recursive: 233

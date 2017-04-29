@@ -168,6 +168,10 @@ class MemorySystem():
       return None
 
   def setValue(self, address, value):
+    if address[0] == '(':
+      pAddress = self.getValue(address[1:-1])
+      self.setValue(str(pAddress), value)
+      return
     address = self.__validateAddress(address)
     scope = self.__getAddressScope(address)
     aType = self.__getAddressType(address)
@@ -187,6 +191,9 @@ class MemorySystem():
       self.controlStack.top().setValue(address, value, aType, scope)
 
   def getValue(self, address):
+    if address[0] == '(':
+      pAddress = self.getValue(address[1:-1])
+      return self.getValue(str(pAddress))
     address = self.__validateAddress(address)
     scope = self.__getAddressScope(address)
     aType = self.__getAddressType(address)

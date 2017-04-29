@@ -18,7 +18,7 @@ class Var:
         return len(self.dimensions)
 
     def totalSpace(self):
-        total = 0
+        total = 1
         for d in self.dimensions:
             total *= d
         return total

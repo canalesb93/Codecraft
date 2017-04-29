@@ -8,6 +8,7 @@
 
 import sys
 import csv
+import time
 
 from enumerators import *
 from classes import *
@@ -110,6 +111,7 @@ def execute():
     q = __quadruples.lookup(ip)
     op = q.operator
     ip += 1
+    # pause()
 
     if isExpression(op):
       # Arithmetic Operations and Comparisons
@@ -159,7 +161,7 @@ def execute():
       ar = __memory.callStack.top()
       # HACK: Push and pop ar after setting param value
       __memory.controlStack.push(ar)
-      __memory.setValue(ar.parameters[position].address(), value)
+      __memory.setValue(str(ar.parameters[position].address()), value)
       __memory.controlStack.pop()
 
     elif op == "GOSUB":
@@ -190,6 +192,22 @@ def execute():
     elif op == "ENDPROC":
       ar = __memory.controlStack.pop()
       ip = ar.callPosition
+
+    elif op == "VER":
+      index = __memory.getValue(q.operand1)
+      low = int(q.operand2)
+      high = int(q.result)
+      if not (index >= low and index < high):
+        print "Array error: index out of bounds"
+        exit(1)
+
+    elif op == "ACUM":
+      left = __memory.getValue(q.operand1)
+      arrAddress = left + int(q.operand2)
+      __memory.setValue(q.result[1:-1], arrAddress)
+
+
+
 
 # =============================================================================
 # Helpers
@@ -271,7 +289,9 @@ if __name__ == '__main__':
   if (len(sys.argv) > 1):
     file = sys.argv[1]
     import_memory(file)
+    executionTime = time.time()
     execute()
+    print time.time() - executionTime
     print
   else:
     print "Execution error: no filename given"
