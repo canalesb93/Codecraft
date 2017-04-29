@@ -149,7 +149,6 @@ def p_var_array_dimension(p):
 #                         | ID "=" "{" parameters "}" 
 #                         | ID
 #                         '''
-#     pass
 
 def p_var_arr_free_assignment(p):
   '''var_arr_free_assignment : ID lookupId index_selector "=" pushOperation super_expression addAssignmentQuadruple'''

@@ -1,0 +1,89 @@
+craft {
+
+  # ==================================
+  # Merge Sort
+  # ==================================
+  var int a[50], array_size = 20
+
+  function void generateArray() {
+    var int index = 0, x = 33
+    while (index < array_size) {
+      a[index] = x
+      index = index + 2
+      x = x - 2
+    }
+
+    index = 1
+    while (index < array_size) {
+      a[index] = index
+      index = index + 2
+    }
+    index = 1
+  }
+
+  function void printArray() {
+    var int c = 0
+    while (c < array_size) {
+      output(a[c]," ")
+      c = c + 1
+    }
+    outputln("")
+  }
+
+  function void merge(int low, int mid, int high) {
+    var int h = low, i = low, j = mid + 1, b[50], k
+
+    while (h <= mid and j <= high) {
+      if (a[h] <= a[j]) {
+        b[i] = a[h]
+        h = h + 1
+      } else {
+        b[i] = a[j]
+        j = j + 1
+      }
+      i = i + 1
+    }
+
+    if (h > mid) {
+      k = j
+      while (k <= high) {
+        b[i] = a[k]
+        i = i + 1
+        k = k + 1
+      }
+    } else {
+      k = h
+      while (k <= mid) {
+        b[i] = a[k]
+        i = i + 1
+        k = k + 1
+      }
+    }
+
+    # outputln(low,  " <> ",high)
+    k = low
+    while (k <= high) {
+      # outputln(b[k])
+      a[k] = b[k]
+      k = k + 1
+    }
+  }
+
+  function void merge_sort(int low, int high) {
+    var int mid
+    if (low < high) {
+      mid = low + (high - low) / 2
+      merge_sort(low, mid)
+      merge_sort(mid + 1, high)
+      merge(low, mid, high)
+    }
+  }
+
+  outputln("===== Merge Sort =====")
+  generateArray()
+  outputln("Unsorted Array:")
+  printArray()
+  merge_sort(0, array_size - 1)
+  outputln("Sorted Array:")
+  printArray()
+}
