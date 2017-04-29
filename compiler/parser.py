@@ -260,6 +260,7 @@ def p_expression(p):
                 | exp tryRelationalQuadruple '>' pushOperation expression
                 | exp tryRelationalQuadruple '<' pushOperation expression
                 | exp tryRelationalQuadruple EQ pushOperation expression
+                | exp tryRelationalQuadruple UNEQ pushOperation expression
                 | exp tryRelationalQuadruple LESS_EQ pushOperation expression
                 | exp tryRelationalQuadruple GREATER_EQ pushOperation expression'''
 

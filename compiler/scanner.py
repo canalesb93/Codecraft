@@ -42,12 +42,14 @@ tokens = [
     'CTE_STRING',
     'ID',
     'EQ',
+    'UNEQ',
     'LESS_EQ',
     'GREATER_EQ'
 ] + list(reserved.values())
 
 # Regular expressions for tokens
 t_EQ  = r'=='
+t_UNEQ  = r'!='
 t_GREATER_EQ  = r'>='
 t_LESS_EQ  = r'<='
 t_CTE_INT = r'\d+'
