@@ -213,7 +213,8 @@ def p_block(p):
 
 def p_output(p):
   '''output : OUTPUT "(" super_expression addOutputQuadruple output1 ")"
-            | OUTPUTLN "(" super_expression addOutputQuadruple output1 addNewLineQuadruple ")"'''
+            | OUTPUTLN "(" super_expression addOutputQuadruple output1 addNewLineQuadruple ")"
+            | OUTPUTLN addNewLineQuadruple'''
 
 def p_output1(p):
   '''output1 : "," super_expression addOutputQuadruple output1

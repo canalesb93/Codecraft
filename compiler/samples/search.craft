@@ -1,0 +1,84 @@
+craft {
+  var int A[5], a_size = 5
+  var int B[5][5], b_size = 5
+
+  function int generateAndPrintA() {
+    var int index = 0
+    while (index < a_size) {
+      A[index] = index
+      index = index + 1
+    }
+
+    index = 0
+    while(index < a_size) {
+      output(A[index])
+      index = index + 1
+      if (index != a_size) {
+        output("->")
+      }
+    }
+    outputln
+  }
+
+  function void generateAndPrintB() {
+    var int i = 0, j = 0
+
+    while (i < b_size) {
+      while(j < b_size) {
+        B[i][j] = i * j
+        j = j + 1
+      }
+      j = 0
+      i = i + 1 
+    }
+
+    i = 0
+    j = 0
+    while (i < b_size) {
+      while(j < b_size) {
+        output(B[i][j], " ")
+        j = j + 1
+      }
+      j = 0
+      i = i + 1 
+      outputln
+    }
+  }
+
+  function int findInA(int n) {
+    var int index = 0, found = 0
+    while (index < a_size) {
+      if (A[index] == n) {
+        found = found + 1  
+        outputln(n, " found in ", index)
+      }
+      index = index + 1
+    }
+    outputln("Found ", found, " matche/s in A!")
+  }
+
+  function int findInB(int n) {
+    var int i = 0, j = 0, found = 0
+
+    while (i < b_size) {
+      j = 0
+      while(j < b_size) {
+        if (B[i][j] == n) {
+          found = found + 1  
+          outputln(n, " found in ", i, ", ", j)
+        }
+        j = j + 1
+      }
+      i = i + 1 
+    }
+    outputln("Found ", found, " matche/s in B!")
+  }
+
+  generateAndPrintA()
+  outputln
+  generateAndPrintB()
+  outputln
+  findInA(3)
+  outputln
+  findInB(6)
+}

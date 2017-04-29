@@ -288,6 +288,6 @@ if __name__ == '__main__':
     import_memory(file)
     executionTime = time.time()
     execute()
-    print "\nExecution ended, total time: %fs" % (time.time() - executionTime)
+    print "\n%% Execution ended, total time: %fs" % (time.time() - executionTime)
   else:
     print "Execution error: no filename given"

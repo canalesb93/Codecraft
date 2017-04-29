@@ -15,9 +15,6 @@ craft {
     outputln("")
   }
 
-
-
-
   function void generateAndPrintMatrix() {
     var int i = 0, j = 0
     var int test[5][5]
