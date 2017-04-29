@@ -1,0 +1,8 @@
+#blocklyArea {
+  height: 500px;
+  /*width: 50%;*/
+}
+
+#blocklyDiv {
+  position: absolute;
+}
