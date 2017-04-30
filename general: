@@ -1,0 +1,20 @@
+general:
+  types
+vars:
+  var type ID
+  var type ID = 0, ID, ID
+  ID = expression
+  ID
+arrays:
+  var type ID[size][][]
+  ID[size][][] = expression
+conditionals:
+  while () {}
+  if else if else
+  break
+  continue
+functions:
+  function type ID (int ID, int ID) {}
+  input(ID)
+  output(expression)
+

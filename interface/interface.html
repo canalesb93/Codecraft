@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
   <title>Codecraft</title>
@@ -11,29 +10,55 @@
   <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   <!-- Blockly -->
-    <script src="google-blockly/blockly_compressed.js"></script>
-    <script src="google-blockly/blocks_compressed.js"></script>
-    <script src="google-blockly/msg/js/en.js"></script>
+    <script src="blockly/blockly_compressed.js"></script>
+    <script src="blockly/javascript_compressed.js"></script>
+    <script src="blockly/blocks_compressed.js"></script>
+    <script src="blockly/msg/js/en.js"></script>
+    <script src="blockly/blocks/custom.js"></script>
     <script src="javascript/main.js"></script>
 </head>
 <body>
   <div class="container">
     <h1>Codecraft</h1>
     <div class="row">
-      <div id="blocklyArea" class="col-md-9">
+      <div id="blocklyArea" class="col-md-7">
         <div id="blocklyDiv"></div>
       </div>
+      <div id="textarea" style="white-space: pre-wrap;" class="col-md-5"></div>
     </div>
+
   </div>
 
   <xml id="toolbox" style="display: none">
-    <block type="controls_if"></block>
-    <block type="controls_repeat_ext"></block>
-    <block type="logic_compare"></block>
-    <block type="math_number"></block>
-    <block type="math_arithmetic"></block>
-    <block type="text"></block>
-    <block type="text_print"></block>
+
+    <category name="Variables">
+      <block type="var_declaration"></block>
+      <block type="var_arr_declaration"></block>
+      <block type="var_arr_free_assign"></block>
+      <block type="var_free_assign"></block>
+      <block type="index_selector_array"></block>
+      <block type="index_selector_matrix"></block>
+    </category>
+    <category name="Logic">
+      <block type="math_arithmetic"></block>
+      <block type="logic_compare"></block>
+      <block type="while"></block>
+      <block type="controls_if"></block>
+    </category>
+    <category name="Function">
+      <block type="function"></block>
+      <block type="param"></block>
+      <block type="function_call"></block>
+      <block type="param_comma"></block>
+      <block type="return"></block>
+    </category>
+    <category name="Values">
+      <block type="math_number"></block>
+      <block type="var"></block>
+      <block type="text"></block>
+      <block type="function_call_value"></block>
+    </category>
+
   </xml>
 
 </body>
