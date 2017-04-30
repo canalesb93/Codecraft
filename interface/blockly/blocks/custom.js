@@ -419,7 +419,6 @@ Blockly.JavaScript['function_call'] = function(block) {
   var text_id = block.getFieldValue('ID');
   var value_params = Blockly.JavaScript.valueToCode(block, 'PARAMS', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
-  console.log(value_params);
   var code = text_id + '¿' + value_params + '?\n';
   return code;
 };

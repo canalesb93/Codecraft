@@ -3,8 +3,9 @@
   <title>Codecraft</title>
   <meta charset="UTF-8">
   <!-- Stylesheets -->
-  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="stylesheets/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
   <!-- Javascript -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
@@ -15,16 +16,43 @@
     <script src="blockly/blocks_compressed.js"></script>
     <script src="blockly/msg/js/en.js"></script>
     <script src="blockly/blocks/custom.js"></script>
+    <script src="javascript/clipboard.min.js"></script>
     <script src="javascript/main.js"></script>
 </head>
 <body>
   <div class="container">
-    <h1>Codecraft</h1>
-    <div class="row">
+    <div id="header">
+      <h1 class="text-center">
+          <img width="500px" src="assets/codecraft.png" alt="Codecraft">
+      </h1>
+      <p class="text-center">Experimental progamming language based on Python</p>
+    </div>
+
+    <div class="row" id="workspace">
       <div id="blocklyArea" class="col-md-7">
         <div id="blocklyDiv"></div>
       </div>
-      <div id="textarea" style="white-space: pre-wrap;" class="col-md-5"></div>
+      <div id="codeArea" class="col-md-5">
+        <button class="copy-btn btn btn-default" data-clipboard-target="#textArea">
+          <img width="13" src="assets/clippy.svg" alt="Copy to clipboard">
+        </button>
+        <div id="textArea"></div>  
+      </div>
+      
+    </div>
+
+    <div id="footer" class="row">
+      <div class="col-md-6">
+        <a href="https://github.com/canalesb93/codecraft" class="btn btn-primary btn-sm">
+          <i class="fa fa-github" aria-hidden="true"></i> Github        
+        </a>
+        <a href="https://developers.google.com/blockly/" class="btn btn-default btn-sm">
+          <i class="fa fa-google" aria-hidden="true"></i> Blockly by Google        
+        </a>
+      </div>
+      <div class="col-md-6">
+        <p class="text-right">Created by Ricardo Canales and Gabriel Berlanga</p>
+      </div>
     </div>
 
   </div>
@@ -42,6 +70,7 @@
     <category name="Logic">
       <block type="math_arithmetic"></block>
       <block type="logic_compare"></block>
+      <block type="logic_operation"></block>
       <block type="while"></block>
       <block type="controls_if"></block>
     </category>

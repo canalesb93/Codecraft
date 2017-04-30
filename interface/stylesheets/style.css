@@ -1,12 +1,62 @@
-#blocklyArea {
+body {
+  background-color: #fafafa;
+}
+
+#workspace {
   height: 500px;
-  /*width: 50%;*/
+}
+
+#blocklyArea {
 }
 
 #blocklyDiv {
   position: absolute;
 }
 
-#textarea {
-  border: 3px solid gray;
+#codeArea {
+  overflow: hidden;
+  position: relative;
+}
+
+#textArea {
+  border: 2px solid lightgray;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  height: 100%;
+  width: 100%;
+  padding: 10px 15px 10px 15px;
+  font-family: monospace;
+  line-height: normal;
+  background-color: #333333;
+  color: #eee;
+}
+
+.btn-default {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+.copy-btn { 
+  position: absolute;
+  right: 25px;
+  top: 10px;
+  background-color: #ffffff;
+  border: 1px solid lightgray !important;
+}
+
+/* mouse over link */
+.copy-btn:hover {
+  background-color: #eceeef;
+}
+
+#header {
+  height: 140px;
+  padding: 25px;
+}
+
+#footer {
+  height: 140px;
+  padding: 30px 0px 30px 0px;
+  color: gray;
 }
