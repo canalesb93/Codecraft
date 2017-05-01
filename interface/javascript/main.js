@@ -16,17 +16,6 @@ $( document ).ready( function() {
   });
   var onresize = function(e) {
     // Compute the absolute coordinates and dimensions of blocklyArea.
-    /* var element = blocklyArea;
-      var x = 0;
-      var y = 0;
-      do {
-        x += element.offsetLeft;
-        y += element.offsetTop;
-        element = element.offsetParent;
-      } while (element);
-      // Position blocklyDiv over blocklyArea.
-      blocklyDiv.style.top = y + 'px';
-    */
     blocklyDiv.style.left = '0px';
     blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
     blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
@@ -163,7 +152,7 @@ $( document ).ready( function() {
     code = highlight(code);
     $('#textArea').html(code);
   }
-  
+
   function highlight(code) {
     code = code.replace(/[=+-/*<>!]/g, "<span style='color: #e24d24;'>$&</span>");
     // code = code.replace(/[0-9+]/g, "<span style='color: #8f41c6;'>$&</span>");
