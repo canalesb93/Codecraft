@@ -217,7 +217,7 @@ class MemorySystem():
   def __safeValue(self, v, t):
     if v is None:
       print "Memory error: undefined variable"
-      exit()
+      exit(1)
     if t is Type.BOOL:
       # If value is set as string compare
       # Else return as is

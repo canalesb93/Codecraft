@@ -54,7 +54,7 @@ $( document ).ready( function() {
       $.post('executer.php', { code: $('#textArea').text() }, function(data) {
         swal({
           title: "Execution Complete!<br>",
-          text: "<div id='output-result' class='text-left'>" + data + "</div>",
+          text: "<div id='output-result' class='text-left'>" + data + "</div><div class='text-center' style='font-size: small;'>There is a maximum execution time of 10 seconds</div>",
           confirmButtonClass: "btn-default",
           confirmButtonText: "Close",
           html: true

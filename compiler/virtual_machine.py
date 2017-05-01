@@ -279,7 +279,7 @@ def performArithmeticExpression(left, op, right):
     return left or right
   else:
     print "Operation error: operator not found (!)"
-    exit()
+    exit(1)
 
 def pause():
   programPause = raw_input("Press the <ENTER> key to continue...")
