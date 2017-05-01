@@ -51,7 +51,7 @@ $( document ).ready( function() {
       confirmButtonClass: "btn-warning",
       showLoaderOnConfirm: true,
     }, function(){
-      $.get('executer.php', function(data) {
+      $.post('executer.php', { code: $('#textArea').text() }, function(data) {
         swal({
           title: "Execution Complete!<br>",
           text: "<div id='output-result' class='text-left'>" + data + "</div>",
@@ -136,8 +136,8 @@ $( document ).ready( function() {
           userModified = false;
           var code = Blockly.JavaScript.workspaceToCode(workspace);
           code = code.replace(/[()]/g,'');
-          code = code.replace(/[¿]/g,'(');
-          code = code.replace(/[?]/g,')');
+          code = code.replace(/&^¿/g,'(');
+          code = code.replace(/?^&/g,')');
           code = '  ' + code.replace(/[\n]/g,"\n  ");
           code = "craft {\n" + code + "\n}\n"
           updateCode(code)
@@ -148,11 +148,11 @@ $( document ).ready( function() {
       userModified = false;
       var code = Blockly.JavaScript.workspaceToCode(workspace);
       code = code.replace(/[()]/g,'');
-      code = code.replace(/[¿]/g,'(');
-      code = code.replace(/[?]/g,')');
+      code = code.replace(/&\^¿/g,'(');
+      code = code.replace(/\?\^&/g,')');
       code = '  ' + code.replace(/[\n]/g,"\n  ");
-      code = "craft {\n" + code + "\n}\n"
-      updateCode(code)
+      code = "craft {\n" + code + "\n}\n";
+      updateCode(code);
     }
   }
 
@@ -161,7 +161,7 @@ $( document ).ready( function() {
 
   function updateCode(code) {
     code = highlight(code);
-    $('#textArea').html(code)
+    $('#textArea').html(code);
   }
 
   function highlight(code) {

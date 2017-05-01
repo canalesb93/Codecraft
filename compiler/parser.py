@@ -959,13 +959,14 @@ if __name__ == '__main__':
     file = sys.argv[1]
     # Open file
     try:
+      if not file.endswith('.craft'):
+        print "Filename must be '.craft' type"
+        exit(1)
       f = open(file, 'r')
       data = f.read()
       f.close()
-      # Parse the data
       if (yacc.parse(data, tracking = True) == 'OK'):
         print(dirProc);
-      # Export program to csv
       export(file.replace(".craft", ".crafted"))
       summary()
     except EOFError:

@@ -306,7 +306,7 @@ Blockly.JavaScript['while'] = function(block) {
   var value_condition = Blockly.JavaScript.valueToCode(block, 'CONDITION', Blockly.JavaScript.ORDER_ATOMIC);
   var statements_statements = Blockly.JavaScript.statementToCode(block, 'STATEMENTS');
   // TODO: Assemble JavaScript into code variable.
-  var code = "while ¿" + value_condition + "? {\n" + statements_statements + "}\n";
+  var code = "while &^¿" + value_condition + "?^& {\n" + statements_statements + "}\n";
   return code;
 };
 
@@ -367,7 +367,7 @@ Blockly.JavaScript['function'] = function(block) {
   var text_id = block.getFieldValue('ID');
   var value_params = Blockly.JavaScript.valueToCode(block, 'PARAMS', Blockly.JavaScript.ORDER_ATOMIC);
   var statements_function = Blockly.JavaScript.statementToCode(block, 'function');
-  var code = 'function ' + dropdown_type + ' ' + text_id + '¿' + value_params + '? {\n' + statements_function + '}\n';
+  var code = 'function ' + dropdown_type + ' ' + text_id + '&^¿' + value_params + '?^& {\n' + statements_function + '}\n';
   return code;
 };
 
@@ -419,14 +419,14 @@ Blockly.JavaScript['function_call'] = function(block) {
   var text_id = block.getFieldValue('ID');
   var value_params = Blockly.JavaScript.valueToCode(block, 'PARAMS', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
-  var code = text_id + '¿' + value_params + '?\n';
+  var code = text_id + '&^¿' + value_params + '?^&\n';
   return code;
 };
 
 Blockly.JavaScript['function_call_value'] = function(block) {
   var text_id = block.getFieldValue('ID');
   var value_params = Blockly.JavaScript.valueToCode(block, 'PARAMS', Blockly.JavaScript.ORDER_ATOMIC);
-  var code = text_id + '¿' + value_params + '?';
+  var code = text_id + '&^¿' + value_params + '?^&';
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
@@ -445,7 +445,7 @@ Blockly.JavaScript['param'] = function(block) {
 
 Blockly.JavaScript['outputln'] = function(block) {
   var value_value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
-  var code = 'outputln¿' + value_value + '?\n';
+  var code = 'outputln&^¿' + value_value + '?^&\n';
   return code;
 };
 
