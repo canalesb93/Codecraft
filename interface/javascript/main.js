@@ -136,8 +136,8 @@ $( document ).ready( function() {
           userModified = false;
           var code = Blockly.JavaScript.workspaceToCode(workspace);
           code = code.replace(/[()]/g,'');
-          code = code.replace(/&^¿/g,'(');
-          code = code.replace(/?^&/g,')');
+          code = code.replace(/&\^¿/g,'(');
+          code = code.replace(/\?\^&/g,')');
           code = '  ' + code.replace(/[\n]/g,"\n  ");
           code = "craft {\n" + code + "\n}\n"
           updateCode(code)
