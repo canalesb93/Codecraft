@@ -15,7 +15,7 @@ Blockly.Blocks['while'] = {
         .setCheck(null);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(230);
+    this.setColour(210);
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -33,7 +33,7 @@ Blockly.Blocks['var_declaration'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(230);
+    this.setColour(160);
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -49,7 +49,7 @@ Blockly.Blocks['var_arr_declaration'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(230);
+    this.setColour(160);
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -64,7 +64,7 @@ Blockly.Blocks['var_free_assign'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(230);
+    this.setColour(160);
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -75,14 +75,14 @@ Blockly.Blocks['var_arr_free_assign'] = {
     this.appendValueInput("INDEX")
         .setCheck(null)
         .appendField(new Blockly.FieldTextInput("default"), "ID")
-            .appendField("[");
+            .appendField("");
     this.appendValueInput("VALUE")
         .setCheck(null)
-        .appendField("] =");
+        .appendField(" =");
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(230);
+    this.setColour(160);
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -97,7 +97,7 @@ Blockly.Blocks['index_selector_array'] = {
         .appendField("]");
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour(230);
+    this.setColour(185);
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -115,7 +115,7 @@ Blockly.Blocks['index_selector_matrix'] = {
         .appendField("]");
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour(230);
+    this.setColour(185);
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -145,7 +145,7 @@ Blockly.Blocks['param_comma'] = {
         .appendField(",");
     this.setInputsInline(true);
     this.setOutput(true, null);
-    this.setColour(230);
+    this.setColour(110);
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -157,7 +157,7 @@ Blockly.Blocks['return'] = {
         .setCheck(null)
         .appendField("return");
     this.setPreviousStatement(true, null);
-    this.setColour(66);
+    this.setColour(290);
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -206,7 +206,7 @@ Blockly.Blocks['text'] = {
         .appendField(new Blockly.FieldTextInput(""), "string")
         .appendField("\"");
     this.setOutput(true, null);
-    this.setColour(230);
+    this.setColour(65);
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -264,7 +264,7 @@ Blockly.Blocks['param'] = {
         .appendField(new Blockly.FieldTextInput("name"), "ID");
     this.setInputsInline(false);
     this.setOutput(true, null);
-    this.setColour(230);
+    this.setColour(120);
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -289,7 +289,7 @@ Blockly.Blocks['var'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldTextInput("default"), "NAME");
     this.setOutput(true, null);
-    this.setColour(330);
+    this.setColour(55);
     this.setTooltip('');
     this.setHelpUrl('');
   }
@@ -342,7 +342,7 @@ Blockly.JavaScript['var_arr_free_assign'] = function(block) {
   var value_index = Blockly.JavaScript.valueToCode(block, 'INDEX', Blockly.JavaScript.ORDER_ATOMIC);
   var value_value = Blockly.JavaScript.valueToCode(block, 'VALUE', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
-  var code = 'text_id' + '[' + value_index + ']' + ' = ' + value_value + '\n';
+  var code = text_id + value_index + ' = ' + value_value + '\n';
   return code;
 };
 

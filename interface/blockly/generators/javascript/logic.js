@@ -38,7 +38,7 @@ Blockly.JavaScript['controls_if'] = function(block) {
       Blockly.JavaScript.ORDER_NONE) || 'false';
     branchCode = Blockly.JavaScript.statementToCode(block, 'DO' + n);
     code += (n > 0 ? ' else ' : '') +
-        'if ¿' + conditionCode + '? {\n' + branchCode + '}';
+        'if &^¿' + conditionCode + '?^& {\n' + branchCode + '}';
 
     ++n;
   } while (block.getInput('IF' + n));
@@ -73,8 +73,8 @@ Blockly.JavaScript['logic_compare'] = function(block) {
 
 Blockly.JavaScript['logic_operation'] = function(block) {
   // Operations 'and', 'or'.
-  var operator = (block.getFieldValue('OP') == 'AND') ? '&&' : '||';
-  var order = (operator == '&&') ? 'and' :
+  var operator = (block.getFieldValue('OP') == 'AND') ? 'and' : 'or';
+  var order = (operator == 'and') ? 'and' :
       'or';
   var argument0 = Blockly.JavaScript.valueToCode(block, 'A', order);
   var argument1 = Blockly.JavaScript.valueToCode(block, 'B', order);
@@ -84,7 +84,7 @@ Blockly.JavaScript['logic_operation'] = function(block) {
     argument1 = 'false';
   } else {
     // Single missing arguments have no effect on the return value.
-    var defaultArgument = (operator == '&&') ? 'true' : 'false';
+    var defaultArgument = (operator == 'and') ? 'true' : 'false';
     if (!argument0) {
       argument0 = defaultArgument;
     }
