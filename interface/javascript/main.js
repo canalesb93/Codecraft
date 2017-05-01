@@ -178,6 +178,7 @@ $( document ).ready( function() {
     code = code.replace(/string/g, "<span style='color: #e28f24;'>string</span>");
     code = code.replace(/void/g, "<span style='color: #e28f24;'>void</span>");
     code = code.replace(/char/g, "<span style='color: #e28f24;'>char</span>");
+    code = code.replace(/\"((?:\\.|[^"\\])*)\"/g, "<span style='color: #f4e842;'>$&</span>");
     return code
   }
 
