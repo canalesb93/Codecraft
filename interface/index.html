@@ -6,21 +6,26 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="stylesheets/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/sweetalert.css">
+  <link rel="icon" href="favicon.ico">
+
   <!-- Javascript -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://npmcdn.com/tether@1.2.4/dist/js/tether.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-  <!-- Blockly -->
+  <script src="javascript/sweetalert.min.js"></script>
+  <script src="javascript/clipboard.min.js"></script>
+    <!-- Blockly -->
     <script src="blockly/blockly_compressed.js"></script>
     <script src="blockly/javascript_compressed.js"></script>
     <script src="blockly/blocks_compressed.js"></script>
     <script src="blockly/msg/js/en.js"></script>
     <script src="blockly/blocks/custom.js"></script>
-    <script src="javascript/clipboard.min.js"></script>
-    <script src="javascript/main.js"></script>
+  <script src="javascript/main.js"></script>
 </head>
 <body>
   <div class="container">
+    <!-- HEADER -->
     <div id="header">
       <h1 class="text-center">
           <img width="500px" src="assets/codecraft.png" alt="Codecraft">
@@ -28,19 +33,23 @@
       <p class="text-center">Experimental progamming language based on Python</p>
     </div>
 
+    <!-- WORKSPACE -->
     <div class="row" id="workspace">
       <div id="blocklyArea" class="col-md-7">
         <div id="blocklyDiv"></div>
       </div>
       <div id="codeArea" class="col-md-5">
-        <button class="copy-btn btn btn-default" data-clipboard-target="#textArea">
-          <img width="13" src="assets/clippy.svg" alt="Copy to clipboard">
+        <button id="copy-btn" class="btn btn-default btn-sm" data-clipboard-target="#textArea">
+          <img width="14" src="assets/clippy.svg" alt="Copy to clipboard">
         </button>
-        <div id="textArea"></div>  
+        <div contenteditable="true" id="textArea"></div>
+        <button id="run-btn" class="btn btn-warning">
+          <i class="fa fa-play" aria-hidden="true"></i> Run Code
+        </button>
       </div>
-      
     </div>
 
+    <!-- FOOTER -->
     <div id="footer" class="row">
       <div class="col-md-6">
         <a href="https://github.com/canalesb93/codecraft" class="btn btn-primary btn-sm">

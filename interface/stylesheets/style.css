@@ -18,6 +18,10 @@ body {
   position: relative;
 }
 
+#textArea:focus {
+    outline: none;
+}
+
 #textArea {
   border: 2px solid lightgray;
   border-radius: 4px;
@@ -29,7 +33,27 @@ body {
   line-height: normal;
   background-color: #333333;
   color: #eee;
+  overflow: scroll;
 }
+
+.sweet-alert {
+  border-radius: 4px;
+}
+
+#output-result {
+  border: 2px solid #f1f1f1;
+  border-radius: 2px;
+  white-space: pre-wrap;
+  font-family: monospace;
+  line-height: normal;
+  max-height: 140;
+  background-color: lightyellow;
+  overflow: scroll;
+  padding: 5px;
+  font-size: 13px;
+  color: #232323;
+}
+
 
 .btn-default {
   color: #333;
@@ -37,12 +61,26 @@ body {
   border-color: #ccc;
 }
 
-.copy-btn { 
+#run-btn:hover {
+  opacity: 1.0; 
+}
+#run-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 25px;
+  opacity: 0.85;
+}
+
+#copy-btn:hover { 
+  opacity: 1.0; 
+}
+#copy-btn { 
   position: absolute;
   right: 25px;
   top: 10px;
   background-color: #ffffff;
   border: 1px solid lightgray !important;
+  opacity: 0.25;
 }
 
 /* mouse over link */
