@@ -163,22 +163,27 @@ $( document ).ready( function() {
     code = highlight(code);
     $('#textArea').html(code);
   }
-
+  
   function highlight(code) {
-    code = code.replace(/=/g, "<span style='color: #e24d24;'>=</span>");
-    code = code.replace(/craft/g, "<span style='color: #5c84c4;'>craft</span>");
-    code = code.replace(/function/g, "<span style='color: #5c84c4;'>function</span>");
+    code = code.replace(/[=+-/*<>!]/g, "<span style='color: #e24d24;'>$&</span>");
+    // code = code.replace(/[0-9+]/g, "<span style='color: #8f41c6;'>$&</span>");
+    code = code.replace(/ true /g, "<span style='color: #8f41c6;'> true </span>");
+    code = code.replace(/ false /g, "<span style='color: #8f41c6;'> false </span>");
+    code = code.replace(/ and /g, "<span style='color: #e24d24;'> and </span>");
+    code = code.replace(/ or /g, "<span style='color: #e24d24;'> or </span>");
+    code = code.replace(/craft/g, "<span style='color: #5c84c4; font-style: italic;'>craft</span>");
+    code = code.replace(/function/g, "<span style='color: #5c84c4; font-style: italic;'>function</span>");
     code = code.replace(/while/g, "<span style='color: #e24d24;'>while</span>");
     code = code.replace(/if/g, "<span style='color: #e24d24;'>if</span>");
     code = code.replace(/else/g, "<span style='color: #e24d24;'>else</span>");
-    code = code.replace(/var/g, "<span style='color: #5c84c4;'>var</span>");
+    code = code.replace(/var/g, "<span style='color: #5c84c4; font-style: italic;'>var</span>");
     code = code.replace(/int/g, "<span style='color: #e28f24;'>int</span>");
     code = code.replace(/bool/g, "<span style='color: #e28f24;'>bool</span>");
     code = code.replace(/float/g, "<span style='color: #e28f24;'>float</span>");
     code = code.replace(/string/g, "<span style='color: #e28f24;'>string</span>");
     code = code.replace(/void/g, "<span style='color: #e28f24;'>void</span>");
     code = code.replace(/char/g, "<span style='color: #e28f24;'>char</span>");
-    code = code.replace(/\"((?:\\.|[^"\\])*)\"/g, "<span style='color: #f4e842;'>$&</span>");
+    code = code.replace(/\"((?:\\.|[^"\\])*)\"/g, "<span style='color: #f4e842 !important;'>$&</span>");
     return code
   }
 

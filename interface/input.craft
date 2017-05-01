@@ -1,21 +1,7 @@
 craft {
-  var int text_id[5]
-  var int index = 0
-  while (index < 5) {
-    text_id[index] = index * 10
-    index = index + 1
+  function bool pedro(int num) {
+    outputln(num, " testing the poop")
   }
   
-  function string sample(string name) {
-    return name + " sampled"
-  }
-  
-  outputln(sample(sample("Apple")))
-  
-  index = 0
-  while (index < 5) {
-    outputln(text_id[index])
-    index = index + 1
-  }
-  
+  pedro(1)
 }
