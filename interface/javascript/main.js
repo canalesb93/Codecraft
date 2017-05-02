@@ -26,9 +26,15 @@ $( document ).ready( function() {
 
   // Sounds
   var playAudio = true;
+  var cacheAudio = localStorage['audio'];
+  if (cacheAudio) playAudio = JSON.parse(cacheAudio);
   var chicken = new Audio('assets/chicken.mp3');
   var chickenhurt = new Audio('assets/chickenhurt.mp3');
   var chickenplop = new Audio('assets/chickenplop.mp3');
+  if (!playAudio) {
+    $("#audio-icon").toggleClass('fa-volume-up');
+    $("#audio-icon").toggleClass('fa-volume-off');
+  }
 
   // ==========================================================================
   // Python Execution
@@ -69,6 +75,7 @@ $( document ).ready( function() {
 
   $("#audio-btn").click(function() {
     playAudio = !playAudio;
+    localStorage['audio'] = JSON.stringify(playAudio);
     $("#audio-icon").toggleClass('fa-volume-up');
     $("#audio-icon").toggleClass('fa-volume-off');
   });  
