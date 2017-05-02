@@ -1,7 +1,3 @@
 craft {
-  function bool pedro(int num) {
-    outputln(num, " testing the poop")
-  }
   
-  pedro(1)
 }

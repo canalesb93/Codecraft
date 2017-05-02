@@ -24,12 +24,18 @@ $( document ).ready( function() {
   onresize();
   Blockly.svgResize(workspace);
 
+  // Sounds
+  var playAudio = true;
+  var chicken = new Audio('assets/chicken.mp3');
+  var chickenhurt = new Audio('assets/chickenhurt.mp3');
+  var chickenplop = new Audio('assets/chickenplop.mp3');
+
   // ==========================================================================
   // Python Execution
   // ==========================================================================
 
   $("#run-btn").click(function() {
-
+    if (playAudio) chicken.play();
     swal({
       title: "Run program?",
       text: "Submit to execute your code",
@@ -41,6 +47,7 @@ $( document ).ready( function() {
       showLoaderOnConfirm: true,
     }, function(){
       $.post('executer.php', { code: $('#textArea').text() }, function(data) {
+        if (playAudio) chickenplop.play();
         swal({
           title: "Execution Complete!<br>",
           text: "<div id='output-result' class='text-left'>" + data + "</div><div class='text-center' style='font-size: small;'>There is a maximum execution time of 10 seconds</div>",
@@ -59,6 +66,12 @@ $( document ).ready( function() {
   clipboard.on('success', function(e) {
     swal("Code copied!", "", "success")
   });
+
+  $("#audio-btn").click(function() {
+    playAudio = !playAudio;
+    $("#audio-icon").toggleClass('fa-volume-up');
+    $("#audio-icon").toggleClass('fa-volume-off');
+  });  
 
 
   // ==========================================================================
@@ -109,6 +122,7 @@ $( document ).ready( function() {
 
   function workspaceCodeUpdate() {
     if (userModified) {
+      if (playAudio) chickenhurt.play();
       swal({
         title: "Your code will be overwritten!",
         text: "Careful, you are modifying code through blockly, this will erase any change you made to the code directly.",
