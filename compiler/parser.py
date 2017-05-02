@@ -282,7 +282,8 @@ def p_exp(p):
 def p_term(p):
   '''term : uminus tryMultDivQuadruple
           | uminus tryMultDivQuadruple '*' pushOperation term
-          | uminus tryMultDivQuadruple '/' pushOperation term'''
+          | uminus tryMultDivQuadruple '/' pushOperation term
+          | uminus tryMultDivQuadruple '%' pushOperation term'''
 
 def p_uminus(p):
   '''uminus : '-' factor generateUMinusQuadruple 
