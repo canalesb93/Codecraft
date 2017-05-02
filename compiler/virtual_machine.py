@@ -261,6 +261,8 @@ def performArithmeticExpression(left, op, right):
     else:
       print "Expression error: division by zero"
       exit(1)
+  elif op == '%':
+    return left % right
   elif op == '<':
     return left < right
   elif op == '>':
