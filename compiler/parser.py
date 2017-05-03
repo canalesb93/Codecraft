@@ -346,11 +346,13 @@ def p_error(p):
 # =============================================================================
 # /////////////////////////////////////////////////////////////////////////////
 
+# Sets the scope to local
 def p_setLocalScope(p):
   'setLocalScope :'
   global __scope 
   __scope = Scope.LOCAL
 
+# Sets the scope to global
 def p_setGlobalScope(p):
   'setGlobalScope :'
   global __scope 
@@ -360,39 +362,48 @@ def p_setGlobalScope(p):
 # Variable/Constant Actions
 # =============================================================================
 
+# Stores the variable type in the temporary stacks
 def p_saveVariableType(p):
   'saveVariableType :'
   __tVarType.push(p[-1])
 
+# Pops a variable type from the temporary stacks
 def p_eraseVariableType(p):
   'eraseVariableType :'
   __tVarType.pop()
 
+# Stores the variable id in the temporary stacks
 def p_saveVariableName(p):
   'saveVariableName :'
   __tVarName.push(p[-1])
 
+# Pops a variable id from the temporary stacks
 def p_eraseVariableName(p):
   'eraseVariableName :'
   __tVarName.pop()
 
+# Stores the index dimension in the temporary stacks
 def p_saveVariableDimension(p):
   'saveVariableDimension :'
   __tVarArrDim.push(0)
 
+# Pops the index dimension from the temporary stacks
 def p_eraseVariableDimension(p):
   'eraseVariableDimension :'
   __tVarArrDim.pop()
 
+# Sends variable data to variable creation method
 def p_addVariable(p):
   'addVariable :'
   addVariable(__tVarName.top(), __tVarType.top())
 
+# Sends constant data to constant creation method
 def p_addConstant(p):
   'addConstant :'
   constRaw = p[-1]
   addConstant(constRaw)
 
+# Searches the variable symbol table for the ID
 def p_lookupId(p):
   'lookupId :'
   operandID = p[-1]
@@ -412,6 +423,7 @@ def p_lookupId(p):
     __tVarName.push(variable.name)
     __tVarType.push(variable.symbolType)
 
+# Creates a simple newline quadruple
 def p_addNewLineQuadruple(p):
   'addNewLineQuadruple :'
   __quadruples.add(Quadruple("OUTPUTLN", None, None, None))
@@ -420,6 +432,7 @@ def p_addNewLineQuadruple(p):
 # Array Actions
 # =============================================================================
 
+# Adds a dimension to a lookedup variable, making it an array
 def p_addDimension(p):
   'addDimension :'
   size = int(p[-1])
@@ -432,6 +445,7 @@ def p_addDimension(p):
       variable = __varsGlobal.lookup(__tVarName.top())
     variable.addDimension(size)
 
+# Generates dimension addresses based on total dimension space in variable
 def p_generateDimensionSpace(p):
   'generateDimensionSpace :'
   if __scope == Scope.GLOBAL:
@@ -448,6 +462,7 @@ def p_generateDimensionSpace(p):
     if size > 0:
       __address.generateLocal(variable.symbolType, size)
 
+# Generates index validation quadruple 
 def p_validateArrayIndex(p):
   'validateArrayIndex :'
   dimension = __tVarArrDim.pop()
@@ -469,6 +484,7 @@ def p_validateArrayIndex(p):
   __quadruples.add(Quadruple("VER", index, 0, variable.dimensions[dimension]))
   __tVarArrDim.push(dimension + 1)
 
+# Generates offset quadruple for multiple dimensioned arrays
 def p_offsetForDimension(p):
   'offsetForDimension :'
   dimension = __tVarArrDim.pop() - 1
@@ -495,6 +511,7 @@ def p_offsetForDimension(p):
   __typeStack.push(Type.INT)
   __tVarArrDim.push(dimension + 1)
 
+# Generates displacement quadruple for array index address
 def p_accummulateDisplacement(p):
   'accummulateDisplacement :'
   rightOp = __operandStack.pop()
@@ -510,6 +527,7 @@ def p_accummulateDisplacement(p):
   __operandStack.push(address)
   __typeStack.push(Type.INT)
 
+# Adds variable base address quadruple for array index address# 
 def p_addAddressBase(p):
   'addAddressBase :'
   leftOp = __operandStack.pop()
@@ -533,10 +551,12 @@ def p_addAddressBase(p):
 # Expression Actions
 # =============================================================================
 
+# Pushes operation to operationStack
 def p_pushOperation(p):
   'pushOperation :'
   __operationStack.push(p[-1])
 
+# Pushes variable address to operandStack
 def p_pushIdOperand(p):
   'pushIdOperand :'
   if __scope == Scope.GLOBAL:
@@ -552,6 +572,7 @@ def p_pushIdOperand(p):
   __operandStack.push(variable.address())
   __typeStack.push(__tVarType.top())
 
+# Pushes constant address to operandStack
 def p_pushConstantOperand(p):
   'pushConstantOperand :'
   constName = str(p[-2])
@@ -562,22 +583,27 @@ def p_pushConstantOperand(p):
   else:
     print "Constant error: constant not found", constName
 
+# Tries to generate a logical expression
 def p_tryLogicalQuadruple(p):
   'tryLogicalQuadruple :'
   addExpressionQuadruple(['and', 'or'])
 
+# Tries to generate a relational expression
 def p_tryRelationalQuadruple(p):
   'tryRelationalQuadruple :'
   addExpressionQuadruple(['<', '>', '==', '!=', '<=', '>='])
 
+# Tries to generate a add/sub expression
 def p_tryAddSubQuadruple(p):
   'tryAddSubQuadruple :'
   addExpressionQuadruple(['+', '-'])
 
+# Tries to generate a mult/div expression
 def p_tryMultDivQuadruple(p):
   'tryMultDivQuadruple :'
   addExpressionQuadruple(['*', '/', '%'])
 
+# Generates 'uminus' quadruple
 def p_generateUMinusQuadruple(p):
   'generateUMinusQuadruple :'
   rightOp = __operandStack.pop()
@@ -597,14 +623,17 @@ def p_generateUMinusQuadruple(p):
   __operandStack.push(address)
   __typeStack.push(resultType)
 
+# Adds the 'fake' bottom to operationStack
 def p_addFakeBottom(p):
   'addFakeBottom :'
   __operationStack.push('(')
 
+# Removes the 'fake' bottom from operaitonStack
 def p_removeFakeBottom(p):
   'removeFakeBottom :'
   __operationStack.pop()
 
+# Generates assignment quadruple
 def p_addAssignmentQuadruple(p):
   'addAssignmentQuadruple :'
   operator = __operationStack.pop()
@@ -627,6 +656,7 @@ def p_addAssignmentQuadruple(p):
 # Conditional Actions
 # =============================================================================
 
+# Generates GOTOF quadruple, adds location to jumpStack
 def p_ifConditional(p):
   'ifConditional :'
   conditionalType = __typeStack.pop()
@@ -640,10 +670,13 @@ def p_ifConditional(p):
     summary()
     exit(1)
 
+# Updates last jump position to current position
 def p_endIfConditional(p):
   'endIfConditional :'
   setLastJumpPosition(__quadruples.size())
 
+# Generates a GOTO quadruple, updates last jump position and adds current
+# position to jump stack
 def p_elseConditional(p):
   'elseConditional :'
   __quadruples.add(Quadruple("GOTO", None, None, -1))
@@ -652,6 +685,8 @@ def p_elseConditional(p):
   # Save goto position
   __jumpStack.push(__quadruples.size()-1)
 
+# Updates last 2 jump positions and generates GOTO quadruple, adds current 
+# position to jumpStack
 def p_elseIfConditional(p):
   'elseIfConditional :'
   setLastJumpPosition(__quadruples.size() + 1)
@@ -660,22 +695,26 @@ def p_elseIfConditional(p):
   # Save goto position
   __jumpStack.push(__quadruples.size()-1)
 
+# Updates last 2 jump positions to current position
 def p_endElseIfConditional(p):
   'endElseIfConditional :'
   setLastJumpPosition(__quadruples.size())
   setLastJumpPosition(__quadruples.size())
 
+# Pushes current position to jumpStack
 def p_startLoop(p):
   'startLoop :'
   __jumpStack.push(__quadruples.size())
 
+# Generates GOTOF quadruple, adds location to jumpStack (same as ifConditional)
 def p_loopConditional(p):
   'loopConditional : ifConditional'
 
+# Sets jump to start of loop and then updates conditional to end of loop
 def p_endLoop(p):
   'endLoop :'
-  lastWhilePos = __jumpStack.pop()
-  returnPos = __jumpStack.pop()
+  lastWhilePos = __jumpStack.pop() # loop conditional position
+  returnPos = __jumpStack.pop() # start of loop position
   __quadruples.add(Quadruple('GOTO', None, None, returnPos))
   lastWhileQ = __quadruples.list[lastWhilePos]
   lastWhileQ.result = __quadruples.size()
@@ -685,16 +724,19 @@ def p_endLoop(p):
 # Function Actions
 # =============================================================================
 
+# Save function type to temporary variable
 def p_saveFunctionType(p):
   'saveFunctionType :'
   global __tFuncType
   __tFuncType = p[-1]
 
+# Save function id to temporary variable
 def p_saveFunctionName(p):
   'saveFunctionName :'
   global __tFuncName
   __tFuncName = p[-1]
 
+# Clears all local data, sets the functions address limit, generates ENDPROC
 def p_endFunction(p):
   'endFunction :'
   global __tFuncParameters
@@ -705,6 +747,7 @@ def p_endFunction(p):
   __quadruples.add(Quadruple('ENDPROC', None, None, None))
   setLastJumpPosition(__quadruples.size())
 
+# Creates variable in local scope, appends parameter to temporary list
 def p_addParameter(p):
   'addParameter :'
   varName = p[-1]
@@ -712,12 +755,14 @@ def p_addParameter(p):
   addVariable(varName, varType)
   __tFuncParameters.append(__varsLocal.lookup(varName))
 
+# Adds SKIP quadruple with pos to jumpStack, creates function object
 def p_addFunction(p):
   'addFunction :'
   __quadruples.add(Quadruple("SKIP", None, None, -1))
   __jumpStack.push(__quadruples.size()-1)
   addFunction(__tFuncName, __tFuncType, __tFuncParameters, __quadruples.size())
 
+# Lookup function in functionTable, adds name and type to temporary stacks
 def p_lookupFunctionId(p):
   'lookupFunction :'
   functionId = p[-2]
@@ -730,11 +775,13 @@ def p_lookupFunctionId(p):
     summary()
     exit(1)
 
+# Generates ERA quadruple, sets argument count to 0 in temporarry stack
 def p_startFunctionCall(p):
   'startFunctionCall :'
   __quadruples.add(Quadruple("ERA", __tCallName.top(), None, None))
   __tCallArgCount.push(0)
 
+# Adds verifies parameter type and adds PARAM quadruple, increases arg count
 def p_addArgument(p):
   'addArgument :'
   argument = __operandStack.pop()
@@ -750,6 +797,7 @@ def p_addArgument(p):
     summary()
     exit(1)
 
+# Verifies the correct number of argument
 def p_verifyArguments(p):
   'verifyArguments :'
   function = __funcsGlobal.lookup(__tCallName.top())
@@ -758,6 +806,8 @@ def p_verifyArguments(p):
     summary()
     exit(1)
 
+# Generate GOSUB quadruple with return a temporary address if needed
+# Clear all function call temporary stacks
 def p_endFunctionCall(p):
   'endFunctionCall :'
   function = __funcsGlobal.lookup(__tCallName.top())
@@ -778,6 +828,7 @@ def p_endFunctionCall(p):
   __tCallType.pop()
   __tCallArgCount.pop()
 
+# Generates RETURN quadruple with return value
 def p_returnFunctionValue(p):
   'returnFunctionValue :'
   returnType = __typeStack.pop()
@@ -789,22 +840,24 @@ def p_returnFunctionValue(p):
     summary()
     exit(1)
 
+# Generates RETURN quadruple w/o return value (void)
 def p_returnFunction(p):
   'returnFunction :'
   __quadruples.add(Quadruple('RETURN', None, None, None))
 
+# Generate OUTPUT quadruple
 def p_addOutputQuadruple(p):
   'addOutputQuadruple :'
   output = __operandStack.pop()
   __typeStack.pop()
   __quadruples.add(Quadruple("OUTPUT", None, None, output))
 
+# Generate INPUT quadruple (with address)
 def p_addInputQuadruple(p):
   'addInputQuadruple :'
   inp = __operandStack.pop()
   __typeStack.pop()
   __quadruples.add(Quadruple("INPUT", None, None, inp))
-
 
 # \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 # =============================================================================
@@ -815,14 +868,26 @@ def p_addInputQuadruple(p):
 # =============================================================================
 # /////////////////////////////////////////////////////////////////////////////
 
+
+# -----------------------------------------------------------------------------
+# setLastJumpPosition()
+#
 # Pops the jump stack ands sets that quadruples result to a position
+# -----------------------------------------------------------------------------
+
 def setLastJumpPosition(position):
   lastPos = __jumpStack.pop()
   quadruple = __quadruples.list[lastPos]
   quadruple.result = position
   print "__ Update ", lastPos, " result to ", position
 
-# Create the quadruple for the requested operators
+# -----------------------------------------------------------------------------
+# addExpressionQuadruple()
+#
+# Create the expression quadruple for the requested operators and 
+# generate the addresses based on the type.
+# -----------------------------------------------------------------------------
+
 def addExpressionQuadruple(operators):
   global __operationStack, __operandStack, __typeStack
   operator = __operationStack.top()
@@ -849,6 +914,13 @@ def addExpressionQuadruple(operators):
       summary()
       exit(1)
 
+# -----------------------------------------------------------------------------
+# addVariable()
+#
+# Create a new variable for the current scope. Generate and assign the address.
+# Adds variable to correct symbol table
+# -----------------------------------------------------------------------------
+
 def addVariable(name, varType):
   global __varsGlobal, __varsLocal
   if varType == Type.VOID:
@@ -864,6 +936,14 @@ def addVariable(name, varType):
     # Construct variable locally
     __varsLocal.insert(variable)
     variable.id = __address.generateLocal(varType)
+
+# -----------------------------------------------------------------------------
+# addConstant()
+#
+# Create a new constant and generate the address. Constant type is retrieved
+# from python variable which was casted during the constants grammar rules.
+# Adds constant to correct symbol table.
+# -----------------------------------------------------------------------------
 
 def addConstant(const):
   global __constantTable
@@ -889,6 +969,12 @@ def addConstant(const):
     # Save Constant to table
     __constantTable.insert(Constant(cid ,str(const), constType, constValue))
 
+# -----------------------------------------------------------------------------
+# addFunction()
+#
+# Create a function object and add it to the function table.
+# -----------------------------------------------------------------------------
+
 def addFunction(functionName, functionType, parameters, position):
   global __funcsGlobal
   function = Function(functionName, functionType, parameters, position)
@@ -904,7 +990,15 @@ def addFunction(functionName, functionType, parameters, position):
 # =============================================================================
 # /////////////////////////////////////////////////////////////////////////////
 
+# Run YACC
 yacc.yacc()
+
+# -----------------------------------------------------------------------------
+# summary()
+#
+# Print a large summary of the current status of all relevant data structurs
+# during the compilation phase.
+# -----------------------------------------------------------------------------
 
 def summary():
   print "============================= COMPILATION SUMMARY ==========================="
@@ -924,6 +1018,12 @@ def summary():
   print "CONSTS: (", __constantTable.size(), ")", __constantTable
   print "G-FUNCS:", __funcsGlobal
   print "================================ END SUMMARY ================================"
+
+# -----------------------------------------------------------------------------
+# export()
+#
+# Export all necessary data to a CSV file, change file ending to '.crafted'
+# -----------------------------------------------------------------------------
 
 def export(filename):
   with open(filename, 'wb') as fp:
@@ -951,10 +1051,21 @@ def export(filename):
         writer.writerow([v.id, v.name, v.symbolType.value])
     writer.writerow(['END', "FUNCTIONS"])
 
+# -----------------------------------------------------------------------------
+# limitDictToArray()
+#
+# Utility function used by export
+# -----------------------------------------------------------------------------
+
 def limitDictToArray(limit):
   return [limit[Type.BOOL], limit[Type.INT], limit[Type.FLOAT], limit[Type.CHAR], limit[Type.STRING]]
 
-# Main Method
+# -----------------------------------------------------------------------------
+# __main__
+#
+# Control of YACC and handler of file input
+# -----------------------------------------------------------------------------
+
 if __name__ == '__main__':
   if (len(sys.argv) > 1):
     file = sys.argv[1]
