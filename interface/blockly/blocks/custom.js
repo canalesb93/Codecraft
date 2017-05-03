@@ -295,6 +295,20 @@ Blockly.Blocks['var'] = {
   }
 };
 
+Blockly.Blocks['var_arr'] = {
+  init: function() {
+    this.appendValueInput("INDEX")
+        .setCheck(null)
+        .appendField(new Blockly.FieldTextInput("default"), "NAME")
+            .appendField("");
+    this.setInputsInline(true);
+    this.setOutput(true, null);
+    this.setColour(55);
+    this.setTooltip('');
+    this.setHelpUrl('');
+  }
+};
+
 
 // \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 // =============================================================================
@@ -454,4 +468,11 @@ Blockly.JavaScript['var'] = function(block) {
   var code = text_name;
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.JavaScript['var_arr'] = function(block) {
+  var text_name = block.getFieldValue('NAME');
+  var value_index = Blockly.JavaScript.valueToCode(block, 'INDEX', Blockly.JavaScript.ORDER_ATOMIC);
+  var code = text_name + value_index;
+  return code;
 };

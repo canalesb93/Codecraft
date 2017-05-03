@@ -1,5 +1,4 @@
 craft {
-  function vasdfoid default() {
-  }
+  outputln(!true)
   
 }
