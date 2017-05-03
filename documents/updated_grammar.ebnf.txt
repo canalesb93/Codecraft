@@ -1,0 +1,98 @@
+program ::= CRAFT "{" canvas_block "}"
+canvas_block ::= block canvas_block
+                | function canvas_block
+                | empty
+type ::= VOID
+        | INT
+        | FLOAT
+        | CHAR
+        | BOOL
+        | STRING
+vars ::= VAR type saveVariableType var eraseVariableType
+var ::= ID saveVariableName addVariable var_array_init var_assignment eraseVariableName var_repeater
+var_repeater ::= "," var
+                | empty
+var_assignment ::= pushIdOperand "=" pushOperation super_expression addAssignmentQuadruple
+                  | empty
+var_free_assignment ::= ID lookupId pushIdOperand eraseVariableName eraseVariableType "=" pushOperation super_expression addAssignmentQuadruple
+var_array_init ::= var_array_dimension generateDimensionSpace
+                  | empty
+var_array_dimension ::= "[" CTE_INT addDimension "]" var_array_dimension1
+var_array_dimension1 ::= "[" CTE_INT addDimension "]" var_array_dimension1
+                        | empty
+var_arr_free_assignment ::= ID lookupId index_selector "=" pushOperation super_expression addAssignmentQuadruple
+index_selector ::= saveVariableDimension "[" addFakeBottom exp removeFakeBottom validateArrayIndex "]" index_selector1 addAddressBase eraseVariableName eraseVariableType eraseVariableDimension
+index_selector1 ::= offsetForDimension "[" addFakeBottom exp removeFakeBottom validateArrayIndex "]" accummulateDisplacement index_selector1
+                   | empty
+ function ::= FUNCTION setLocalScope type saveFunctionType ID saveFunctionName "(" parameters_definition ")" addFunction "{" block_repeater "}" endFunction setGlobalScope
+parameters_definition ::= type ID addParameter parameters_definition1
+                         | empty 
+parameters_definition1 ::= "," type ID addParameter parameters_definition1
+                          | empty
+parameters ::= super_expression addArgument parameters1
+              | empty
+parameters1 ::= "," super_expression addArgument parameters1
+               | empty
+return ::= RETURN returnFunction
+          | RETURN super_expression returnFunctionValue
+function_call ::= ID "(" lookupFunction startFunctionCall addFakeBottom parameters removeFakeBottom ")" verifyArguments endFunctionCall
+                 | ID "(" lookupFunction startFunctionCall ")" endFunctionCall
+block_repeater ::= block block_repeater
+                  | empty
+block ::= vars
+         | var_free_assignment
+         | var_arr_free_assignment
+         | if
+         | cycle
+         | return
+         | BREAK
+         | CONTINUE
+         | output
+         | input
+         | function_call
+output ::= OUTPUT "(" super_expression addOutputQuadruple output1 ")"
+          | OUTPUTLN "(" super_expression addOutputQuadruple output1 addNewLineQuadruple ")"
+          | OUTPUTLN addNewLineQuadruple
+output1 ::= "," super_expression addOutputQuadruple output1
+           | empty
+ input ::= INPUT "(" ID lookupId pushIdOperand eraseVariableName eraseVariableType ")" addInputQuadruple
+          | INPUT "(" ID lookupId index_selector ")" addInputQuadruple
+if ::= IF "(" super_expression ")" ifConditional "{" block_repeater "}" endIfConditional
+      | IF "(" super_expression ")" ifConditional "{" block_repeater "}" else
+else ::= ELSE elseConditional else_if
+        | ELSE "{" elseConditional block_repeater "}" endIfConditional
+else_if ::= IF "(" super_expression ")" ifConditional "{" block_repeater "}" endElseIfConditional 
+           | IF "(" super_expression ")" ifConditional "{" block_repeater "}" else_if_else
+else_if_else ::= ELSE elseIfConditional else_if
+                | ELSE "{" elseIfConditional block_repeater "}" endIfConditional
+cycle ::= WHILE startLoop "(" super_expression ")" loopConditional "{" block_repeater "}" endLoop
+super_expression ::= expression tryLogicalQuadruple
+                    | expression tryLogicalQuadruple AND pushOperation super_expression
+                    | expression tryLogicalQuadruple OR pushOperation super_expression
+expression ::= exp tryRelationalQuadruple
+              | exp tryRelationalQuadruple '>' pushOperation expression
+              | exp tryRelationalQuadruple '<' pushOperation expression
+              | exp tryRelationalQuadruple EQ pushOperation expression
+              | exp tryRelationalQuadruple UNEQ pushOperation expression
+              | exp tryRelationalQuadruple LESS_EQ pushOperation expression
+              | exp tryRelationalQuadruple GREATER_EQ pushOperation expression
+exp ::= term tryAddSubQuadruple
+       | term tryAddSubQuadruple '+' pushOperation exp
+       | term tryAddSubQuadruple '-' pushOperation exp 
+term ::= uminus tryMultDivQuadruple
+        | uminus tryMultDivQuadruple '*' pushOperation term
+        | uminus tryMultDivQuadruple '/' pushOperation term
+uminus ::= '-' factor generateUMinusQuadruple 
+          | factor
+factor ::= '(' addFakeBottom super_expression removeFakeBottom ')'
+          | value
+value ::= constant addConstant pushConstantOperand
+         | ID lookupId pushIdOperand eraseVariableName eraseVariableType
+         | ID lookupId index_selector
+         | function_call       
+constant ::= CTE_INT
+constant ::= FALSE
+            | TRUE
+constant ::= CTE_FLOAT
+constant ::= CTE_STRING
+            | CTE_CHAR 
