@@ -40,6 +40,50 @@ $( document ).ready( function() {
   // Python Execution
   // ==========================================================================
 
+  $("#save-btn").click(function() {
+    var xml = Blockly.Xml.workspaceToDom(workspace);
+    var xml_text = Blockly.Xml.domToText(xml);
+    console.log(xml_text);
+  });
+
+  function loadToWorkspace(file) {
+    swal({
+      title: "Your code will be erased!",
+      text: "Careful, loading an example will erase any blocks you've already placed.",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Load",
+      cancelButtonText: "Cancel",
+      closeOnConfirm: true,
+      closeOnCancel: true
+    },
+    function(isConfirm){
+      if (isConfirm) {
+        $.get('examples/' + file, function(data) {
+          var xml = Blockly.Xml.textToDom(data);
+          Blockly.Xml.domToWorkspace(xml, workspace);
+        });
+      }
+    });
+  }
+
+  $("#restore-simple-btn").click(function() {
+    loadToWorkspace('simple_function.txt');
+  });
+
+  $("#restore-fib-btn").click(function() {
+    loadToWorkspace('fibonacci.txt');
+  });
+
+  $("#restore-fac-btn").click(function() {
+    loadToWorkspace('factorial.txt');
+  });
+
+  $("#restore-arr-btn").click(function() {
+    loadToWorkspace('array.txt');
+  });
+
   $("#run-btn").click(function() {
     if (playAudio) chicken.play();
     swal({
@@ -63,8 +107,6 @@ $( document ).ready( function() {
         });
       });
     });
-
-    
   });  
 
   var clipboard = new Clipboard('#copy-btn');
@@ -189,12 +231,12 @@ $( document ).ready( function() {
     code = code.replace(/if/g, "<span style='color: #e24d24;'>if</span>");
     code = code.replace(/else/g, "<span style='color: #e24d24;'>else</span>");
     code = code.replace(/var/g, "<span style='color: #5c84c4; font-style: italic;'>var</span>");
-    code = code.replace(/int/g, "<span style='color: #e28f24;'>int</span>");
-    code = code.replace(/bool/g, "<span style='color: #e28f24;'>bool</span>");
-    code = code.replace(/float/g, "<span style='color: #e28f24;'>float</span>");
-    code = code.replace(/string/g, "<span style='color: #e28f24;'>string</span>");
-    code = code.replace(/void/g, "<span style='color: #e28f24;'>void</span>");
-    code = code.replace(/char/g, "<span style='color: #e28f24;'>char</span>");
+    code = code.replace(/ int /g, "<span style='color: #e28f24;'> int </span>");
+    code = code.replace(/ bool /g, "<span style='color: #e28f24;'> bool </span>");
+    code = code.replace(/ float /g, "<span style='color: #e28f24;'> float </span>");
+    code = code.replace(/ string /g, "<span style='color: #e28f24;'> string </span>");
+    code = code.replace(/ void /g, "<span style='color: #e28f24;'> void </span>");
+    code = code.replace(/ char /g, "<span style='color: #e28f24;'> char </span>");
     code = code.replace(/\"((?:\\.|[^"\\])*)\"/g, "<span style='color: #f4e842 !important;'>$&</span>");
     return code
   }

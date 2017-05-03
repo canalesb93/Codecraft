@@ -1,6 +1,6 @@
 craft {
 
-  function int generateAndPrintArray() {
+  function void generateAndPrintArray() {
     var int test[5], index = 0
     while (index < 5) {
       input(test[index])

@@ -299,8 +299,7 @@ Blockly.Blocks['var_arr'] = {
   init: function() {
     this.appendValueInput("INDEX")
         .setCheck(null)
-        .appendField(new Blockly.FieldTextInput("default"), "NAME")
-            .appendField("");
+        .appendField(new Blockly.FieldTextInput("default"), "NAME");
     this.setInputsInline(true);
     this.setOutput(true, null);
     this.setColour(55);
@@ -389,7 +388,7 @@ Blockly.JavaScript['param_comma'] = function(block) {
   var value_left_param = Blockly.JavaScript.valueToCode(block, 'LEFT_PARAM', Blockly.JavaScript.ORDER_ATOMIC);
   var value_name = Blockly.JavaScript.valueToCode(block, 'NAME', Blockly.JavaScript.ORDER_ATOMIC);
   // TODO: Assemble JavaScript into code variable.
-  var code = value_left_param + ',' + fvalue_name;
+  var code = value_left_param + ',' + value_name;
   // TODO: Change ORDER_NONE to the correct strength.
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
@@ -425,7 +424,7 @@ Blockly.JavaScript['text'] = function(block) {
 
 Blockly.JavaScript['comment'] = function(block) {
   var text_comment = block.getFieldValue('COMMENT');
-  var code = '#' + text_comment + '\n';
+  var code = '# ' + text_comment + '\n';
   return code;
 };
 
@@ -474,5 +473,5 @@ Blockly.JavaScript['var_arr'] = function(block) {
   var text_name = block.getFieldValue('NAME');
   var value_index = Blockly.JavaScript.valueToCode(block, 'INDEX', Blockly.JavaScript.ORDER_ATOMIC);
   var code = text_name + value_index;
-  return code;
+  return [code, Blockly.JavaScript.ORDER_NONE];
 };
