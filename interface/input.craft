@@ -1,23 +1,4 @@
 craft {
-  var int array[5]
-  
-  function void generateArray() {
-    var int index = 0
-    while (index < 5) {
-      array[index] = index * 5
-      index = index + 1
-    }
-  }
-  
-  function void printArray() {
-    var int index = 0
-    while (index < 5) {
-      output(array[index]," ")
-      index = index + 1
-    }
-  }
-  
-  generateArray()
-  printArray()
-  
+  outputln("TEST")
+
 }

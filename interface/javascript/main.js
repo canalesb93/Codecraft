@@ -40,11 +40,11 @@ $( document ).ready( function() {
   // Python Execution
   // ==========================================================================
 
-  $("#save-btn").click(function() {
-    var xml = Blockly.Xml.workspaceToDom(workspace);
-    var xml_text = Blockly.Xml.domToText(xml);
-    console.log(xml_text);
-  });
+  // $("#save-btn").click(function() {
+  //   var xml = Blockly.Xml.workspaceToDom(workspace);
+  //   var xml_text = Blockly.Xml.domToText(xml);
+  //   console.log(xml_text);
+  // });
 
   function loadToWorkspace(file) {
     swal({
