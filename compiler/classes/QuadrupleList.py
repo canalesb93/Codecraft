@@ -1,6 +1,10 @@
+# ------------------------------------------------------------------
+# QuadrupleList object
+#
+# Manages the quadruple list.
+# ------------------------------------------------------------------
+
 class QuadrupleList:
-    '''
-    '''
 
     def __init__(self):
         self.list = []

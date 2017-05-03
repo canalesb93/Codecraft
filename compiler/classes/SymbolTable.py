@@ -1,9 +1,16 @@
 from enumerators import Type
 
+# ------------------------------------------------------------------
+# SymbolTable object
+#
+# A dictionary with utility methods. Keeps track of symbols in 
+# the program. Insert and Lookup methods are used at parser.py
+# There are 3 instances of this object.
+#   1. Global Variables
+#   2. Local Variables
+#   3. Constants
+# ------------------------------------------------------------------
 class SymbolTable:
-    '''
-    Class that manages a symbol table for scopes (global, local)
-    '''
 
     def __init__(self):
         self.symbols = {}

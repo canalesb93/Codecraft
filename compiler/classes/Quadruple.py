@@ -1,6 +1,10 @@
+
+# ------------------------------------------------------------------
+# SymbolTable object
+#
+# Object holding quadruple data
+# ------------------------------------------------------------------
 class Quadruple:
-    '''
-    '''
 
     def __init__(self, operator, operand1, operand2, result):
         self.operator = operator

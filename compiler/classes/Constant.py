@@ -1,9 +1,12 @@
 from enumerators import Type
 
+# ------------------------------------------------------------------
+# Constant object
+#
+# Object representing contant values, inclues name, type, value and
+# address
+# ------------------------------------------------------------------
 class Constant:
-    '''
-    Object containing information about a constant
-    '''
 
     def __init__(self, id, name, symbolType, value):
         self.id = id

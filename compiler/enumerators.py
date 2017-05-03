@@ -1,8 +1,8 @@
-# import sys
-# import os
-# sys.path.append(os.path.abspath('../libraries'))
 from libraries.enum import *
 
+# ------------------------------------------------------------------
+# Type Enumerator
+# ------------------------------------------------------------------
 class Type(Enum):
   __order__ = 'BOOL INT FLOAT CHAR STRING VOID'
   BOOL = 0
@@ -12,6 +12,9 @@ class Type(Enum):
   STRING = 4
   VOID = 5
 
+# ------------------------------------------------------------------
+# Scope Enumerator
+# ------------------------------------------------------------------
 class Scope(Enum):
   LOCAL = 0
   GLOBAL = 1

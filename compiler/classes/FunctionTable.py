@@ -1,7 +1,11 @@
+# ------------------------------------------------------------------
+# FunctionTable object
+#
+# A dictionary with utility methods. Keeps track of functions in 
+# the program. Insert and Lookup methods are used at parser.py
+# ------------------------------------------------------------------
+
 class FunctionTable:
-    '''
-    Class that manages a symbol table for scopes (global, local)
-    '''
 
     def __init__(self):
         self.functions = {}

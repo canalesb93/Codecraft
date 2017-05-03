@@ -1,5 +1,10 @@
-# module: scanner.py
-# This module just contains the lexing rules
+# -----------------------------------------------------------------------------
+# scanner.py
+#
+# Author: Ricardo Canales and Gabriel Berlanga
+#
+# The module contains lexical rules used by the parser.
+# -----------------------------------------------------------------------------
 
 reserved = {
     # Basic tokens

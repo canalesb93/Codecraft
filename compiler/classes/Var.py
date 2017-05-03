@@ -1,9 +1,12 @@
 from enumerators import Type
 
+# ------------------------------------------------------------------
+# Variable object
+# 
+# Holds the variable data: name, type and dimensions if the var
+# is an array. Can calculate total size based on dimension.
+# ------------------------------------------------------------------
 class Var:
-    '''
-    Object containing information about variables
-    '''
 
     def __init__(self, name, symbolType):
         self.id = -1
