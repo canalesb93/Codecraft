@@ -1,13 +1,5 @@
 craft {
-  function void sample(int test) {
-    if (test <= 20) {
-      outputln("It's smaller that 20!")
-    } else {
-      outputln("It's a failure!")
-    }
+  function vasdfoid default() {
   }
-  
-  sample(15)
-  sample(29)
   
 }

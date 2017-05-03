@@ -123,6 +123,7 @@ $( document ).ready( function() {
       updateCode(text);
       userModified = true;
       setCaretPosition($(this).get(0), position);
+      $("#blocklyDiv").addClass('overlay');
     }
     contents = $(this).html();
   });
@@ -144,6 +145,7 @@ $( document ).ready( function() {
       function(isConfirm){
         if (isConfirm) {
           userModified = false;
+          $("#blocklyDiv").removeClass('overlay');
           var code = Blockly.JavaScript.workspaceToCode(workspace);
           code = code.replace(/[()]/g,'');
           code = code.replace(/&\^¿/g,'(');
